@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>de.leo-labs.VoodooSMBus</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -19,10 +19,49 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>IOKitPersonalities</key>
-	<dict/>
+	<dict>
+		<key>VoodooSMBusControllerDriver</key>
+		<dict>
+			<key>IOProbeScore</key>
+			<integer>400</integer>
+			<key>IOPCIMatchComment</key>
+			<string>Intel SMBus Controller i801(Sunrise Point LP)</string>
+			<key>IOPCIMatch</key>
+			<string>0x9d238086</string>
+			<key>IOProviderClass</key>
+			<string>IOPCIDevice</string>
+			<key>IOKitDebug</key>
+			<integer>65535</integer>
+			<key>IOClass</key>
+			<string>VoodooSMBusControllerDriver</string>
+			<key>CFBundleIdentifier</key>
+			<string>de.leo-labs.VoodooSMBus</string>
+		</dict>
+        <key>ELANTouchpadDriver</key>
+        <dict>
+            <key>IOProbeScore</key>
+            <integer>400</integer>
+            <key>IOProviderClass</key>
+            <string>VoodooSMBusDeviceNub</string>
+            <key>IOKitDebug</key>
+            <integer>65535</integer>
+            <key>IOClass</key>
+            <string>ELANTouchpadDriver</string>
+            <key>CFBundleIdentifier</key>
+            <string>de.leo-labs.VoodooSMBus</string>
+        </dict>
+	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 leo-labs. All rights reserved.</string>
 	<key>OSBundleLibraries</key>
-	<dict/>
-</dict>
+    <dict>
+        <key>com.apple.iokit.IOPCIFamily</key>
+        <string>2.9</string>
+        <key>com.apple.kpi.iokit</key>
+        <string>18.5</string>
+        <key>com.apple.kpi.libkern</key>
+        <string>18.5</string>
+        <key>com.apple.kpi.mach</key>
+        <string>18.5</string>
+    </dict></dict>
 </plist>

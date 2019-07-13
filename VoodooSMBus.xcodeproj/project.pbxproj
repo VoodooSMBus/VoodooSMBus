@@ -7,15 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B3953FFD22D8DBC100473323 /* VoodooSMBus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3953FFC22D8DBC100473323 /* VoodooSMBus.hpp */; };
-		B3953FFF22D8DBC100473323 /* VoodooSMBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3953FFE22D8DBC100473323 /* VoodooSMBus.cpp */; };
+		B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */; };
+		B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */; };
+		B395400922D8FD6100473323 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B395400722D8FD6100473323 /* helpers.cpp */; };
+		B395400A22D8FD6100473323 /* helpers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B395400822D8FD6100473323 /* helpers.hpp */; };
+		B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */; };
+		B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */; };
+		B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */; };
+		B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B3953FF922D8DBC100473323 /* VoodooSMBus.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoodooSMBus.kext; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3953FFC22D8DBC100473323 /* VoodooSMBus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBus.hpp; sourceTree = "<group>"; };
-		B3953FFE22D8DBC100473323 /* VoodooSMBus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBus.cpp; sourceTree = "<group>"; };
+		B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusControllerDriver.hpp; sourceTree = "<group>"; };
+		B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusControllerDriver.cpp; sourceTree = "<group>"; };
 		B395400022D8DBC100473323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B395400622D8F7FE00473323 /* i2c_i801.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i2c_i801.h; sourceTree = "<group>"; };
+		B395400722D8FD6100473323 /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
+		B395400822D8FD6100473323 /* helpers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = helpers.hpp; sourceTree = "<group>"; };
+		B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusDeviceNub.cpp; sourceTree = "<group>"; };
+		B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusDeviceNub.hpp; sourceTree = "<group>"; };
+		B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ELANTouchpadDriver.cpp; sourceTree = "<group>"; };
+		B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ELANTouchpadDriver.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,9 +61,16 @@
 		B3953FFB22D8DBC100473323 /* VoodooSMBus */ = {
 			isa = PBXGroup;
 			children = (
-				B3953FFC22D8DBC100473323 /* VoodooSMBus.hpp */,
-				B3953FFE22D8DBC100473323 /* VoodooSMBus.cpp */,
+				B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */,
+				B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */,
 				B395400022D8DBC100473323 /* Info.plist */,
+				B395400622D8F7FE00473323 /* i2c_i801.h */,
+				B395400722D8FD6100473323 /* helpers.cpp */,
+				B395400822D8FD6100473323 /* helpers.hpp */,
+				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
+				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
+				B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */,
+				B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -62,7 +82,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3953FFD22D8DBC100473323 /* VoodooSMBus.hpp in Headers */,
+				B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */,
+				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
+				B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */,
+				B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,7 +156,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3953FFF22D8DBC100473323 /* VoodooSMBus.cpp in Sources */,
+				B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */,
+				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
+				B395400922D8FD6100473323 /* helpers.cpp in Sources */,
+				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,14 +280,16 @@
 		B395400422D8DBC100473323 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = VoodooSMBus/Info.plist;
 				MODULE_NAME = "de.leo-labs.VoodooSMBus";
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.leo-labs.VoodooSMBus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -269,14 +297,16 @@
 		B395400522D8DBC100473323 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = VoodooSMBus/Info.plist;
 				MODULE_NAME = "de.leo-labs.VoodooSMBus";
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.leo-labs.VoodooSMBus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
