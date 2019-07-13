@@ -8,6 +8,8 @@
 #include "helpers.hpp"
 #include "i2c_i801.h"
 
+#define ELAN_TOUCHPAD_ADDRESS 0x15
+
 /* An SMBus device on a PCI controller */
 typedef struct {
     IOACPIPlatformDevice* acpi_device;
@@ -35,7 +37,7 @@ public:
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
     
-    IOReturn publishNub();
+    IOReturn publishNub(UInt8 address);
     void enableHostNotify();
     void disableHostNotify();
 };

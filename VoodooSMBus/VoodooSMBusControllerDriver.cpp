@@ -70,7 +70,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     
     enableHostNotify();
     
-    publishNub();
+    publishNub(ELAN_TOUCHPAD_ADDRESS);
     
     IOLog("Everything went well: %s", physical_device->name);
     return result;
@@ -97,7 +97,7 @@ void VoodooSMBusControllerDriver::stop(IOService *provider) {
 }
 
 
-IOReturn VoodooSMBusControllerDriver::publishNub() {
+IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     IOLog("%s::%s Publishing nub\n", getName(), physical_device->name);
     
     VoodooSMBusDeviceNub* device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
@@ -108,7 +108,7 @@ IOReturn VoodooSMBusControllerDriver::publishNub() {
         goto exit;
     }
     
-    if (!device_nub->attach(this)) {
+    if (!device_nub->attach(this, address)) {
         IOLog("%s::%s Could not attach nub", getName(), physical_device->name);
         goto exit;
     }

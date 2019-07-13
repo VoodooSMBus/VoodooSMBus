@@ -5,7 +5,15 @@
 
 OSDefineMetaClassAndStructors(VoodooSMBusDeviceNub, IOService);
 
-bool VoodooSMBusDeviceNub::attach(IOService* provider) {
+bool VoodooSMBusDeviceNub::init() {
+    bool result = super::init();
+    
+    slave_device = reinterpret_cast<VoodooSMBusSlaveDevice*>(IOMalloc(sizeof(VoodooSMBusSlaveDevice)));
+    return result;
+}
+
+
+bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     if (!super::attach(provider))
         return false;
     
@@ -14,6 +22,9 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider) {
         IOLog("%s Could not get controller\n", provider->getName());
         return false;
     }
+    
+    setProperty("VoodooSMBUS Slave Device Address", OSNumber::withNumber(address, 8));
+    slave_device->address = address;
     
     return true;
 }

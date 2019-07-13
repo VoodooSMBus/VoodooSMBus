@@ -10,16 +10,22 @@
 #include "VoodooSMBusControllerDriver.hpp"
 
 
+struct VoodooSMBusSlaveDevice {
+    UInt8 address;        /* chip address - NOTE: 7bit    */
+};
+
+
 class VoodooSMBusDeviceNub : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusDeviceNub);
     
 public:
-    bool attach(IOService* provider) override;
+    bool init() override;
+
+    bool attach(IOService* provider, UInt8 address);
     
     bool start(IOService* provider) override;
     
     void stop(IOService* provider) override;
-    
     
     
 private:
@@ -29,6 +35,7 @@ private:
     VoodooSMBusControllerDriver* controller;
     IOWorkLoop* work_loop;
     void releaseResources();
+    VoodooSMBusSlaveDevice* slave_device;
 };
 
 #endif /* VoodooSMBusDeviceNub_hpp */
