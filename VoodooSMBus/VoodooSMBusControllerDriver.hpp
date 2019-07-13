@@ -17,13 +17,14 @@ typedef struct {
     // IOMemoryMap* mmap;
     IOService* provider;
     unsigned long smba;
+    UInt8 original_slvcmd;
 } VoodooSMBusPhysicalDevice;
 
 
 class VoodooSMBusControllerDriver : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusControllerDriver)
 public:
-    IOPCIDevice* pciDevice;
+    IOPCIDevice* pci_device;
     
     VoodooSMBusPhysicalDevice* physical_device;
     OSArray* device_nubs;
@@ -35,6 +36,8 @@ public:
     virtual void stop(IOService *provider) override;
     
     IOReturn publishNub();
+    void enableHostNotify();
+    void disableHostNotify();
 };
 
 #endif /* VoodooSMBusControllerDriver_hpp */

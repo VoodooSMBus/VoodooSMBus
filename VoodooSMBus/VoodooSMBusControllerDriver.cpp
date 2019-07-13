@@ -36,9 +36,9 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     bool result = super::start(provider);
     IOLog("Starting\n");
     
-    pciDevice = OSDynamicCast(IOPCIDevice, provider);
+    pci_device = OSDynamicCast(IOPCIDevice, provider);
     
-    if (!(pciDevice = OSDynamicCast(IOPCIDevice, provider))) {
+    if (!(pci_device = OSDynamicCast(IOPCIDevice, provider))) {
         IOLog("Failed to cast provider\n");
         return false;
     }
@@ -46,31 +46,33 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     physical_device->provider = provider;
     physical_device->name = getMatchedName(physical_device->provider);
     
-    pciDevice->retain();
-    if (!pciDevice->open(this)) {
-        IOLog("%s::%s Could not open provider\n", getName(), pciDevice->getName());
+    pci_device->retain();
+    if (!pci_device->open(this)) {
+        IOLog("%s::%s Could not open provider\n", getName(), pci_device->getName());
         return false;
     }
     
-    uint32_t host_config = pciDevice->configRead8(SMBHSTCFG);
+    uint32_t host_config = pci_device->configRead8(SMBHSTCFG);
     if ((host_config & SMBHSTCFG_HST_EN) == 0) {
         IOLog("SMBus disabled\n");
         return false;
     }
     
     // TODO why 0xfffe
-    physical_device->smba = pciDevice->configRead16(SMBBAR) & 0xFFFE;
+    physical_device->smba = pci_device->configRead16(SMBBAR) & 0xFFFE;
     if (host_config & SMBHSTCFG_SMB_SMI_EN) {
         IOLog("No PCI IRQ. Poll mode is not implemented. Unloading.\n");
         return false;
     }
+    pci_device->setIOEnable(true);
     
-    pciDevice->setIOEnable(true);
+    physical_device->original_slvcmd = pci_device->ioRead8(SMBSLVCMD(physical_device));
+    
+    enableHostNotify();
     
     publishNub();
     
     IOLog("Everything went well: %s", physical_device->name);
-    
     return result;
 }
 
@@ -86,8 +88,10 @@ void VoodooSMBusControllerDriver::stop(IOService *provider) {
         }
     }
     
-    pciDevice->close(this);
-    pciDevice->release();
+    disableHostNotify();
+    
+    pci_device->close(this);
+    pci_device->release();
     
     super::stop(provider);
 }
@@ -123,3 +127,19 @@ exit:
     
     return kIOReturnError;
 }
+
+
+void VoodooSMBusControllerDriver::enableHostNotify() {
+    
+    if(!(physical_device->original_slvcmd & SMBSLVCMD_HST_NTFY_INTREN)) {
+        pci_device->ioWrite8(SMBSLVCMD(physical_device), SMBSLVCMD_HST_NTFY_INTREN | physical_device->original_slvcmd);
+    }
+
+    /* clear Host Notify bit to allow a new notification */
+    pci_device->ioWrite8(SMBSLVSTS(physical_device), SMBSLVSTS_HST_NTFY_STS);
+}
+
+void VoodooSMBusControllerDriver::disableHostNotify() {
+    pci_device->ioWrite8(SMBSLVCMD(physical_device), physical_device->original_slvcmd);
+}
+
