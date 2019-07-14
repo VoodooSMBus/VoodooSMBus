@@ -12,6 +12,13 @@ bool VoodooSMBusDeviceNub::init() {
     return result;
 }
 
+void VoodooSMBusDeviceNub::free(void) {
+    IOFree(slave_device, sizeof(VoodooSMBusSlaveDevice));
+    super::free();
+}
+
+
+
 
 bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     if (!super::attach(provider))
@@ -24,72 +31,38 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     }
     
     setProperty("VoodooSMBUS Slave Device Address", OSNumber::withNumber(address, 8));
-    slave_device->address = address;
+    slave_device->addr = address;
     
     return true;
-}
-
-IOWorkLoop* VoodooSMBusDeviceNub::getWorkLoop() {
-    // Do we have a work loop already?, if so return it NOW.
-    if ((vm_address_t) work_loop >> 1)
-        return work_loop;
-    
-    if (OSCompareAndSwap(0, 1, reinterpret_cast<IOWorkLoop*>(&work_loop))) {
-        // Construct the workloop and set the cntrlSync variable
-        // to whatever the result is and return
-        work_loop = IOWorkLoop::workLoop();
-    } else {
-        while (reinterpret_cast<IOWorkLoop*>(work_loop) == reinterpret_cast<IOWorkLoop*>(1)) {
-            // Spin around the cntrlSync variable until the
-            // initialization finishes.
-            thread_block(0);
-        }
-    }
-    
-    return work_loop;
 }
 
 
 void VoodooSMBusDeviceNub::releaseResources() {
-    if (command_gate) {
-        work_loop->removeEventSource(command_gate);
-        command_gate->release();
-        command_gate = NULL;
-    }
-    
-    if (work_loop) {
-        work_loop->release();
-        work_loop = NULL;
-    }
+
 }
 
 bool VoodooSMBusDeviceNub::start(IOService* provider) {
-    if (!super::start(provider))
+    if (!super::start(provider)) {
         return false;
-    
-    work_loop = getWorkLoop();
-    
-    if (!work_loop) {
-        IOLog("%s Could not get work loop\n", getName());
-        goto exit;
     }
     
-    work_loop->retain();
-    
-    command_gate = IOCommandGate::commandGate(this);
-    if (!command_gate || (work_loop->addEventSource(command_gate) != kIOReturnSuccess)) {
-        IOLog("%s Could not open command gate\n", getName());
-        goto exit;
-    }
-    
-
     registerService();
     return true;
-exit:
-    releaseResources();
-    return false;
 }
 
 void VoodooSMBusDeviceNub::stop(IOService* provider) {
     super::stop(provider);
 }
+
+IOReturn VoodooSMBusDeviceNub::WriteByteData(u8 command, u8 value) {
+    return controller->WriteByteData(slave_device, command, value);
+}
+
+IOReturn VoodooSMBusDeviceNub::ReadBlockData(u8 command, u8 *values) {
+    return controller->ReadBlockData(slave_device, command, values);
+}
+
+IOReturn VoodooSMBusDeviceNub::WriteByte(u8 value) {
+    return controller->WriteByte(slave_device, value);
+}
+
