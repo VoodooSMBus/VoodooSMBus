@@ -1,5 +1,4 @@
 #include "VoodooSMBusControllerDriver.hpp"
-#include "VoodooSMBusDeviceNub.hpp"
 
 OSDefineMetaClassAndStructors(VoodooSMBusControllerDriver, IOService)
 
@@ -10,7 +9,7 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     IOLog("Initializing\n");
     
     // For now, we support only one slave device
-    device_nubs = OSArray::withCapacity(1);
+    device_nubs = OSDictionary::withCapacity(1);
 
     adapter = reinterpret_cast<i801_adapter*>(IOMalloc(sizeof(i801_adapter)));
     adapter->awake = true;
@@ -59,32 +58,23 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
         return false;
     }
     
-    // TODO why 0xfffe
     adapter->smba = pci_device->configRead16(ICH_SMB_BASE) & 0xFFFE;
-    IOLog("SMBA: %lu", adapter->smba);
     
     if (host_config & SMBHSTCFG_SMB_SMI_EN) {
         IOLog("No PCI IRQ. Poll mode is not implemented. Unloading.\n");
         return false;
     }
-    pci_device->setIOEnable(true);
     
     adapter->original_hstcfg = host_config;
     adapter->original_slvcmd = pci_device->ioRead8(SMBSLVCMD(adapter));
     adapter->features |= FEATURE_I2C_BLOCK_READ;
     adapter->features |= FEATURE_IRQ;
     //adapter->features |= FEATURE_SMBUS_PEC;
-    
-    
-    
     adapter->features |= FEATURE_BLOCK_BUFFER;
     adapter->features |= FEATURE_HOST_NOTIFY;
-    
     adapter->retries = 4;
-    //adapter->timeout = 200;
     
     enableHostNotify();
-    
     
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
@@ -93,13 +83,13 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     }
     
     interrupt_source =
-    IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt), provider);
+    IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt),
+                                                            provider);
     
     if (!interrupt_source || work_loop->addEventSource(interrupt_source) != kIOReturnSuccess) {
         IOLog("%s Could not add interrupt source to work loop\n", getName());
         goto exit;
     }
-    interrupt_source->enable();
     
     command_gate = IOCommandGate::commandGate(this);
     if (!command_gate || (work_loop->addEventSource(command_gate) != kIOReturnSuccess)) {
@@ -109,9 +99,9 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     work_loop->retain();
     
     publishNub(ELAN_TOUCHPAD_ADDRESS);
+    interrupt_source->enable();
     registerService();
 
-    IOLog("Everything went well: %s", adapter->name);
     return result;
     
 exit:
@@ -120,32 +110,27 @@ exit:
 }
 
 void VoodooSMBusControllerDriver::releaseResources() {
-    IOLog("Releasing resources");
-    
-    IOLog("- disableHostNotify");
+    IOLog("Releasing resources\n");
     
     disableHostNotify();
+    pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
     
-    IOLog("- Device nubs");
-
     if (device_nubs) {
-        while (device_nubs->getCount() > 0) {
-            VoodooSMBusDeviceNub *device_nub = reinterpret_cast<VoodooSMBusDeviceNub*>(device_nubs->getLastObject());
+        OSCollectionIterator* iterator = OSCollectionIterator::withCollection(device_nubs);
+        
+        while (VoodooSMBusDeviceNub *device_nub = OSDynamicCast(VoodooSMBusDeviceNub, iterator->getNextObject())) {
+            IOLog("detaching device nub");
             device_nub->detach(this);
-            device_nubs->removeObject(device_nubs->getCount() - 1);
-            OSSafeReleaseNULL(device_nub);
         }
+        device_nubs->flushCollection();
     }
     
-    IOLog("- command gate ");
-
     if (command_gate) {
         work_loop->removeEventSource(command_gate);
         command_gate->release();
         command_gate = NULL;
     }
     
-    IOLog("- interrupt_source ");
 
     if (interrupt_source) {
         interrupt_source->disable();
@@ -173,28 +158,28 @@ void VoodooSMBusControllerDriver::stop(IOService *provider) {
 
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
-    IOLog("%s::%s Publishing nub\n", getName(), adapter->name);
+    IOLog("Publishing nub\n");
     
     VoodooSMBusDeviceNub* device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
     
-    
     if (!device_nub || !device_nub->init()) {
-        IOLog("%s::%s Could not initialise nub", getName(), adapter->name);
+        IOLog("%s::%s Could not initialise nub\n", getName(), adapter->name);
         goto exit;
     }
     
     if (!device_nub->attach(this, address)) {
-        IOLog("%s::%s Could not attach nub", getName(), adapter->name);
+        IOLog("%s::%s Could not attach nub\n", getName(), adapter->name);
         goto exit;
     }
     
     if (!device_nub->start(this)) {
-        IOLog("%s::%s Could not start nub", getName(), adapter->name);
+        IOLog("%s::%s Could not start nub\n", getName(), adapter->name);
         goto exit;
     }
     
-    device_nubs->setObject(device_nub);
-    
+    device_nubs->setObject("0x15", device_nub);
+    IOLogDebug("Publishing nub for slave device at address %#04x", address);
+
     return kIOReturnSuccess;
     
 exit:
@@ -223,25 +208,33 @@ IOWorkLoop* VoodooSMBusControllerDriver::getWorkLoop() {
     return work_loop;
 }
 
+
 void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount) {
     IOLog("Interrupt occured\n");
     
-    u16 pcists;
     u8 status;
-    
 
     if (adapter->features & FEATURE_HOST_NOTIFY) {
         status = adapter->inb_p(SMBSLVSTS(adapter));
         if (status & SMBSLVSTS_HST_NTFY_STS) {
+            UInt8 addr;
+            
+            addr = adapter->inb_p(SMBNTFDADD(adapter)) >> 1;
             
             /*
              * With the tested platforms, reading SMBNTFDDAT (22 + (p)->smba)
              * always returns 0. Our current implementation doesn't provide
              * data, so we just ignore it.
              */
-            //i2c_handle_smbus_host_notify(&priv->adapter, addr);
-            IOLog("i2c_handle_smbus_host_notify\n");
-        
+            
+            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x15"));
+            if (nub) {
+                nub->HandleHostNotify();
+            } else {
+                IOLogError("Received Host Notify Interrupt for unknown device at address %#04x", addr);
+                IOLogError("Size of dict: %d", device_nubs->getCount());
+            }
+            
             /* clear Host Notify bit and return */
             adapter->outb_p(SMBSLVSTS_HST_NTFY_STS, SMBSLVSTS(adapter));
             return;
@@ -251,8 +244,9 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
     status = adapter->inb_p(SMBHSTSTS(adapter));
     PrintBitFieldExpanded(status);
 
-    if (status & SMBHSTSTS_BYTE_DONE)
+    if (status & SMBHSTSTS_BYTE_DONE) {
         i801_isr_byte_done(adapter);
+    }
     
     /*
      * Clear irq sources and report transaction result.
@@ -264,10 +258,7 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
         adapter->status = status;
         command_gate->commandWakeup(&adapter->status);
     }
-    
 }
-
-
 
 
 void VoodooSMBusControllerDriver::enableHostNotify() {
@@ -309,6 +300,21 @@ IOReturn VoodooSMBusControllerDriver::WriteByte(VoodooSMBusSlaveDevice *client, 
 }
 
 
+IOReturn VoodooSMBusControllerDriver::writeBlockData(VoodooSMBusSlaveDevice *client, u8 command,
+                                                     u8 length, const u8 *values) {
+
+    union i2c_smbus_data data;
+    
+    if (length > I2C_SMBUS_BLOCK_MAX)
+        length = I2C_SMBUS_BLOCK_MAX;
+    data.block[0] = length;
+    memcpy(&data.block[1], values, length);
+    return transfer(client, I2C_SMBUS_WRITE, command, I2C_SMBUS_BLOCK_DATA, &data);
+    
+}
+
+
+
 // i2c_smbus_xfer
 IOReturn VoodooSMBusControllerDriver::transfer(VoodooSMBusSlaveDevice *client, char  read_write, u8 command, int protocol, union i2c_smbus_data *data) {
     VoodooSMBusControllerMessage message = {
@@ -331,7 +337,7 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
     
     /* Retry automatically on arbitration loss */
     for (res = 0, _try = 0; _try <= adapter->retries; _try++) {
-        IOLog("%d, %du, %d, %d, %d", slave_device->addr, 0, message->read_write, message->command, message->protocol);
+        IOLog("%d, %du, %d, %d, %d\n", slave_device->addr, 0, message->read_write, message->command, message->protocol);
         
         res = i801_access(adapter, slave_device->addr, 0, message->read_write, message->command, message->protocol, data, command_gate);
         if (res != -EAGAIN)

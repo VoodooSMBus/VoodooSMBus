@@ -8,28 +8,26 @@
 #include <IOKit/IOCommandGate.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
 #include "VoodooSMBusControllerDriver.hpp"
+#include "VoodooSMBusSlaveDeviceDriver.hpp"
 
-
-
-
+class VoodooSMBusControllerDriver;
 
 class VoodooSMBusDeviceNub : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusDeviceNub);
     
 public:
     bool init() override;
-
     bool attach(IOService* provider, UInt8 address);
-    
     bool start(IOService* provider) override;
-    
     void stop(IOService* provider) override;
-    virtual void free(void) override;
+    void free(void) override;
 
+    void HandleHostNotify();
     
     IOReturn WriteByteData(u8 command, u8 value);
     IOReturn ReadBlockData(u8 command, u8 *values);
     IOReturn WriteByte(u8 value);
+    IOReturn writeBlockData(u8 command, u8 length, const u8 *values);
 
 private:
 

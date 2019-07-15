@@ -5,11 +5,13 @@
 #include <IOKit/IOLib.h>
 #include <IOKit/IOKitKeys.h>
 #include <IOKit/IOService.h>
-#include <IOKit/IOInterruptEventSource.h>
+#include <IOKit/IOFilterInterruptEventSource.h>
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
+#include <IOKit/IOPlatformExpert.h>
 #include "helpers.hpp"
 #include "i2c_i801.cpp"
+#include "VoodooSMBusDeviceNub.hpp"
 
 #define ELAN_TOUCHPAD_ADDRESS 0x15
 
@@ -26,15 +28,18 @@ public:
     IOPCIDevice* pci_device;
     
     i801_adapter* adapter;
-    OSArray* device_nubs;
+    OSDictionary* device_nubs;
     
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
     virtual IOService *probe(IOService *provider, SInt32 *score) override;
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
+    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice);
+
     IOWorkLoop* getWorkLoop();
     void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
+    bool filterInterrupt(OSObject *owner, IOFilterInterruptEventSource *sender);
 
     // i2c_smbus_read_block_data
     IOReturn ReadBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values);
@@ -59,6 +64,18 @@ public:
      * else zero on success.
      */
     IOReturn WriteByte(VoodooSMBusSlaveDevice *client, u8 value);
+    
+    /**
+     * i2c_smbus_write_block_data - SMBus "block write" protocol
+     * @client: Handle to slave device
+     * @command: Byte interpreted by slave
+     * @length: Size of data block; SMBus allows at most 32 bytes
+     * @values: Byte array which will be written.
+     *
+     * This executes the SMBus "block write" protocol, returning negative errno
+     * else zero on success.
+     */
+    IOReturn writeBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 length, const u8 *values);
     
     
 private:

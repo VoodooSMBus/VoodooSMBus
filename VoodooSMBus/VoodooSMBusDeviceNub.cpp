@@ -7,7 +7,7 @@ OSDefineMetaClassAndStructors(VoodooSMBusDeviceNub, IOService);
 
 bool VoodooSMBusDeviceNub::init() {
     bool result = super::init();
-    
+
     slave_device = reinterpret_cast<VoodooSMBusSlaveDevice*>(IOMalloc(sizeof(VoodooSMBusSlaveDevice)));
     return result;
 }
@@ -17,7 +17,13 @@ void VoodooSMBusDeviceNub::free(void) {
     super::free();
 }
 
-
+void VoodooSMBusDeviceNub::HandleHostNotify () {
+    VoodooSMBusSlaveDeviceDriver* device_driver = OSDynamicCast(VoodooSMBusSlaveDeviceDriver, getClient());
+    
+    if(device_driver) {
+        device_driver->handleHostNotify();
+    }
+}
 
 
 bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
@@ -64,5 +70,9 @@ IOReturn VoodooSMBusDeviceNub::ReadBlockData(u8 command, u8 *values) {
 
 IOReturn VoodooSMBusDeviceNub::WriteByte(u8 value) {
     return controller->WriteByte(slave_device, value);
+}
+
+IOReturn VoodooSMBusDeviceNub::writeBlockData(u8 command, u8 length, const u8 *values) {
+    return controller->writeBlockData(slave_device, command, length, values);
 }
 

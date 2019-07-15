@@ -15,6 +15,8 @@
 		B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */; };
 		B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */; };
 		B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */; };
+		B3B69D6622DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */; };
+		B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ELANTouchpadDriver.cpp; sourceTree = "<group>"; };
 		B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ELANTouchpadDriver.hpp; sourceTree = "<group>"; };
 		B3B31E6B22DA600700179497 /* i2c_smbus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i2c_smbus.h; sourceTree = "<group>"; };
+		B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusSlaveDeviceDriver.hpp; sourceTree = "<group>"; };
+		B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusSlaveDeviceDriver.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,8 @@
 				B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */,
 				B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */,
 				B3B31E6B22DA600700179497 /* i2c_smbus.h */,
+				B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */,
+				B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -86,6 +92,7 @@
 			files = (
 				B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */,
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
+				B3B69D6622DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp in Headers */,
 				B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */,
 				B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */,
 			);
@@ -160,6 +167,7 @@
 			files = (
 				B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */,
 				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
+				B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */,
 				B395400922D8FD6100473323 /* helpers.cpp in Sources */,
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
 			);

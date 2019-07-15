@@ -182,18 +182,18 @@ static int i801_check_pre(struct i801_adapter *priv)
     
     status = priv->inb_p(SMBHSTSTS(priv));
     if (status & SMBHSTSTS_HOST_BUSY) {
-        IOLogError("SMBus is busy, can't use it! (%02x)", status);
+        IOLogError("SMBus is busy, can't use it! (%02x)\n", status);
         return -EBUSY;
     }
     
     status &= STATUS_FLAGS;
     if (status) {
-        IOLogDebug("Clearing status flags (%02x)",
+        IOLogDebug("Clearing status flags (%02x)\n",
                    status);
         priv->outb_p(status, SMBHSTSTS(priv));
         status = priv->inb_p(SMBHSTSTS(priv)) & STATUS_FLAGS;
         if (status) {
-            IOLogError("Failed clearing status flags (%02x)",
+            IOLogError("Failed clearing status flags (%02x)\n",
                        status);
             return -EBUSY;
         }
@@ -581,8 +581,6 @@ static s32 i801_access(struct i801_adapter *priv, u16 addr,
     hwpec = (priv->features & FEATURE_SMBUS_PEC) && (flags & I2C_CLIENT_PEC)
     && size != I2C_SMBUS_QUICK
     && size != I2C_SMBUS_I2C_BLOCK_DATA;
-    
-    IOLog("hwpec--- %d size-- %d", hwpec, size);
     
     switch (size) {
         case I2C_SMBUS_QUICK:

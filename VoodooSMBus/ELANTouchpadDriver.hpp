@@ -11,6 +11,17 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "i2c_smbus.h"
 #include "helpers.hpp"
+#include "VoodooSMBusSlaveDeviceDriver.hpp"
+
+/* https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c.h */
+#define ETP_ENABLE_ABS        0x0001
+#define ETP_ENABLE_CALIBRATE    0x0002
+#define ETP_DISABLE_CALIBRATE    0x0000
+#define ETP_DISABLE_POWER    0x0001
+#define ETP_PRESSURE_OFFSET    25
+
+
+
 
 /* Elan SMbus commands */
 /* from https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c_smbus.c */
@@ -59,8 +70,31 @@
 #define ETP_HOVER_INFO_OFFSET    30
 #define ETP_MAX_REPORT_LEN    34
 
+struct elan_tp_data {
+    
+    unsigned int        max_x;
+    unsigned int        max_y;
+    unsigned int        width_x;
+    unsigned int        width_y;
+    unsigned int        x_res;
+    unsigned int        y_res;
+    
+    u8                  pattern;
+    u16                 product_id;
+   
+    int                 pressure_adjustment;
+    u8                  mode;
+    u16                 ic_type;
+    
+    u8                  min_baseline;
+    u8                  max_baseline;
+    bool                baseline_ready;
+    u8                  clickpad;
+    bool                middle_button;
+};
 
-class ELANTouchpadDriver : public IOService {
+
+class ELANTouchpadDriver : public VoodooSMBusSlaveDeviceDriver {
     OSDeclareDefaultStructors(ELANTouchpadDriver);
     
 public:
@@ -70,12 +104,33 @@ public:
     void stop(IOService* provider) override;
     
     ELANTouchpadDriver* probe(IOService* provider, SInt32* score) override;
-
+    void handleHostNotify() override;
+    
+    bool init(OSDictionary *dict) override;
+    void free(void) override;
+    
 private:
-    void releaseResources();
     VoodooSMBusDeviceNub* device_nub;
     
-    int Initialize();
+    void releaseResources();
+    
+    int tryInitialize();
+    int initialize();
+    int getReport(u8 *report);
+    void reportTrackpoint(u8 *report);
+
+    void handleHostNotifyThreaded();
+    
+    elan_tp_data* data;
+    
+    static unsigned int convertResolution(u8 val);
+    
+    int setMode(u8 mode);
+
+    bool setDeviceParameters();
+    void reportContact(int contact_num, bool contact_valid, u8 *finger_data);
+    void reportAbsolute(u8 *packet);
+
 
 };
 
