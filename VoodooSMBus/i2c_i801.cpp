@@ -138,6 +138,7 @@ struct i801_adapter {
     UInt8 original_slvcmd;
     UInt8 original_hstcfg;
     int retries;
+    int timeout;                /* in ns */
     unsigned int features;
     u8 status;
     
@@ -323,7 +324,7 @@ static int i801_transaction(struct i801_adapter *priv, int xact)
         priv->outb_p(xact | SMBHSTCNT_INTREN | SMBHSTCNT_START,
                SMBHSTCNT(priv));
         
-        nanoseconds_to_absolutetime(200000000, &abstime);
+        nanoseconds_to_absolutetime(priv->timeout, &abstime);
         sleep_result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
         
         if ( sleep_result == THREAD_TIMED_OUT ) {
@@ -407,7 +408,7 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
         
         priv->outb_p(priv->cmd | SMBHSTCNT_START, SMBHSTCNT(priv));
         
-        nanoseconds_to_absolutetime(200000000, &abstime);
+        nanoseconds_to_absolutetime(priv->timeout, &abstime);
         result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
         
         if ( result == THREAD_TIMED_OUT ) {
