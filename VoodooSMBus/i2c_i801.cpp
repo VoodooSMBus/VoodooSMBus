@@ -129,9 +129,11 @@ STATUS_ERROR_FLAGS)
 
 
 /* An SMBus device on a PCI controller */
+/* This is a mix of i2c_adapter and i801_priv */
 struct i801_adapter {
     const char* name;
     IOPCIDevice* pci_device;
+    IOCommandGate* command_gate;
     unsigned long smba;
     UInt8 original_slvcmd;
     UInt8 original_hstcfg;
@@ -146,24 +148,20 @@ struct i801_adapter {
     int len;
     u8 *data;
     
+    /* helper function to write to PCI device register, behaves like linux' outb_p */
     void outb_p(UInt8 b, UInt16 offset) {
         pci_device->ioWrite8(offset, b);
     }
+    
+    /* helper function to read from PCI device register, behaves like linux' inb_p */
     UInt8 inb_p(UInt16 offset) {
         return pci_device->ioRead8(offset);
     }
 };
 struct VoodooSMBusSlaveDevice {
-    UInt8 addr;        /* chip address - NOTE: 7bit    */
+    UInt8 addr;
     UInt8 flags;
 };
-
-typedef struct  {
-    VoodooSMBusSlaveDevice* slave_device;
-    char read_write;
-    u8 command;
-    int protocol;
-} VoodooSMBusControllerMessage;
 
 /* Make sure the SMBus host is ready to start transmitting.
  Return 0 if it is, -EBUSY if it is not. */
@@ -310,7 +308,7 @@ static int i801_wait_intr(struct i801_adapter *priv)
     return status & (STATUS_ERROR_FLAGS | SMBHSTSTS_INTR);
 }
 
-static int i801_transaction(struct i801_adapter *priv, int xact, IOCommandGate* command_gate)
+static int i801_transaction(struct i801_adapter *priv, int xact)
 {
     int status;
     int result;
@@ -326,7 +324,7 @@ static int i801_transaction(struct i801_adapter *priv, int xact, IOCommandGate* 
                SMBHSTCNT(priv));
         
         nanoseconds_to_absolutetime(200000000, &abstime);
-        sleep_result = command_gate->commandSleep(&priv->status, (UInt32)abstime);
+        sleep_result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
         
         if ( sleep_result == THREAD_TIMED_OUT ) {
             IOLog("Timeout waiting for bus to accept transfer request\n");
@@ -373,7 +371,7 @@ static int i801_wait_byte_done(struct i801_adapter *priv)
 static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
                                                union i2c_smbus_data *data,
                                                char read_write, int command,
-                                               int hwpec, IOCommandGate* command_gate)
+                                               int hwpec)
 {
     int i, len;
     int smbcmd;
@@ -410,7 +408,7 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
         priv->outb_p(priv->cmd | SMBHSTCNT_START, SMBHSTCNT(priv));
         
         nanoseconds_to_absolutetime(200000000, &abstime);
-        result = command_gate->commandSleep(&priv->status, (UInt32)abstime);
+        result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
         
         if ( result == THREAD_TIMED_OUT ) {
             IOLog("Timeout waiting for bus to accept transfer request\n");
@@ -476,7 +474,7 @@ static int i801_set_block_buffer_mode(struct i801_adapter *priv)
 
 static int i801_block_transaction_by_block(struct i801_adapter *priv,
                                            union i2c_smbus_data *data,
-                                           char read_write, int hwpec, IOCommandGate* command_gate)
+                                           char read_write, int hwpec)
 {
     int i, len;
     int status;
@@ -492,7 +490,7 @@ static int i801_block_transaction_by_block(struct i801_adapter *priv,
     }
     
     status = i801_transaction(priv, I801_BLOCK_DATA |
-                              (hwpec ? SMBHSTCNT_PEC_EN : 0), command_gate);
+                              (hwpec ? SMBHSTCNT_PEC_EN : 0));
     if (status)
         return status;
     
@@ -510,7 +508,7 @@ static int i801_block_transaction_by_block(struct i801_adapter *priv,
 
 static int i801_block_transaction(struct i801_adapter *priv,
                                   union i2c_smbus_data *data, char read_write,
-                                  int command, int hwpec, IOCommandGate* command_gate)
+                                  int command, int hwpec)
 {
     int result = 0;
     unsigned char hostc;
@@ -544,11 +542,11 @@ static int i801_block_transaction(struct i801_adapter *priv,
         && command != I2C_SMBUS_I2C_BLOCK_DATA
         && i801_set_block_buffer_mode(priv) == 0)
         result = i801_block_transaction_by_block(priv, data,
-                                                 read_write, hwpec, command_gate);
+                                                 read_write, hwpec);
     else
         result = i801_block_transaction_byte_by_byte(priv, data,
                                                      read_write,
-                                                     command, hwpec, command_gate);
+                                                     command, hwpec);
     
     if (command == I2C_SMBUS_I2C_BLOCK_DATA
         && read_write == I2C_SMBUS_WRITE) {
@@ -563,7 +561,7 @@ static int i801_block_transaction(struct i801_adapter *priv,
 /* Return negative errno on error. */
 static s32 i801_access(struct i801_adapter *priv, u16 addr,
                        unsigned short flags, char read_write, u8 command,
-                       int size, union i2c_smbus_data *data, IOCommandGate* command_gate)
+                       int size, union i2c_smbus_data *data)
 {
     int hwpec;
     int block = 0;
@@ -644,9 +642,9 @@ static s32 i801_access(struct i801_adapter *priv, u16 addr,
     
     if (block)
         ret = i801_block_transaction(priv, data, read_write, size,
-                                     hwpec, command_gate);
+                                     hwpec);
     else
-        ret = i801_transaction(priv, xact, command_gate);
+        ret = i801_transaction(priv, xact);
     
     /* Some BIOSes don't like it when PEC is enabled at reboot or resume
      time, so we forcibly disable it after every transaction. Turn off

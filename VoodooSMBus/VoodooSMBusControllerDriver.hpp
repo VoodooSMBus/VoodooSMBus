@@ -27,6 +27,15 @@
 
 #define ELAN_TOUCHPAD_ADDRESS 0x15
 
+/* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
+typedef struct  {
+    VoodooSMBusSlaveDevice* slave_device;
+    char read_write;
+    u8 command;
+    int protocol;
+} VoodooSMBusControllerMessage;
+
+
 class VoodooSMBusControllerDriver : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusControllerDriver)
 public:
@@ -124,7 +133,7 @@ private:
     
     void disableCommandGate();
     
-    IOReturn transferGated(VoodooSMBusControllerMessage *message, union i2c_smbus_data *data, IOCommandGate* command_gate);
+    IOReturn transferGated(VoodooSMBusControllerMessage *message, union i2c_smbus_data *data);
 
 };
 

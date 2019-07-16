@@ -92,7 +92,6 @@
 #define ETP_MAX_REPORT_LEN                  34
 
 struct elan_tp_data {
-    
     unsigned int        max_x;
     unsigned int        max_y;
     unsigned int        width_x;
@@ -110,12 +109,9 @@ class ELANTouchpadDriver : public VoodooSMBusSlaveDeviceDriver {
 public:
     
     bool start(IOService* provider) override;
-    
     void stop(IOService* provider) override;
-    
     ELANTouchpadDriver* probe(IOService* provider, SInt32* score) override;
     void handleHostNotify() override;
-    
     bool init(OSDictionary *dict) override;
     void free(void) override;
     IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
@@ -124,27 +120,25 @@ private:
     VoodooSMBusDeviceNub* device_nub;
     VoodooI2CMultitouchInterface *mt_interface;
     OSArray* transducers;
-    
+    elan_tp_data* data;
+
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();
 
+    void handleHostNotifyThreaded();
+
+    /* ELAN device functions */
     int tryInitialize();
     int initialize();
     int getReport(u8 *report);
     void reportTrackpoint(u8 *report);
-
-    void handleHostNotifyThreaded();
-    
-    elan_tp_data* data;
     static unsigned int convertResolution(u8 val);
     int setMode(u8 mode);
     bool setDeviceParameters();
     void reportContact(VoodooI2CDigitiserTransducer* transducer, bool contact_valid, u8 *finger_data, AbsoluteTime timestamp);
     void reportAbsolute(u8 *packet);
     void sendSleepCommand();
-
-
 };
 
 #endif /* ELANTouchpadDriver_hpp */

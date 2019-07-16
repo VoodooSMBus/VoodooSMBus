@@ -22,7 +22,6 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     
     // For now, we support only one slave device
     device_nubs = OSDictionary::withCapacity(1);
-
     adapter = reinterpret_cast<i801_adapter*>(IOMalloc(sizeof(i801_adapter)));
     
     return result;
@@ -99,6 +98,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
         IOLog("%s Could not open command gate\n", getName());
         goto exit;
     }
+    adapter->command_gate = command_gate;
     work_loop->retain();
     
     PMinit();
@@ -334,11 +334,11 @@ IOReturn VoodooSMBusControllerDriver::transfer(VoodooSMBusSlaveDevice *client, c
         .protocol = protocol,
     };
     
-    return command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::transferGated), &message, data, command_gate);
+    return command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::transferGated), &message, data);
 }
 
 // __i2c_smbus_xfer
-IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage *message, union i2c_smbus_data *data, IOCommandGate* command_gate) {
+IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage *message, union i2c_smbus_data *data) {
     int _try;
     s32 res;
 
@@ -347,14 +347,10 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
     
     /* Retry automatically on arbitration loss */
     for (res = 0, _try = 0; _try <= adapter->retries; _try++) {
-        res = i801_access(adapter, slave_device->addr, slave_device->flags, message->read_write, message->command, message->protocol, data, command_gate);
+        res = i801_access(adapter, slave_device->addr, slave_device->flags, message->read_write, message->command, message->protocol, data);
         if (res != -EAGAIN)
             break;
     }
     
     return kIOReturnSuccess;
 }
-
-
-
-
