@@ -79,7 +79,7 @@ void VoodooSMBusDeviceNub::stop(IOService* provider) {
 }
 
 void VoodooSMBusDeviceNub::setSlaveDeviceFlags(unsigned short flags) {
-    slave_device->flags = I2C_CLIENT_HOST_NOTIFY;
+    slave_device->flags = flags;
 }
 
 IOReturn VoodooSMBusDeviceNub::readBlockData(u8 command, u8 *values) {
