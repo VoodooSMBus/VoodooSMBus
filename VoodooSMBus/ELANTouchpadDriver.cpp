@@ -1,4 +1,27 @@
-
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * ELANTouchpadDriver.cpp
+ * Elan I2C/SMBus Touchpad driver port for macOS X
+ *
+ * Copyright (c) 2019 Leonard Kleinhans <leo-labs>
+ *
+ * Based on linux driver:
+ ********************************************************************************
+ *
+ * Elan I2C/SMBus Touchpad driver
+ *
+ * Copyright (c) 2013 ELAN Microelectronics Corp.
+ *
+ * Author: 林政維 (Duson Lin) <dusonlin@emc.com.tw>
+ * Author: KT Liao <kt.liao@emc.com.tw>
+ * Version: 1.6.3
+ *
+ * Based on cyapa driver:
+ * copyright (c) 2011-2012 Cypress Semiconductor, Inc.
+ * copyright (c) 2011-2012 Google, Inc.
+ *
+ * Trademarks are the property of their respective owners.
+ */
 #include "ELANTouchpadDriver.hpp"
 
 

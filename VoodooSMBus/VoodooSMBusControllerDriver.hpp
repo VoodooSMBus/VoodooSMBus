@@ -1,3 +1,15 @@
+/*
+ * VoodooSMBusControllerDriver.hpp
+ * SMBus Controller Driver for macOS X
+ *
+ * Copyright (c) 2019 Leonard Kleinhans <leo-labs>
+ *
+ * some functions are ported from the linux kernel driver at:
+ * https://github.com/torvalds/linux/blob/master/drivers/i2c/i2c-core-smbus.c
+ * by Frodo Looijaard <frodol@dds.nl>
+ * by Mark Studebaker <mdsxyz123@yahoo.com> and
+ * Jean Delvare <jdelvare@suse.de>
+ */
 
 #ifndef VoodooSMBusControllerDriver_hpp
 #define VoodooSMBusControllerDriver_hpp

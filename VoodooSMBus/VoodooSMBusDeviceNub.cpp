@@ -1,3 +1,10 @@
+/*
+ * VoodooSMBusDeviceNub.cpp
+ * SMBus Controller Driver for macOS X
+ *
+ * Copyright (c) 2019 Leonard Kleinhans <leo-labs>
+ *
+ */
 
 #include "VoodooSMBusDeviceNub.hpp"
 

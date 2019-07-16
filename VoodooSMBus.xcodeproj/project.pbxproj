@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */; };
 		B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */; };
-		B395400922D8FD6100473323 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B395400722D8FD6100473323 /* helpers.cpp */; };
 		B395400A22D8FD6100473323 /* helpers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B395400822D8FD6100473323 /* helpers.hpp */; };
 		B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */; };
 		B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */; };
@@ -59,7 +58,6 @@
 		B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusControllerDriver.cpp; sourceTree = "<group>"; };
 		B395400022D8DBC100473323 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B395400622D8F7FE00473323 /* i2c_i801.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = i2c_i801.cpp; sourceTree = "<group>"; };
-		B395400722D8FD6100473323 /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B395400822D8FD6100473323 /* helpers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = helpers.hpp; sourceTree = "<group>"; };
 		B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusDeviceNub.cpp; sourceTree = "<group>"; };
 		B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusDeviceNub.hpp; sourceTree = "<group>"; };
@@ -142,7 +140,6 @@
 				B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */,
 				B395400022D8DBC100473323 /* Info.plist */,
 				B395400622D8F7FE00473323 /* i2c_i801.cpp */,
-				B395400722D8FD6100473323 /* helpers.cpp */,
 				B395400822D8FD6100473323 /* helpers.hpp */,
 				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
 				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
@@ -365,7 +362,6 @@
 				B3D4D4C622DE380F00032061 /* VoodooI2CMultitouchEngine.cpp in Sources */,
 				B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */,
 				B3D4D4C122DE380F00032061 /* VoodooI2CCSGestureEngine.cpp in Sources */,
-				B395400922D8FD6100473323 /* helpers.cpp in Sources */,
 				B3D4D4B622DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp in Sources */,
 				B3D4D4BC22DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp in Sources */,
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
