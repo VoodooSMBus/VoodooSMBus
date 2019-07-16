@@ -43,6 +43,7 @@ private:
     VoodooSMBusControllerDriver* controller;
     void releaseResources();
     VoodooSMBusSlaveDevice* slave_device;
+    void handleHostNotifyThreaded();
 };
 
 #endif /* VoodooSMBusDeviceNub_hpp */

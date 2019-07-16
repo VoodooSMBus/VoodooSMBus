@@ -165,17 +165,6 @@ int ELANTouchpadDriver::tryInitialize() {
 }
 
 void ELANTouchpadDriver::handleHostNotify() {
-    thread_t new_thread;
-    kern_return_t ret = kernel_thread_start(OSMemberFunctionCast(thread_continue_t, this, &ELANTouchpadDriver::handleHostNotifyThreaded), this, &new_thread);
-    
-    if (ret != KERN_SUCCESS) {
-        IOLogDebug(" Thread error while attemping to get input report\n");
-    } else {
-        thread_deallocate(new_thread);
-    }
-}
-
-void ELANTouchpadDriver::handleHostNotifyThreaded() {
     int error;
     u8 report[ETP_MAX_REPORT_LEN];
     error = getReport(report);

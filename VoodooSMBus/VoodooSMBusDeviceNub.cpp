@@ -23,11 +23,22 @@ void VoodooSMBusDeviceNub::free(void) {
     super::free();
 }
 
-void VoodooSMBusDeviceNub::handleHostNotify () {
+void VoodooSMBusDeviceNub::handleHostNotifyThreaded () {
     VoodooSMBusSlaveDeviceDriver* device_driver = OSDynamicCast(VoodooSMBusSlaveDeviceDriver, getClient());
     
     if(device_driver) {
         device_driver->handleHostNotify();
+    }
+}
+
+void VoodooSMBusDeviceNub::handleHostNotify() {
+    thread_t new_thread;
+    kern_return_t ret = kernel_thread_start(OSMemberFunctionCast(thread_continue_t, this, &VoodooSMBusDeviceNub::handleHostNotifyThreaded), this, &new_thread);
+    
+    if (ret != KERN_SUCCESS) {
+        IOLogDebug(" Thread error while attemping to handle host notify in device nub.\n");
+    } else {
+        thread_deallocate(new_thread);
     }
 }
 

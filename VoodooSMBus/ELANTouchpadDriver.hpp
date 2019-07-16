@@ -126,8 +126,6 @@ private:
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();
 
-    void handleHostNotifyThreaded();
-
     /* ELAN device functions */
     int tryInitialize();
     int initialize();
