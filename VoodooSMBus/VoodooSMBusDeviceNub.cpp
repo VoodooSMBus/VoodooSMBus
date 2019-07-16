@@ -75,4 +75,3 @@ IOReturn VoodooSMBusDeviceNub::WriteByte(u8 value) {
 IOReturn VoodooSMBusDeviceNub::writeBlockData(u8 command, u8 length, const u8 *values) {
     return controller->writeBlockData(slave_device, command, length, values);
 }
-

@@ -15,12 +15,12 @@ bool ELANTouchpadDriver::init(OSDictionary *dict) {
 }
 
 void ELANTouchpadDriver::free(void) {
-   
     IOFree(data, sizeof(elan_tp_data));
     super::free();
 }
 
 void ELANTouchpadDriver::releaseResources() {
+    sendSleepCommand();
     OSSafeReleaseNULL(device_nub);
 }
 
@@ -28,22 +28,18 @@ bool ELANTouchpadDriver::start(IOService* provider) {
     if (!super::start(provider)) {
         return false;
     }
-
-    if(tryInitialize()) {
-        goto exit;
-    }
-
+    
+    PMinit();
+    provider->joinPMtree(this);
+    registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
+    
     return true;
-exit:
-    releaseResources();
-    return false;
 }
-
-
 
 
 void ELANTouchpadDriver::stop(IOService* provider) {
     releaseResources();
+    PMstop();
     super::stop(provider);
 }
 
@@ -59,6 +55,21 @@ ELANTouchpadDriver* ELANTouchpadDriver::probe(IOService* provider, SInt32* score
         return NULL;
     }
     return this;
+}
+
+IOReturn ELANTouchpadDriver::setPowerState(unsigned long whichState, IOService* whatDevice) {
+    if (whatDevice != this)
+        return kIOPMAckImplied;
+    
+    if (whichState == kIOPMPowerOff) {
+        sendSleepCommand();
+    } else {
+        int error = tryInitialize();
+        if(error) {
+            IOLogError("Could not initialize ELAN device.");
+        }
+    }
+    return kIOPMAckImplied;
 }
 
 
@@ -290,3 +301,6 @@ void ELANTouchpadDriver::reportAbsolute(u8 *packet) {
 //    input_sync(input);
 }
 
+void ELANTouchpadDriver::sendSleepCommand() {
+    device_nub->WriteByte(ETP_SMBUS_SLEEP_CMD);
+}

@@ -108,7 +108,8 @@ public:
     
     bool init(OSDictionary *dict) override;
     void free(void) override;
-    
+    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
+
 private:
     VoodooSMBusDeviceNub* device_nub;
     
@@ -130,6 +131,7 @@ private:
     bool setDeviceParameters();
     void reportContact(int contact_num, bool contact_valid, u8 *finger_data);
     void reportAbsolute(u8 *packet);
+    void sendSleepCommand();
 
 
 };

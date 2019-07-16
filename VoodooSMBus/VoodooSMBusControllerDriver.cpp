@@ -74,8 +74,6 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     adapter->features |= FEATURE_HOST_NOTIFY;
     adapter->retries = 4;
     
-    enableHostNotify();
-    
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
         IOLog("%s Could not get work loop\n", getName());
@@ -83,8 +81,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     }
     
     interrupt_source =
-    IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt),
-                                                            provider);
+    IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt),provider);
     
     if (!interrupt_source || work_loop->addEventSource(interrupt_source) != kIOReturnSuccess) {
         IOLog("%s Could not add interrupt source to work loop\n", getName());
@@ -98,6 +95,10 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     }
     work_loop->retain();
     
+    PMinit();
+    provider->joinPMtree(this);
+    registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
+
     publishNub(ELAN_TOUCHPAD_ADDRESS);
     interrupt_source->enable();
     registerService();
@@ -131,7 +132,6 @@ void VoodooSMBusControllerDriver::releaseResources() {
         command_gate = NULL;
     }
     
-
     if (interrupt_source) {
         interrupt_source->disable();
         work_loop->removeEventSource(interrupt_source);
@@ -139,13 +139,9 @@ void VoodooSMBusControllerDriver::releaseResources() {
         interrupt_source = NULL;
     }
     
-    if (work_loop) {
-        work_loop->release();
-        work_loop = NULL;
-    }
-    
+    OSSafeReleaseNULL(work_loop);
     pci_device->close(this);
-    pci_device->release();
+    OSSafeReleaseNULL(pci_device);
 }
 
 
@@ -153,7 +149,33 @@ void VoodooSMBusControllerDriver::stop(IOService *provider) {
     IOLog("Stopping\n");
     
     releaseResources();
+    PMstop();
+
     super::stop(provider);
+}
+
+IOReturn VoodooSMBusControllerDriver::setPowerState(unsigned long whichState, IOService* whatDevice) {
+    if (whatDevice != this)
+        return kIOPMAckImplied;
+    
+    if (whichState == kIOPMPowerOff) {
+        IOLog("Going to sleep\n");
+        disableHostNotify();
+        command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::disableCommandGate));
+        pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
+
+    } else {
+        pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
+        command_gate->enable();
+        enableHostNotify();
+
+        IOLog("Woke up\n");
+    }
+    return kIOPMAckImplied;
+}
+
+void VoodooSMBusControllerDriver::disableCommandGate() {
+    command_gate->disable();
 }
 
 
@@ -232,7 +254,6 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
                 nub->HandleHostNotify();
             } else {
                 IOLogError("Received Host Notify Interrupt for unknown device at address %#04x", addr);
-                IOLogError("Size of dict: %d", device_nubs->getCount());
             }
             
             /* clear Host Notify bit and return */

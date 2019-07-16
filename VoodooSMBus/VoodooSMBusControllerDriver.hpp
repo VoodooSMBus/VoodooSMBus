@@ -89,6 +89,7 @@ private:
     void enableHostNotify();
     void disableHostNotify();
     
+    void disableCommandGate();
     /**
      * i2c_smbus_xfer - execute SMBus protocol operations
      * @adapter: Handle to I2C bus

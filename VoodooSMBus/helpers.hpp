@@ -17,14 +17,8 @@
 
 #define BIT(nr) (1UL << (nr))
 
-UInt16 abs(SInt16 x);
-
 const char* getMatchedName(IOService* provider);
 
-enum VoodooI2CState {
-    kVoodooI2CStateOff = 0,
-    kVoodooI2CStateOn = 1
-};
 
 static IOPMPowerState VoodooI2CIOPMPowerStates[kVoodooI2CIOPMNumberPowerStates] = {
     {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
