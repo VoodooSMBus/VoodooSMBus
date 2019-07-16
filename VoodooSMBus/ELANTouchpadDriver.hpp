@@ -59,7 +59,7 @@
 #define ETP_MAX_PRESSURE    255
 #define ETP_FWIDTH_REDUCE    90
 #define ETP_FINGER_WIDTH    15
-#define ETP_RETRY_COUNT        3
+#define ETP_RETRY_COUNT        10
 
 #define ETP_MAX_FINGERS        5
 #define ETP_FINGER_DATA_LEN    5
