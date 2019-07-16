@@ -6,7 +6,6 @@ OSDefineMetaClassAndStructors(VoodooSMBusControllerDriver, IOService)
 
 bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     bool result = super::init(dict);
-    IOLog("Initializing\n");
     
     // For now, we support only one slave device
     device_nubs = OSDictionary::withCapacity(1);
@@ -18,7 +17,6 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
 }
 
 void VoodooSMBusControllerDriver::free(void) {
-    IOLog("Freeing\n");
     IOFree(adapter, sizeof(i801_adapter));
     OSSafeReleaseNULL(device_nubs);
     super::free();
@@ -26,14 +24,11 @@ void VoodooSMBusControllerDriver::free(void) {
 
 IOService *VoodooSMBusControllerDriver::probe(IOService *provider, SInt32 *score) {
     IOService *result = super::probe(provider, score);
-    IOLog("Probing\n");
-    
     return result;
 }
 
 bool VoodooSMBusControllerDriver::start(IOService *provider) {
     bool result = super::start(provider);
-    IOLog("Starting\n");
     
     pci_device = OSDynamicCast(IOPCIDevice, provider);
     
@@ -111,8 +106,6 @@ exit:
 }
 
 void VoodooSMBusControllerDriver::releaseResources() {
-    IOLog("Releasing resources\n");
-    
     disableHostNotify();
     pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
     
@@ -146,11 +139,8 @@ void VoodooSMBusControllerDriver::releaseResources() {
 
 
 void VoodooSMBusControllerDriver::stop(IOService *provider) {
-    IOLog("Stopping\n");
-    
     releaseResources();
     PMstop();
-
     super::stop(provider);
 }
 
@@ -159,7 +149,6 @@ IOReturn VoodooSMBusControllerDriver::setPowerState(unsigned long whichState, IO
         return kIOPMAckImplied;
     
     if (whichState == kIOPMPowerOff) {
-        IOLog("Going to sleep\n");
         disableHostNotify();
         command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::disableCommandGate));
         pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
@@ -168,8 +157,6 @@ IOReturn VoodooSMBusControllerDriver::setPowerState(unsigned long whichState, IO
         pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
         command_gate->enable();
         enableHostNotify();
-
-        IOLog("Woke up\n");
     }
     return kIOPMAckImplied;
 }
@@ -180,7 +167,6 @@ void VoodooSMBusControllerDriver::disableCommandGate() {
 
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
-    IOLog("Publishing nub\n");
     
     VoodooSMBusDeviceNub* device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
     
@@ -232,8 +218,6 @@ IOWorkLoop* VoodooSMBusControllerDriver::getWorkLoop() {
 
 
 void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount) {
-    IOLog("Interrupt occured\n");
-    
     u8 status;
 
     if (adapter->features & FEATURE_HOST_NOTIFY) {
@@ -356,8 +340,6 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
     
     /* Retry automatically on arbitration loss */
     for (res = 0, _try = 0; _try <= adapter->retries; _try++) {
-        IOLog("%d, %du, %d, %d, %d\n", slave_device->addr, 0, message->read_write, message->command, message->protocol);
-        
         res = i801_access(adapter, slave_device->addr, 0, message->read_write, message->command, message->protocol, data, command_gate);
         if (res != -EAGAIN)
             break;
