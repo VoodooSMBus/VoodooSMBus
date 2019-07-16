@@ -1,0 +1,3 @@
+[submodule "Dependencies/VoodooI2C"]
+	path = Dependencies/VoodooI2C
+	url = https://github.com/kprinssu/VoodooI2C.git

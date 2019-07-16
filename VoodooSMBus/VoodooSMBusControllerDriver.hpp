@@ -9,7 +9,7 @@
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
 #include <IOKit/IOPlatformExpert.h>
-#include "helpers.hpp"
+#include "../Dependencies/VoodooI2C/Dependencies/helpers.hpp"
 #include "i2c_i801.cpp"
 #include "VoodooSMBusDeviceNub.hpp"
 

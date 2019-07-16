@@ -17,6 +17,40 @@
 		B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */; };
 		B3B69D6622DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */; };
 		B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */; };
+		B3D4D4AE22DE380F00032061 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D48422DE380E00032061 /* helpers.cpp */; };
+		B3D4D4AF22DE380F00032061 /* VoodooI2CMultitouchInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */; };
+		B3D4D4B022DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */; };
+		B3D4D4B122DE380F00032061 /* VoodooI2CMultitouchEngine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48822DE380F00032061 /* VoodooI2CMultitouchEngine.hpp */; };
+		B3D4D4B222DE380F00032061 /* VoodooI2CDigitiserStylus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48922DE380F00032061 /* VoodooI2CDigitiserStylus.hpp */; };
+		B3D4D4B322DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D48B22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp */; };
+		B3D4D4B422DE380F00032061 /* VoodooI2CNativeEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D48C22DE380F00032061 /* VoodooI2CNativeEngine.cpp */; };
+		B3D4D4B522DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48D22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp */; };
+		B3D4D4B622DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D48E22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp */; };
+		B3D4D4B722DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48F22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp */; };
+		B3D4D4B822DE380F00032061 /* VoodooI2CNativeEngine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49022DE380F00032061 /* VoodooI2CNativeEngine.hpp */; };
+		B3D4D4B922DE380F00032061 /* MultitouchHelpers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49122DE380F00032061 /* MultitouchHelpers.hpp */; };
+		B3D4D4BA22DE380F00032061 /* VoodooI2CCSGestureEngine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49322DE380F00032061 /* VoodooI2CCSGestureEngine.hpp */; };
+		B3D4D4BB22DE380F00032061 /* AverageClasses.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49422DE380F00032061 /* AverageClasses.h */; };
+		B3D4D4BC22DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49522DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp */; };
+		B3D4D4BD22DE380F00032061 /* VoodooCSGestureHIDWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49622DE380F00032061 /* VoodooCSGestureHIDWrapper.h */; };
+		B3D4D4BE22DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49722DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp */; };
+		B3D4D4BF22DE380F00032061 /* csgesturescroll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49822DE380F00032061 /* csgesturescroll.cpp */; };
+		B3D4D4C022DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49922DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp */; };
+		B3D4D4C122DE380F00032061 /* VoodooI2CCSGestureEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49A22DE380F00032061 /* VoodooI2CCSGestureEngine.cpp */; };
+		B3D4D4C222DE380F00032061 /* csgesturescroll.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49B22DE380F00032061 /* csgesturescroll.h */; };
+		B3D4D4C322DE380F00032061 /* csgesture-softc.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D49C22DE380F00032061 /* csgesture-softc.h */; };
+		B3D4D4C422DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49D22DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp */; };
+		B3D4D4C522DE380F00032061 /* VoodooI2CMultitouchInterface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49E22DE380F00032061 /* VoodooI2CMultitouchInterface.cpp */; };
+		B3D4D4C622DE380F00032061 /* VoodooI2CMultitouchEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D49F22DE380F00032061 /* VoodooI2CMultitouchEngine.cpp */; };
+		B3D4D4C722DE380F00032061 /* VoodooI2CDigitiserStylus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D4A022DE380F00032061 /* VoodooI2CDigitiserStylus.cpp */; };
+		B3D4D4C822DE380F00032061 /* helpers.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A122DE380F00032061 /* helpers.hpp */; };
+		B3D4D4C922DE380F00032061 /* IOHIDPrivateKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A522DE380F00032061 /* IOHIDPrivateKeys.h */; };
+		B3D4D4CA22DE380F00032061 /* AppleHIDUsageTables.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A622DE380F00032061 /* AppleHIDUsageTables.h */; };
+		B3D4D4CB22DE380F00032061 /* IOHIDEventService.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A722DE380F00032061 /* IOHIDEventService.h */; };
+		B3D4D4CC22DE380F00032061 /* IOHIDEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A822DE380F00032061 /* IOHIDEvent.h */; };
+		B3D4D4CD22DE380F00032061 /* IOHIDProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A922DE380F00032061 /* IOHIDProperties.h */; };
+		B3D4D4CE22DE380F00032061 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */; };
+		B3D4D4CF22DE380F00032061 /* OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4AD22DE380F00032061 /* OSBase.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +68,40 @@
 		B3B31E6B22DA600700179497 /* i2c_smbus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i2c_smbus.h; sourceTree = "<group>"; };
 		B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusSlaveDeviceDriver.hpp; sourceTree = "<group>"; };
 		B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusSlaveDeviceDriver.cpp; sourceTree = "<group>"; };
+		B3D4D48422DE380E00032061 /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helpers.cpp; path = Dependencies/VoodooI2C/Dependencies/helpers.cpp; sourceTree = "<group>"; };
+		B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMultitouchInterface.hpp; sourceTree = "<group>"; };
+		B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CDigitiserTransducer.hpp; sourceTree = "<group>"; };
+		B3D4D48822DE380F00032061 /* VoodooI2CMultitouchEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMultitouchEngine.hpp; sourceTree = "<group>"; };
+		B3D4D48922DE380F00032061 /* VoodooI2CDigitiserStylus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CDigitiserStylus.hpp; sourceTree = "<group>"; };
+		B3D4D48B22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMT2ActuatorDevice.cpp; sourceTree = "<group>"; };
+		B3D4D48C22DE380F00032061 /* VoodooI2CNativeEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CNativeEngine.cpp; sourceTree = "<group>"; };
+		B3D4D48D22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMT2SimulatorDevice.hpp; sourceTree = "<group>"; };
+		B3D4D48E22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMT2SimulatorDevice.cpp; sourceTree = "<group>"; };
+		B3D4D48F22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMT2ActuatorDevice.hpp; sourceTree = "<group>"; };
+		B3D4D49022DE380F00032061 /* VoodooI2CNativeEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CNativeEngine.hpp; sourceTree = "<group>"; };
+		B3D4D49122DE380F00032061 /* MultitouchHelpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MultitouchHelpers.hpp; sourceTree = "<group>"; };
+		B3D4D49322DE380F00032061 /* VoodooI2CCSGestureEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CCSGestureEngine.hpp; sourceTree = "<group>"; };
+		B3D4D49422DE380F00032061 /* AverageClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AverageClasses.h; sourceTree = "<group>"; };
+		B3D4D49522DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooCSGestureHIDWrapper.cpp; sourceTree = "<group>"; };
+		B3D4D49622DE380F00032061 /* VoodooCSGestureHIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoodooCSGestureHIDWrapper.h; sourceTree = "<group>"; };
+		B3D4D49722DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooCSGestureHIPointingWrapper.cpp; sourceTree = "<group>"; };
+		B3D4D49822DE380F00032061 /* csgesturescroll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = csgesturescroll.cpp; sourceTree = "<group>"; };
+		B3D4D49922DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooCSGestureHIPointingWrapper.hpp; sourceTree = "<group>"; };
+		B3D4D49A22DE380F00032061 /* VoodooI2CCSGestureEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CCSGestureEngine.cpp; sourceTree = "<group>"; };
+		B3D4D49B22DE380F00032061 /* csgesturescroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csgesturescroll.h; sourceTree = "<group>"; };
+		B3D4D49C22DE380F00032061 /* csgesture-softc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "csgesture-softc.h"; sourceTree = "<group>"; };
+		B3D4D49D22DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CDigitiserTransducer.cpp; sourceTree = "<group>"; };
+		B3D4D49E22DE380F00032061 /* VoodooI2CMultitouchInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMultitouchInterface.cpp; sourceTree = "<group>"; };
+		B3D4D49F22DE380F00032061 /* VoodooI2CMultitouchEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMultitouchEngine.cpp; sourceTree = "<group>"; };
+		B3D4D4A022DE380F00032061 /* VoodooI2CDigitiserStylus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CDigitiserStylus.cpp; sourceTree = "<group>"; };
+		B3D4D4A122DE380F00032061 /* helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = helpers.hpp; path = Dependencies/VoodooI2C/Dependencies/helpers.hpp; sourceTree = "<group>"; };
+		B3D4D4A522DE380F00032061 /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
+		B3D4D4A622DE380F00032061 /* AppleHIDUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleHIDUsageTables.h; sourceTree = "<group>"; };
+		B3D4D4A722DE380F00032061 /* IOHIDEventService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventService.h; sourceTree = "<group>"; };
+		B3D4D4A822DE380F00032061 /* IOHIDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
+		B3D4D4A922DE380F00032061 /* IOHIDProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDProperties.h; sourceTree = "<group>"; };
+		B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
+		B3D4D4AD22DE380F00032061 /* OSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSBase.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +118,10 @@
 		B3953FEF22D8DBC100473323 = {
 			isa = PBXGroup;
 			children = (
+				B3D4D4A222DE380F00032061 /* Headers */,
+				B3D4D48422DE380E00032061 /* helpers.cpp */,
+				B3D4D4A122DE380F00032061 /* helpers.hpp */,
+				B3D4D48522DE380F00032061 /* Multitouch Support */,
 				B3953FFB22D8DBC100473323 /* VoodooSMBus */,
 				B3953FFA22D8DBC100473323 /* Products */,
 			);
@@ -83,6 +155,102 @@
 			path = VoodooSMBus;
 			sourceTree = "<group>";
 		};
+		B3D4D48522DE380F00032061 /* Multitouch Support */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */,
+				B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */,
+				B3D4D48822DE380F00032061 /* VoodooI2CMultitouchEngine.hpp */,
+				B3D4D48922DE380F00032061 /* VoodooI2CDigitiserStylus.hpp */,
+				B3D4D48A22DE380F00032061 /* Native */,
+				B3D4D49122DE380F00032061 /* MultitouchHelpers.hpp */,
+				B3D4D49222DE380F00032061 /* CSGesture */,
+				B3D4D49D22DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp */,
+				B3D4D49E22DE380F00032061 /* VoodooI2CMultitouchInterface.cpp */,
+				B3D4D49F22DE380F00032061 /* VoodooI2CMultitouchEngine.cpp */,
+				B3D4D4A022DE380F00032061 /* VoodooI2CDigitiserStylus.cpp */,
+			);
+			name = "Multitouch Support";
+			path = "Dependencies/VoodooI2C/Multitouch Support";
+			sourceTree = "<group>";
+		};
+		B3D4D48A22DE380F00032061 /* Native */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D48B22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp */,
+				B3D4D48C22DE380F00032061 /* VoodooI2CNativeEngine.cpp */,
+				B3D4D48D22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp */,
+				B3D4D48E22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp */,
+				B3D4D48F22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp */,
+				B3D4D49022DE380F00032061 /* VoodooI2CNativeEngine.hpp */,
+			);
+			path = Native;
+			sourceTree = "<group>";
+		};
+		B3D4D49222DE380F00032061 /* CSGesture */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D49322DE380F00032061 /* VoodooI2CCSGestureEngine.hpp */,
+				B3D4D49422DE380F00032061 /* AverageClasses.h */,
+				B3D4D49522DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp */,
+				B3D4D49622DE380F00032061 /* VoodooCSGestureHIDWrapper.h */,
+				B3D4D49722DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp */,
+				B3D4D49822DE380F00032061 /* csgesturescroll.cpp */,
+				B3D4D49922DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp */,
+				B3D4D49A22DE380F00032061 /* VoodooI2CCSGestureEngine.cpp */,
+				B3D4D49B22DE380F00032061 /* csgesturescroll.h */,
+				B3D4D49C22DE380F00032061 /* csgesture-softc.h */,
+			);
+			path = CSGesture;
+			sourceTree = "<group>";
+		};
+		B3D4D4A222DE380F00032061 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D4A322DE380F00032061 /* IOKit */,
+				B3D4D4AB22DE380F00032061 /* libkern */,
+			);
+			name = Headers;
+			path = Dependencies/VoodooI2C/Dependencies/Headers;
+			sourceTree = "<group>";
+		};
+		B3D4D4A322DE380F00032061 /* IOKit */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D4A422DE380F00032061 /* hid */,
+			);
+			path = IOKit;
+			sourceTree = "<group>";
+		};
+		B3D4D4A422DE380F00032061 /* hid */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D4A522DE380F00032061 /* IOHIDPrivateKeys.h */,
+				B3D4D4A622DE380F00032061 /* AppleHIDUsageTables.h */,
+				B3D4D4A722DE380F00032061 /* IOHIDEventService.h */,
+				B3D4D4A822DE380F00032061 /* IOHIDEvent.h */,
+				B3D4D4A922DE380F00032061 /* IOHIDProperties.h */,
+				B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */,
+			);
+			path = hid;
+			sourceTree = "<group>";
+		};
+		B3D4D4AB22DE380F00032061 /* libkern */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D4AC22DE380F00032061 /* libkern */,
+			);
+			path = libkern;
+			sourceTree = "<group>";
+		};
+		B3D4D4AC22DE380F00032061 /* libkern */ = {
+			isa = PBXGroup;
+			children = (
+				B3D4D4AD22DE380F00032061 /* OSBase.h */,
+			);
+			path = libkern;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -90,11 +258,33 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D4D4AF22DE380F00032061 /* VoodooI2CMultitouchInterface.hpp in Headers */,
 				B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */,
+				B3D4D4BD22DE380F00032061 /* VoodooCSGestureHIDWrapper.h in Headers */,
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
+				B3D4D4B222DE380F00032061 /* VoodooI2CDigitiserStylus.hpp in Headers */,
+				B3D4D4B822DE380F00032061 /* VoodooI2CNativeEngine.hpp in Headers */,
+				B3D4D4CF22DE380F00032061 /* OSBase.h in Headers */,
+				B3D4D4CD22DE380F00032061 /* IOHIDProperties.h in Headers */,
+				B3D4D4BA22DE380F00032061 /* VoodooI2CCSGestureEngine.hpp in Headers */,
+				B3D4D4B922DE380F00032061 /* MultitouchHelpers.hpp in Headers */,
+				B3D4D4CE22DE380F00032061 /* IOHIDEventTypes.h in Headers */,
+				B3D4D4CB22DE380F00032061 /* IOHIDEventService.h in Headers */,
+				B3D4D4CA22DE380F00032061 /* AppleHIDUsageTables.h in Headers */,
+				B3D4D4C822DE380F00032061 /* helpers.hpp in Headers */,
+				B3D4D4B722DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp in Headers */,
+				B3D4D4B122DE380F00032061 /* VoodooI2CMultitouchEngine.hpp in Headers */,
+				B3D4D4BB22DE380F00032061 /* AverageClasses.h in Headers */,
+				B3D4D4B022DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp in Headers */,
 				B3B69D6622DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp in Headers */,
 				B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */,
+				B3D4D4CC22DE380F00032061 /* IOHIDEvent.h in Headers */,
+				B3D4D4B522DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp in Headers */,
+				B3D4D4C322DE380F00032061 /* csgesture-softc.h in Headers */,
+				B3D4D4C922DE380F00032061 /* IOHIDPrivateKeys.h in Headers */,
+				B3D4D4C222DE380F00032061 /* csgesturescroll.h in Headers */,
 				B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */,
+				B3D4D4C022DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,10 +356,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */,
+				B3D4D4AE22DE380F00032061 /* helpers.cpp in Sources */,
 				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
+				B3D4D4B422DE380F00032061 /* VoodooI2CNativeEngine.cpp in Sources */,
+				B3D4D4BF22DE380F00032061 /* csgesturescroll.cpp in Sources */,
+				B3D4D4C722DE380F00032061 /* VoodooI2CDigitiserStylus.cpp in Sources */,
+				B3D4D4C522DE380F00032061 /* VoodooI2CMultitouchInterface.cpp in Sources */,
+				B3D4D4C622DE380F00032061 /* VoodooI2CMultitouchEngine.cpp in Sources */,
 				B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */,
+				B3D4D4C122DE380F00032061 /* VoodooI2CCSGestureEngine.cpp in Sources */,
 				B395400922D8FD6100473323 /* helpers.cpp in Sources */,
+				B3D4D4B622DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp in Sources */,
+				B3D4D4BC22DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp in Sources */,
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
+				B3D4D4BE22DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp in Sources */,
+				B3D4D4C422DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp in Sources */,
+				B3D4D4B322DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -280,6 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -294,6 +498,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"./Dependencies/VoodooI2C/Dependencies/Headers\"/**";
 				INFOPLIST_FILE = VoodooSMBus/Info.plist;
 				MODULE_NAME = "de.leo-labs.VoodooSMBus";
 				MODULE_VERSION = 1.0.0d1;
@@ -311,6 +517,8 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
 				DEVELOPMENT_TEAM = "";
+				HEADER_SEARCH_PATHS = "";
+				"HEADER_SEARCH_PATHS[arch=*]" = "\"./Dependencies/VoodooI2C/Dependencies/Headers\"/**";
 				INFOPLIST_FILE = VoodooSMBus/Info.plist;
 				MODULE_NAME = "de.leo-labs.VoodooSMBus";
 				MODULE_VERSION = 1.0.0d1;

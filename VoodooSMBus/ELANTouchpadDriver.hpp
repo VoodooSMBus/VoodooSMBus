@@ -12,6 +12,7 @@
 #include "i2c_smbus.h"
 #include "helpers.hpp"
 #include "VoodooSMBusSlaveDeviceDriver.hpp"
+#include "../Dependencies/VoodooI2C/Multitouch Support/VoodooI2CMultitouchInterface.hpp"
 
 /* https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c.h */
 #define ETP_ENABLE_ABS        0x0001
@@ -79,18 +80,7 @@ struct elan_tp_data {
     unsigned int        x_res;
     unsigned int        y_res;
     
-    u8                  pattern;
-    u16                 product_id;
-   
     int                 pressure_adjustment;
-    u8                  mode;
-    u16                 ic_type;
-    
-    u8                  min_baseline;
-    u8                  max_baseline;
-    bool                baseline_ready;
-    u8                  clickpad;
-    bool                middle_button;
 };
 
 
@@ -112,9 +102,13 @@ public:
 
 private:
     VoodooSMBusDeviceNub* device_nub;
+    VoodooI2CMultitouchInterface *mt_interface;
+    OSArray* transducers;
     
     void releaseResources();
-    
+    void unpublishMultitouchInterface();
+    bool publishMultitouchInterface();
+
     int tryInitialize();
     int initialize();
     int getReport(u8 *report);
@@ -123,13 +117,10 @@ private:
     void handleHostNotifyThreaded();
     
     elan_tp_data* data;
-    
     static unsigned int convertResolution(u8 val);
-    
     int setMode(u8 mode);
-
     bool setDeviceParameters();
-    void reportContact(int contact_num, bool contact_valid, u8 *finger_data);
+    void reportContact(VoodooI2CDigitiserTransducer* transducer, bool contact_valid, u8 *finger_data, AbsoluteTime timestamp);
     void reportAbsolute(u8 *packet);
     void sendSleepCommand();
 

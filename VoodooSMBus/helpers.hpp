@@ -1,30 +1,9 @@
-//
-//  helpers.hpp
-//  VoodooI2C
-//
-//  Created by Alexandre on 31/07/2017.
-//  Copyright © 2017 Alexandre Daoud. All rights reserved.
-//
 
-#ifndef helpers_hpp
-#define helpers_hpp
+#ifndef smbus_helpers_hpp
+#define smbus_helpers_hpp
 
 #include <IOKit/IOService.h>
 #include <IOKit/IOLib.h>
-
-#define kIOPMPowerOff                       0
-#define kVoodooI2CIOPMNumberPowerStates     2
-
-#define BIT(nr) (1UL << (nr))
-
-const char* getMatchedName(IOService* provider);
-
-
-static IOPMPowerState VoodooI2CIOPMPowerStates[kVoodooI2CIOPMNumberPowerStates] = {
-    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
-};
-
 
 typedef UInt8 __u8;
 typedef __u8 u8;
@@ -36,7 +15,6 @@ typedef SInt32 s32;
 
 #define IOLogError(arg...) IOLog("Error: " arg)
 #define IOLogDebug(arg...) IOLog("Debug: " arg)
-
 
 
 #define EPERM            1      /* Operation not permitted */
@@ -168,4 +146,4 @@ typedef SInt32 s32;
 #define EMEDIUMTYPE     124     /* Wrong medium type */
 
 
-#endif /* helpers_hpp */
+#endif /* smbus_helpers_hpp */
