@@ -130,12 +130,8 @@ STATUS_ERROR_FLAGS)
 
 /* An SMBus device on a PCI controller */
 struct i801_adapter {
-    IOACPIPlatformDevice* acpi_device;
-    bool awake = true;
     const char* name;
     IOPCIDevice* pci_device;
-    // IOMemoryMap* mmap;
-    IOService* provider;
     unsigned long smba;
     UInt8 original_slvcmd;
     UInt8 original_hstcfg;
@@ -168,8 +164,6 @@ typedef struct  {
     u8 command;
     int protocol;
 } VoodooSMBusControllerMessage;
-
-
 
 /* Make sure the SMBus host is ready to start transmitting.
  Return 0 if it is, -EBUSY if it is not. */

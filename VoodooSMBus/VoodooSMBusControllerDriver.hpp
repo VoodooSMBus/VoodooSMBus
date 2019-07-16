@@ -27,18 +27,10 @@
 
 #define ELAN_TOUCHPAD_ADDRESS 0x15
 
-#define PrintBitFieldExpanded(val) IOLog("Register decoded: 0x%x<BUSY=%d,INTR=%d," \
-"DEVERR=%d,BUSERR=%d,FAILED=%d,SMBAL=%d,INUSE=%d,BDONE=%d>\n", val, \
-(val & SMBHSTSTS_HOST_BUSY) != 0, (val & SMBHSTSTS_INTR) != 0, \
-(val & SMBHSTSTS_DEV_ERR) != 0, (val & SMBHSTSTS_BUS_ERR) != 0, \
-(val & SMBHSTSTS_FAILED) != 0, (val & SMBHSTSTS_SMBALERT_STS) != 0, \
-(val & SMBHSTSTS_INUSE_STS) != 0, (val & SMBHSTSTS_BYTE_DONE) != 0)
-
 class VoodooSMBusControllerDriver : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusControllerDriver)
 public:
     IOPCIDevice* pci_device;
-    
     i801_adapter* adapter;
     OSDictionary* device_nubs;
     
@@ -51,13 +43,26 @@ public:
 
     IOWorkLoop* getWorkLoop();
     void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
-    bool filterInterrupt(OSObject *owner, IOFilterInterruptEventSource *sender);
 
-    // i2c_smbus_read_block_data
-    IOReturn ReadBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values);
+    /**
+     * readBlockData - SMBus "block read" protocol
+     * @client: Handle to slave device
+     * @command: Byte interpreted by slave
+     * @values: Byte array into which data will be read; big enough to hold
+     *    the data returned by the slave.  SMBus allows at most 32 bytes.
+     *
+     * This executes the SMBus "block read" protocol, returning negative errno
+     * else the number of data bytes in the slave's response.
+     *
+     * Note that using this function requires that the client's adapter support
+     * the I2C_FUNC_SMBUS_READ_BLOCK_DATA functionality.  Not all adapter drivers
+     * support this; its emulation through I2C messaging relies on a specific
+     * mechanism (I2C_M_RECV_LEN) which may not be implemented.
+     */
+    IOReturn readBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values);
     
     /**
-     * i2c_smbus_write_byte_data - SMBus "write byte" protocol
+     * writeByteData - SMBus "write byte" protocol
      * @client: Handle to slave device
      * @command: Byte interpreted by slave
      * @value: Byte being written
@@ -65,20 +70,21 @@ public:
      * This executes the SMBus "write byte" protocol, returning negative errno
      * else zero on success.
      */
-    IOReturn WriteByteData(VoodooSMBusSlaveDevice *client, u8 command, u8 value);
+    
+    IOReturn writeByteData(VoodooSMBusSlaveDevice *client, u8 command, u8 value);
     
     /**
-     * i2c_smbus_write_byte - SMBus "send byte" protocol
+     * writeByte - SMBus "send byte" protocol
      * @client: Handle to slave device
      * @value: Byte to be sent
      *
      * This executes the SMBus "send byte" protocol, returning negative errno
      * else zero on success.
      */
-    IOReturn WriteByte(VoodooSMBusSlaveDevice *client, u8 value);
+    IOReturn writeByte(VoodooSMBusSlaveDevice *client, u8 value);
     
     /**
-     * i2c_smbus_write_block_data - SMBus "block write" protocol
+     * writeBlockData - SMBus "block write" protocol
      * @client: Handle to slave device
      * @command: Byte interpreted by slave
      * @length: Size of data block; SMBus allows at most 32 bytes
@@ -88,6 +94,21 @@ public:
      * else zero on success.
      */
     IOReturn writeBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 length, const u8 *values);
+    
+    /**
+     * transfer - execute SMBus protocol operations
+     * @adapter: Handle to I2C bus
+     * @addr: Address of SMBus slave on that bus
+     * @flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
+     * @read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
+     * @command: Byte interpreted by slave, for protocols which use such bytes
+     * @protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
+     * @data: Data to be read or written
+     *
+     * This executes an SMBus protocol operation, and returns a negative
+     * errno code else zero on success.
+     */
+    IOReturn transfer(VoodooSMBusSlaveDevice *client, char read_write, u8 command, int protocol, union i2c_smbus_data *data);
     
     
 private:
@@ -102,20 +123,7 @@ private:
     void disableHostNotify();
     
     void disableCommandGate();
-    /**
-     * i2c_smbus_xfer - execute SMBus protocol operations
-     * @adapter: Handle to I2C bus
-     * @addr: Address of SMBus slave on that bus
-     * @flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
-     * @read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
-     * @command: Byte interpreted by slave, for protocols which use such bytes
-     * @protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
-     * @data: Data to be read or written
-     *
-     * This executes an SMBus protocol operation, and returns a negative
-     * errno code else zero on success.
-     */
-    IOReturn transfer(VoodooSMBusSlaveDevice *client, char read_write, u8 command, int protocol, union i2c_smbus_data *data);
+    
     IOReturn transferGated(VoodooSMBusControllerMessage *message, union i2c_smbus_data *data, IOCommandGate* command_gate);
 
 };

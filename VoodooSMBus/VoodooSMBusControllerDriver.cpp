@@ -24,7 +24,6 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     device_nubs = OSDictionary::withCapacity(1);
 
     adapter = reinterpret_cast<i801_adapter*>(IOMalloc(sizeof(i801_adapter)));
-    adapter->awake = true;
     
     return result;
 }
@@ -50,9 +49,8 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
         return false;
     }
    
-    adapter->provider = provider;
     adapter->pci_device = pci_device;
-    adapter->name = getMatchedName(adapter->provider);
+    adapter->name = getMatchedName(provider);
     
     pci_device->retain();
     if (!pci_device->open(this)) {
@@ -77,10 +75,10 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     adapter->original_slvcmd = pci_device->ioRead8(SMBSLVCMD(adapter));
     adapter->features |= FEATURE_I2C_BLOCK_READ;
     adapter->features |= FEATURE_IRQ;
-    //adapter->features |= FEATURE_SMBUS_PEC;
+    adapter->features |= FEATURE_SMBUS_PEC;
     adapter->features |= FEATURE_BLOCK_BUFFER;
     adapter->features |= FEATURE_HOST_NOTIFY;
-    adapter->retries = 4;
+    adapter->retries = 3;
     
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
@@ -248,7 +246,7 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
             
             VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x15"));
             if (nub) {
-                nub->HandleHostNotify();
+                nub->handleHostNotify();
             } else {
                 IOLogError("Received Host Notify Interrupt for unknown device at address %#04x", addr);
             }
@@ -260,7 +258,6 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
     }
     
     status = adapter->inb_p(SMBHSTSTS(adapter));
-    PrintBitFieldExpanded(status);
 
     if (status & SMBHSTSTS_BYTE_DONE) {
         i801_isr_byte_done(adapter);
@@ -293,7 +290,7 @@ void VoodooSMBusControllerDriver::disableHostNotify() {
     pci_device->ioWrite8(SMBSLVCMD(adapter), adapter->original_slvcmd);
 }
 
-IOReturn VoodooSMBusControllerDriver::ReadBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values) {
+IOReturn VoodooSMBusControllerDriver::readBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values) {
     union i2c_smbus_data data;
     IOReturn status;
     
@@ -305,7 +302,7 @@ IOReturn VoodooSMBusControllerDriver::ReadBlockData(VoodooSMBusSlaveDevice *clie
     return data.block[0];
 }
 
-IOReturn VoodooSMBusControllerDriver::WriteByteData(VoodooSMBusSlaveDevice *client, u8 command, u8 value) {
+IOReturn VoodooSMBusControllerDriver::writeByteData(VoodooSMBusSlaveDevice *client, u8 command, u8 value) {
     union i2c_smbus_data data;
     data.byte = value;
     
@@ -313,7 +310,7 @@ IOReturn VoodooSMBusControllerDriver::WriteByteData(VoodooSMBusSlaveDevice *clie
 }
 
 
-IOReturn VoodooSMBusControllerDriver::WriteByte(VoodooSMBusSlaveDevice *client, u8 value) {
+IOReturn VoodooSMBusControllerDriver::writeByte(VoodooSMBusSlaveDevice *client, u8 value) {
     return transfer(client, I2C_SMBUS_WRITE, value, I2C_SMBUS_BYTE, NULL);
 }
 
@@ -329,9 +326,6 @@ IOReturn VoodooSMBusControllerDriver::writeBlockData(VoodooSMBusSlaveDevice *cli
     return transfer(client, I2C_SMBUS_WRITE, command, I2C_SMBUS_BLOCK_DATA, &data);
 }
 
-
-
-// i2c_smbus_xfer
 IOReturn VoodooSMBusControllerDriver::transfer(VoodooSMBusSlaveDevice *client, char  read_write, u8 command, int protocol, union i2c_smbus_data *data) {
     VoodooSMBusControllerMessage message = {
         .slave_device = client,
@@ -349,11 +343,11 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
     s32 res;
 
     VoodooSMBusSlaveDevice* slave_device = message->slave_device;
-    //slave_device->flags &= I2C_M_TEN | I2C_CLIENT_PEC | I2C_CLIENT_SCCB;
+    slave_device->flags &= I2C_M_TEN | I2C_CLIENT_PEC | I2C_CLIENT_SCCB;
     
     /* Retry automatically on arbitration loss */
     for (res = 0, _try = 0; _try <= adapter->retries; _try++) {
-        res = i801_access(adapter, slave_device->addr, 0, message->read_write, message->command, message->protocol, data, command_gate);
+        res = i801_access(adapter, slave_device->addr, slave_device->flags, message->read_write, message->command, message->protocol, data, command_gate);
         if (res != -EAGAIN)
             break;
     }

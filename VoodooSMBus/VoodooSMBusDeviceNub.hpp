@@ -31,15 +31,15 @@ public:
     void stop(IOService* provider) override;
     void free(void) override;
 
-    void HandleHostNotify();
+    void handleHostNotify();
+    void setSlaveDeviceFlags(unsigned short flags);
     
-    IOReturn WriteByteData(u8 command, u8 value);
-    IOReturn ReadBlockData(u8 command, u8 *values);
-    IOReturn WriteByte(u8 value);
+    IOReturn writeByteData(u8 command, u8 value);
+    IOReturn readBlockData(u8 command, u8 *values);
+    IOReturn writeByte(u8 value);
     IOReturn writeBlockData(u8 command, u8 length, const u8 *values);
 
 private:
-
     VoodooSMBusControllerDriver* controller;
     void releaseResources();
     VoodooSMBusSlaveDevice* slave_device;

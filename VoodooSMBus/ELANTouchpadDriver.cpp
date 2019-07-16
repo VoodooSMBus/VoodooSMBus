@@ -74,6 +74,7 @@ bool ELANTouchpadDriver::start(IOService* provider) {
     provider->joinPMtree(this);
     registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
     
+    device_nub->setSlaveDeviceFlags(I2C_CLIENT_HOST_NOTIFY);
     publishMultitouchInterface();
     setDeviceParameters();
 
@@ -204,7 +205,7 @@ int ELANTouchpadDriver::initialize() {
     int len, error;
     
     /* Get hello packet */
-    len = device_nub->ReadBlockData(ETP_SMBUS_HELLOPACKET_CMD, values);
+    len = device_nub->readBlockData(ETP_SMBUS_HELLOPACKET_CMD, values);
     
     if (len != ETP_SMBUS_HELLOPACKET_LEN) {
         IOLog("hello packet length fail: %d\n", len);
@@ -220,7 +221,7 @@ int ELANTouchpadDriver::initialize() {
     }
     
     /* enable tp */
-    error = device_nub->WriteByte(ETP_SMBUS_ENABLE_TP);
+    error = device_nub->writeByte(ETP_SMBUS_ENABLE_TP);
     if (error) {
         IOLog("failed to enable touchpad: %d\n", error);
         return error;
@@ -285,7 +286,7 @@ int ELANTouchpadDriver::getReport(u8 *report)
 {
     int len;
     
-    len = device_nub->ReadBlockData(ETP_SMBUS_PACKET_QUERY,
+    len = device_nub->readBlockData(ETP_SMBUS_PACKET_QUERY,
                                     &report[ETP_SMBUS_REPORT_OFFSET]);
     if (len < 0) {
         IOLogError("failed to read report data: %d\n", len);
@@ -400,5 +401,5 @@ void ELANTouchpadDriver::reportAbsolute(u8 *packet) {
 }
 
 void ELANTouchpadDriver::sendSleepCommand() {
-    device_nub->WriteByte(ETP_SMBUS_SLEEP_CMD);
+    device_nub->writeByte(ETP_SMBUS_SLEEP_CMD);
 }

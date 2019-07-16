@@ -7,10 +7,8 @@
 
 typedef UInt8 __u8;
 typedef __u8 u8;
-
 typedef UInt16 __u16;
 typedef __u16 u16;
-
 typedef SInt32 s32;
 
 #define IOLogError(arg...) IOLog("Error: " arg)
@@ -27,6 +25,5 @@ typedef SInt32 s32;
 #define EBADMSG         74      /* Not a data message */
 #define EOPNOTSUPP      95      /* Operation not supported on transport endpoint */
 #define ETIMEDOUT       110     /* Connection timed out */
-
 
 #endif /* smbus_helpers_hpp */

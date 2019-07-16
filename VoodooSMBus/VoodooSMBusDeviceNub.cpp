@@ -9,7 +9,6 @@
 #include "VoodooSMBusDeviceNub.hpp"
 
 #define super IOService
-
 OSDefineMetaClassAndStructors(VoodooSMBusDeviceNub, IOService);
 
 bool VoodooSMBusDeviceNub::init() {
@@ -24,7 +23,7 @@ void VoodooSMBusDeviceNub::free(void) {
     super::free();
 }
 
-void VoodooSMBusDeviceNub::HandleHostNotify () {
+void VoodooSMBusDeviceNub::handleHostNotify () {
     VoodooSMBusSlaveDeviceDriver* device_driver = OSDynamicCast(VoodooSMBusSlaveDeviceDriver, getClient());
     
     if(device_driver) {
@@ -45,6 +44,7 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     
     setProperty("VoodooSMBUS Slave Device Address", OSNumber::withNumber(address, 8));
     slave_device->addr = address;
+    slave_device->flags = 0;
     
     return true;
 }
@@ -67,16 +67,20 @@ void VoodooSMBusDeviceNub::stop(IOService* provider) {
     super::stop(provider);
 }
 
-IOReturn VoodooSMBusDeviceNub::WriteByteData(u8 command, u8 value) {
-    return controller->WriteByteData(slave_device, command, value);
+void VoodooSMBusDeviceNub::setSlaveDeviceFlags(unsigned short flags) {
+    slave_device->flags = I2C_CLIENT_HOST_NOTIFY;
 }
 
-IOReturn VoodooSMBusDeviceNub::ReadBlockData(u8 command, u8 *values) {
-    return controller->ReadBlockData(slave_device, command, values);
+IOReturn VoodooSMBusDeviceNub::readBlockData(u8 command, u8 *values) {
+    return controller->readBlockData(slave_device, command, values);
 }
 
-IOReturn VoodooSMBusDeviceNub::WriteByte(u8 value) {
-    return controller->WriteByte(slave_device, value);
+IOReturn VoodooSMBusDeviceNub::writeByteData(u8 command, u8 value) {
+    return controller->writeByteData(slave_device, command, value);
+}
+
+IOReturn VoodooSMBusDeviceNub::writeByte(u8 value) {
+    return controller->writeByte(slave_device, value);
 }
 
 IOReturn VoodooSMBusDeviceNub::writeBlockData(u8 command, u8 length, const u8 *values) {
