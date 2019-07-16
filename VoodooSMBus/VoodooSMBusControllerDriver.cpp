@@ -323,7 +323,6 @@ IOReturn VoodooSMBusControllerDriver::WriteByte(VoodooSMBusSlaveDevice *client, 
 
 IOReturn VoodooSMBusControllerDriver::writeBlockData(VoodooSMBusSlaveDevice *client, u8 command,
                                                      u8 length, const u8 *values) {
-
     union i2c_smbus_data data;
     
     if (length > I2C_SMBUS_BLOCK_MAX)
@@ -331,7 +330,6 @@ IOReturn VoodooSMBusControllerDriver::writeBlockData(VoodooSMBusSlaveDevice *cli
     data.block[0] = length;
     memcpy(&data.block[1], values, length);
     return transfer(client, I2C_SMBUS_WRITE, command, I2C_SMBUS_BLOCK_DATA, &data);
-    
 }
 
 

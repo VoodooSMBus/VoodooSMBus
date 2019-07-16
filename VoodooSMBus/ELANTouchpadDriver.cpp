@@ -28,7 +28,7 @@ bool ELANTouchpadDriver::start(IOService* provider) {
     if (!super::start(provider)) {
         return false;
     }
-    
+    setDeviceParameters();
     PMinit();
     provider->joinPMtree(this);
     registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
