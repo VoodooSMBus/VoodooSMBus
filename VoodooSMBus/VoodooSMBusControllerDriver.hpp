@@ -124,7 +124,8 @@ private:
     IOCommandGate* command_gate;
     IOWorkLoop* work_loop;
     IOInterruptEventSource* interrupt_source;
-
+    bool awake;
+    
     IOReturn publishNub(UInt8 address);
     void releaseResources();
     

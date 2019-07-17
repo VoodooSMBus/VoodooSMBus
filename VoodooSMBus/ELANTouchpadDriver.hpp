@@ -121,7 +121,8 @@ private:
     VoodooI2CMultitouchInterface *mt_interface;
     OSArray* transducers;
     elan_tp_data* data;
-
+    bool awake;
+    
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();

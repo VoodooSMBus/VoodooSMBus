@@ -42,6 +42,7 @@ bool ELANTouchpadDriver::init(OSDictionary *dict) {
         VoodooI2CDigitiserTransducer* transducer = VoodooI2CDigitiserTransducer::transducer(type, NULL);
         transducers->setObject(transducer);
     }
+    awake = true;
     return result;
 }
 
@@ -77,7 +78,13 @@ bool ELANTouchpadDriver::start(IOService* provider) {
     device_nub->setSlaveDeviceFlags(I2C_CLIENT_HOST_NOTIFY);
     publishMultitouchInterface();
     setDeviceParameters();
-
+    
+    int error = tryInitialize();
+    if(error) {
+        IOLogError("Could not initialize ELAN device.");
+        return false;
+    }
+    
     registerService();
     return true;
 }
@@ -108,11 +115,18 @@ IOReturn ELANTouchpadDriver::setPowerState(unsigned long whichState, IOService* 
         return kIOPMAckImplied;
     
     if (whichState == kIOPMPowerOff) {
-        sendSleepCommand();
+        if (awake) {
+            awake = false;
+            sendSleepCommand();
+        }
     } else {
-        int error = tryInitialize();
-        if(error) {
-            IOLogError("Could not initialize ELAN device.");
+        if (!awake) {
+            IOLogDebug("ELANTouchpadDriver waking up");
+            int error = tryInitialize();
+            if(error) {
+                IOLogError("Could not initialize ELAN device.");
+            }
+            awake = true;
         }
     }
     return kIOPMAckImplied;
@@ -152,6 +166,7 @@ void ELANTouchpadDriver::unpublishMultitouchInterface() {
 
 
 int ELANTouchpadDriver::tryInitialize() {
+    IOSleep(3000);
     int repeat = ETP_RETRY_COUNT;
     int error;
     do {
@@ -159,7 +174,7 @@ int ELANTouchpadDriver::tryInitialize() {
         if (!error)
             return 0;
         
-        IOSleep(30);
+        IOSleep(100);
     } while (--repeat > 0);
     return error;
 }

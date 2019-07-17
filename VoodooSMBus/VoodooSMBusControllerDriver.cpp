@@ -23,6 +23,7 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     // For now, we support only one slave device
     device_nubs = OSDictionary::withCapacity(1);
     adapter = reinterpret_cast<i801_adapter*>(IOMalloc(sizeof(i801_adapter)));
+    awake = true;
     
     return result;
 }
@@ -105,9 +106,12 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     PMinit();
     provider->joinPMtree(this);
     registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
+    pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
 
     publishNub(ELAN_TOUCHPAD_ADDRESS);
     interrupt_source->enable();
+    enableHostNotify();
+
     registerService();
 
     return result;
@@ -161,14 +165,20 @@ IOReturn VoodooSMBusControllerDriver::setPowerState(unsigned long whichState, IO
         return kIOPMAckImplied;
     
     if (whichState == kIOPMPowerOff) {
+        
         disableHostNotify();
         command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::disableCommandGate));
         pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
+        awake = false;
 
     } else {
-        pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
-        command_gate->enable();
-        enableHostNotify();
+        if (!awake) {
+            pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
+            command_gate->enable();
+            enableHostNotify();
+            awake = true;
+        }
+        
     }
     return kIOPMAckImplied;
 }
