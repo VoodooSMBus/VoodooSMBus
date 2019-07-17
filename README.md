@@ -5,7 +5,7 @@ VoodooSMBus solves two related problems:
   1. VoodooSMBus is a project that provides a kernel extension (driver) for macOS that adds support for the SMBus capabilities of Intel I/O Controller Hubs (ICH), also called i801 SMBus. 
   2. VoodooSMBus also contains a slave device driver for the ELAN Touchpad device found on the SMBus of the Thinkpad T480s making it possible to use multitouch gestures efficiently
 
-This project is heavily inspired by https://github.com/alexandred/VoodooI2C and a complete reimplementation of the ideas in https://github.com/gokula/ELANSMBus. The Multitouch support is made possible by the implementation VoodooI2C.
+This project is heavily inspired by https://github.com/alexandred/VoodooI2C and a complete reimplementation of the ideas in https://github.com/gokula/ELANSMBus. Multitouch support is made possible by the implementation VoodooI2C.
 
 VoodooSMBus ports the `i2c-i801`<sup>[1](#i2c-i801)</sup> driver and the `elan_i2c_smbus`<sup>[2](#elan_i2c_smbus)</sup> from linux to macOS.
 
@@ -13,9 +13,10 @@ In the future we might want to split up the project,  similar as it has been don
 
 ## Installation
 
-- Apply the patch in config.plist.patch, so VoodooPS2Controller does not attach itself to the PS2 interface of the touchpad
+- Add `VoodooPS2Controller.kext`
+- Add the patch in `config.plist.patch`, so `VoodooPS2Controller` does not attach itself to the PS2 interface of the touchpad
 - Add the four patches found here https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467 and https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 to supress loading of those kexts
-- Install the kext
+- Install this kext
 
 ## Current Status
 
