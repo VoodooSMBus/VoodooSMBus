@@ -46,6 +46,21 @@
 			<key>CFBundleIdentifier</key>
 			<string>de.leo-labs.VoodooSMBus</string>
 		</dict>
+        <key>VoodooSMBusIntelLpssI2C</key>
+        <dict>
+            <key>IOProbeScore</key>
+            <integer>400</integer>
+            <key>IOPCIMatchComment</key>
+            <string>Dummy IntelLpssI2CDriver</string>
+            <key>IOPCIMatch</key>
+            <string>0x9d608086</string>
+            <key>IOProviderClass</key>
+            <string>IOPCIDevice</string>
+            <key>IOClass</key>
+            <string>VoodooSMBusIntelLpssI2C</string>
+            <key>CFBundleIdentifier</key>
+            <string>de.leo-labs.VoodooSMBus</string>
+        </dict>
         <key>Custom MT2 Personality</key>
         <dict>
             <key>ApplePreferenceCapability</key>
