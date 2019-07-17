@@ -13,7 +13,7 @@ In the future we might want to split up the project,  similar as it has been don
 
 ## Installation
 
-- From `VoodooPS2Controller.kext/Contents/Info.plist` delete the line with `<string>PNP0F13</string>`, so the kext does not attach itself to the PS2 interface of the touchpad
+- Apply the patch in config.plist.patch, so VoodooPS2Controller does not attach itself to the PS2 interface of the touchpad
 - Add the four patches found here https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467 and https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 to supress loading of those kexts
 - Install the kext
 
