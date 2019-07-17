@@ -1,0 +1,12 @@
+<dict>
+    <key>Comment</key>
+    <string>Prevent VoodooPS2Controller to attach to MOU</string>
+    <key>Find</key>
+    <data>PHN0cmluZz5QTlAwRjBFPC9zdHJpbmc+CgkJCQk8c3RyaW5nPlBOUDBGMTM8L3N0cmluZz4JCQkJPHN0cmluZz5QTlAwRjEzPC9zdHJpbmc+</data>
+    <key>InfoPlistPatch</key>
+    <true/>
+    <key>Name</key>
+    <string>com.apple.driver.AppleSMBusController</string>
+    <key>Replace</key>
+    <data>PHN0cmluZz5QTlAwRjBFPC9zdHJpbmc+</data>
+</dict>
