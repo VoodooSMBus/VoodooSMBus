@@ -378,7 +378,7 @@ void ELANTouchpadDriver::reportTrackpoint(u8 *report) {
         trackpointScrolling = false;
     }
     if(trackpointScrolling) {
-        trackpoint->updateScrollwheel(-y, x, 0);
+        trackpoint->updateScrollwheel(-y, -x, 0);
     } else {
         trackpoint->updateRelativePointer(x, y, button);
     }
