@@ -229,17 +229,17 @@ void ELANTouchpadDriver::handleHostNotify() {
     }
     
     // Ignore input for specified time after keyboard usage
-    AbsoluteTime timestamp;
-    clock_get_uptime(&timestamp);
-    uint64_t timestamp_ns;
-    absolutetime_to_nanoseconds(timestamp, &timestamp_ns);
-    
-    if (timestamp_ns - keytime < maxaftertyping) {
+    uint64_t timestamp_ns = clock_get_uptime_nanoseconds();
+    if (timestamp_ns - ts_last_keyboard < ignore_time_after_input) {
         return;
     }
     
     switch (report[ETP_REPORT_ID_OFFSET]) {
         case ETP_REPORT_ID:
+            // ignore touchpad for specified time after trackpoint usage
+            if(timestamp_ns - ts_last_trackpoint < ignore_time_after_input) {
+                break;
+            }
             reportAbsolute(report);
             break;
         case ETP_TP_REPORT_ID:
@@ -371,12 +371,21 @@ void ELANTouchpadDriver::reportTrackpoint(u8 *report) {
         y = (int)((packet[2] ^ 0x80) << 1) - packet[5];
     }
     
+    // trackpoint was used
+    if(x != 0 || y != 0) {
+        ts_last_trackpoint = clock_get_uptime_nanoseconds();
+    }
+    
+    // enable trackpoint scroll mode when middle button was pressed and the trackpoint moved
     if (btn_middle == 4 && x != 0 && y!=0) {
         trackpointScrolling = true;
     }
-    if (btn_middle == 0) {
+    
+    // disable trackpoint scrolling mode always when middle button is released
+    if (trackpointScrolling && btn_middle == 0) {
         trackpointScrolling = false;
     }
+    
     if(trackpointScrolling) {
         trackpoint->updateScrollwheel(-y, -x, 0);
     } else {
@@ -499,7 +508,7 @@ IOReturn ELANTouchpadDriver::message(UInt32 type, IOService* provider, void* arg
         }
         case kKeyboardKeyPressTime: {
             //  Remember last time key was pressed
-            keytime = *((uint64_t*)argument);
+            ts_last_keyboard = *((uint64_t*)argument);
             break;
         }
     }

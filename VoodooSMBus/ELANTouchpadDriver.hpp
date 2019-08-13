@@ -134,9 +134,13 @@ private:
     bool trackpointScrolling;
     
     bool ignoreall;
-    uint64_t maxaftertyping = 500000000;
-    uint64_t keytime = 0;
     
+    // ignore input of touchpad for some time after keyboard or trackpoint has been used
+    uint64_t ignore_time_after_input = 500000000;
+    
+    uint64_t ts_last_keyboard = 0;
+    uint64_t ts_last_trackpoint = 0;
+
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();
