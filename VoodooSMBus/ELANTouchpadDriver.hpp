@@ -102,6 +102,13 @@ struct elan_tp_data {
     int                 pressure_adjustment;
 };
 
+// Message types defined by ApplePS2Keyboard
+enum {
+    // from keyboard to mouse/touchpad
+    kKeyboardSetTouchStatus = iokit_vendor_specific_msg(100),   // set disable/enable touchpad (data is bool*)
+    kKeyboardGetTouchStatus = iokit_vendor_specific_msg(101),   // get disable/enable touchpad (data is bool*)
+    kKeyboardKeyPressTime = iokit_vendor_specific_msg(110)      // notify of timestamp a non-modifier key was pressed (data is uint64_t*)
+};
 
 class ELANTouchpadDriver : public VoodooSMBusSlaveDeviceDriver {
     OSDeclareDefaultStructors(ELANTouchpadDriver);
@@ -123,6 +130,10 @@ private:
     elan_tp_data* data;
     bool awake;
     
+    bool ignoreall;
+    uint64_t maxaftertyping = 500000000;
+    uint64_t keytime = 0;
+    
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();
@@ -138,6 +149,16 @@ private:
     void reportContact(VoodooI2CDigitiserTransducer* transducer, bool contact_valid, u8 *finger_data, AbsoluteTime timestamp);
     void reportAbsolute(u8 *packet);
     void sendSleepCommand();
+    
+    /*
+     * Called by ApplePS2Controller to notify of keyboard interactions
+     * @type Custom message type in iokit_vendor_specific_msg range
+     * @provider Calling IOService
+     * @argument Optional argument as defined by message type
+     *
+     * @return kIOSuccess if the message is processed
+     */
+    virtual IOReturn message(UInt32 type, IOService* provider, void* argument);
 };
 
 #endif /* ELANTouchpadDriver_hpp */
