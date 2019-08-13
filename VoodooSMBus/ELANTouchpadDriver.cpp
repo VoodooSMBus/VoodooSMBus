@@ -43,6 +43,7 @@ bool ELANTouchpadDriver::init(OSDictionary *dict) {
         transducers->setObject(transducer);
     }
     awake = true;
+    trackpointScrolling = false;
     return result;
 }
 
@@ -65,6 +66,8 @@ void ELANTouchpadDriver::releaseResources() {
     OSSafeReleaseNULL(transducers);
     unpublishMultitouchInterface();
     OSSafeReleaseNULL(mt_interface);
+    unpublishTrackpoint();
+    OSSafeReleaseNULL(trackpoint);
 }
 
 bool ELANTouchpadDriver::start(IOService* provider) {
@@ -77,6 +80,7 @@ bool ELANTouchpadDriver::start(IOService* provider) {
     
     device_nub->setSlaveDeviceFlags(I2C_CLIENT_HOST_NOTIFY);
     publishMultitouchInterface();
+    publishTrackpoint();
     setDeviceParameters();
     
     int error = tryInitialize();
@@ -135,19 +139,19 @@ IOReturn ELANTouchpadDriver::setPowerState(unsigned long whichState, IOService* 
 bool ELANTouchpadDriver::publishMultitouchInterface() {
     mt_interface = OSTypeAlloc(VoodooI2CMultitouchInterface);
     if (!mt_interface) {
-        IOLogError("ELANSMBUS No memory to allocate VoodooI2CMultitouchInterface instance\n");
+        IOLogError("No memory to allocate VoodooI2CMultitouchInterface instance\n");
         goto multitouch_exit;
     }
     if (!mt_interface->init(NULL)) {
-        IOLogError("ELANSMBUS Failed to init multitouch interface\n");
+        IOLogError("Failed to init multitouch interface\n");
         goto multitouch_exit;
     }
     if (!mt_interface->attach(this)) {
-        IOLogError("ELANSMBUS Failed to attach multitouch interface\n");
+        IOLogError("Failed to attach multitouch interface\n");
         goto multitouch_exit;
     }
     if (!mt_interface->start(this)) {
-        IOLogError("ELANSMBUS Failed to start multitouch interface\n");
+        IOLogError("Failed to start multitouch interface\n");
         goto multitouch_exit;
     }
     // Assume we are a touchpad
@@ -163,6 +167,38 @@ void ELANTouchpadDriver::unpublishMultitouchInterface() {
         mt_interface->stop(this);
     }
 }
+
+bool ELANTouchpadDriver::publishTrackpoint() {
+    trackpoint = OSTypeAlloc(TrackpointDevice);
+    if (!trackpoint) {
+        IOLogError("No memory to allocate TrackpointDevice instance\n");
+        goto trackpoint_exit;
+    }
+    if (!trackpoint->init(NULL)) {
+        IOLogError("Failed to init TrackpointDevice\n");
+        goto trackpoint_exit;
+    }
+    if (!trackpoint->attach(this)) {
+        IOLogError("Failed to attach TrackpointDevice\n");
+        goto trackpoint_exit;
+    }
+    if (!trackpoint->start(this)) {
+        IOLogError("Failed to start TrackpointDevice \n");
+        goto trackpoint_exit;
+    }
+  
+    trackpoint->registerService();
+    return true;
+trackpoint_exit:
+    unpublishTrackpoint();
+    return false;
+}
+void ELANTouchpadDriver::unpublishTrackpoint() {
+    if (trackpoint) {
+        trackpoint->stop(this);
+    }
+}
+
 
 
 int ELANTouchpadDriver::tryInitialize() {
@@ -322,7 +358,30 @@ int ELANTouchpadDriver::getReport(u8 *report)
 }
 
 void ELANTouchpadDriver::reportTrackpoint(u8 *report) {
-    IOLogDebug("reporting trackpoint\n");
+    u8 *packet = &report[ETP_REPORT_ID_OFFSET + 1];
+    int x = 0, y = 0;
+    
+    int btn_left = packet[0] & 0x01;
+    int btn_right = packet[0] & 0x02;
+    int btn_middle = packet[0] & 0x04;
+
+    int button = btn_left | btn_right | btn_middle;
+    if ((packet[3] & 0x0F) == 0x06) {
+        x = packet[4] - (int)((packet[1] ^ 0x80) << 1);
+        y = (int)((packet[2] ^ 0x80) << 1) - packet[5];
+    }
+    
+    if (btn_middle == 4 && x != 0 && y!=0) {
+        trackpointScrolling = true;
+    }
+    if (btn_middle == 0) {
+        trackpointScrolling = false;
+    }
+    if(trackpointScrolling) {
+        trackpoint->updateScrollwheel(-y, x, 0);
+    } else {
+        trackpoint->updateRelativePointer(x, y, button);
+    }
 }
 
 // elan_report_contact

@@ -52,6 +52,8 @@
 		B3D4D4CD22DE380F00032061 /* IOHIDProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4A922DE380F00032061 /* IOHIDProperties.h */; };
 		B3D4D4CE22DE380F00032061 /* IOHIDEventTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */; };
 		B3D4D4CF22DE380F00032061 /* OSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D4AD22DE380F00032061 /* OSBase.h */; };
+		B3EF0B202302280A0035158B /* TrackpointDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3EF0B1E2302280A0035158B /* TrackpointDevice.cpp */; };
+		B3EF0B212302280A0035158B /* TrackpointDevice.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3EF0B1F2302280A0035158B /* TrackpointDevice.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		B3D4D4A922DE380F00032061 /* IOHIDProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDProperties.h; sourceTree = "<group>"; };
 		B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
 		B3D4D4AD22DE380F00032061 /* OSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSBase.h; sourceTree = "<group>"; };
+		B3EF0B1E2302280A0035158B /* TrackpointDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TrackpointDevice.cpp; sourceTree = "<group>"; };
+		B3EF0B1F2302280A0035158B /* TrackpointDevice.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TrackpointDevice.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +158,8 @@
 				B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */,
 				B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */,
 				B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */,
+				B3EF0B1E2302280A0035158B /* TrackpointDevice.cpp */,
+				B3EF0B1F2302280A0035158B /* TrackpointDevice.hpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -265,6 +271,7 @@
 				B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */,
 				B3D4D4BD22DE380F00032061 /* VoodooCSGestureHIDWrapper.h in Headers */,
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
+				B3EF0B212302280A0035158B /* TrackpointDevice.hpp in Headers */,
 				B3D4D4B222DE380F00032061 /* VoodooI2CDigitiserStylus.hpp in Headers */,
 				B3D4D4B822DE380F00032061 /* VoodooI2CNativeEngine.hpp in Headers */,
 				B3D4D4CF22DE380F00032061 /* OSBase.h in Headers */,
@@ -372,6 +379,7 @@
 				B3D4D4C122DE380F00032061 /* VoodooI2CCSGestureEngine.cpp in Sources */,
 				B3D4D4B622DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp in Sources */,
 				B3D4D4BC22DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp in Sources */,
+				B3EF0B202302280A0035158B /* TrackpointDevice.cpp in Sources */,
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
 				B3D4D4BE22DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp in Sources */,
 				B3D4D4C422DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp in Sources */,
