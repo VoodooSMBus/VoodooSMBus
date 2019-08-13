@@ -23,6 +23,8 @@ In the future we might want to split up the project,  similar as it has been don
 
 Currently `Sunrise Point-LP (PCH)` `pci8086,9d23` is the only supported and tested controller. However it should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
 
+Trackpoint support is implemented, make sure to activate the trackpoint in BIOS.
+
 For a list of planned features, see https://github.com/leo-labs/VoodooSMBus/labels/enhancement
 
 ## Supported Gestures
