@@ -3,7 +3,7 @@
 VoodooSMBus solves two related problems: 
   
   1. VoodooSMBus is a project that provides a kernel extension (driver) for macOS that adds support for the SMBus capabilities of Intel I/O Controller Hubs (ICH), also called i801 SMBus. 
-  2. VoodooSMBus also contains a slave device driver for the ELAN Touchpad device found on the SMBus of the Thinkpad T480s making it possible to use multitouch gestures efficiently
+  2. VoodooSMBus also contains a slave device driver for the ELAN Touchpad device found on the SMBus of some Thinkpad models (T480s, P52) making it possible to use multitouch gestures efficiently.
 
 This project is heavily inspired by https://github.com/alexandred/VoodooI2C and a complete reimplementation of the ideas in https://github.com/gokula/ELANSMBus. Multitouch support is made possible by the implementation VoodooI2C.
 
@@ -21,7 +21,15 @@ In the future we might want to split up the project,  similar as it has been don
 
 ## Current Status
 
-Currently `Sunrise Point-LP (PCH)` `pci8086,9d23` is the only supported and tested controller. However it should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
+Currently the following Intel I/O Controller Hubs are supported and tested:
+
+| Name                   | Id             |  Device        |
+| ---------------------- | -------------- | -------------- |
+| Sunrise Point-LP (PCH) | `pci8086,9d23` | Thinkpad T480s |
+| Cannon Lake-H (PCH)    | `pci8086,a323` | Thinkpad P52   |
+
+
+It should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
 
 Trackpoint support is implemented, make sure to activate the trackpoint in BIOS.
 
