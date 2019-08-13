@@ -187,6 +187,21 @@ void ELANTouchpadDriver::handleHostNotify() {
         return;
     }
     
+    // Check if input is disabled via ApplePS2Keyboard request
+    if (ignoreall) {
+        return;
+    }
+    
+    // Ignore input for specified time after keyboard usage
+    AbsoluteTime timestamp;
+    clock_get_uptime(&timestamp);
+    uint64_t timestamp_ns;
+    absolutetime_to_nanoseconds(timestamp, &timestamp_ns);
+    
+    if (timestamp_ns - keytime < maxaftertyping) {
+        return;
+    }
+    
     switch (report[ETP_REPORT_ID_OFFSET]) {
         case ETP_REPORT_ID:
             reportAbsolute(report);
@@ -374,8 +389,6 @@ void ELANTouchpadDriver::reportAbsolute(u8 *packet) {
 
     AbsoluteTime timestamp;
     clock_get_uptime(&timestamp);
-    //uint64_t timestamp_ns;
-    //absolutetime_to_nanoseconds(timestamp, &timestamp_ns);
     
     hover_event = hover_info & 0x40;
     for (i = 0; i < ETP_MAX_FINGERS; i++) {
@@ -406,4 +419,31 @@ void ELANTouchpadDriver::reportAbsolute(u8 *packet) {
 
 void ELANTouchpadDriver::sendSleepCommand() {
     device_nub->writeByte(ETP_SMBUS_SLEEP_CMD);
+}
+
+IOReturn ELANTouchpadDriver::message(UInt32 type, IOService* provider, void* argument) {
+    switch (type) {
+        case kKeyboardGetTouchStatus: {
+            bool* pResult = (bool*)argument;
+            *pResult = !ignoreall;
+            break;
+        }
+        case kKeyboardSetTouchStatus: {
+            bool enable = *((bool*)argument);
+
+            // ignoreall is true when trackpad has been disabled
+            if (enable == ignoreall) {
+                // save state, and update LED
+                ignoreall = !enable;
+            }
+            break;
+        }
+        case kKeyboardKeyPressTime: {
+            //  Remember last time key was pressed
+            keytime = *((uint64_t*)argument);
+            break;
+        }
+    }
+    
+    return kIOReturnSuccess;
 }
