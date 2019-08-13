@@ -34,6 +34,7 @@
 #include "i2c_smbus.h"
 #include "helpers.hpp"
 #include "VoodooSMBusSlaveDeviceDriver.hpp"
+#include "TrackpointDevice.hpp"
 #include "../Dependencies/VoodooI2C/Multitouch Support/VoodooI2CMultitouchInterface.hpp"
 
 /* https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c.h */
@@ -126,9 +127,11 @@ public:
 private:
     VoodooSMBusDeviceNub* device_nub;
     VoodooI2CMultitouchInterface *mt_interface;
+    TrackpointDevice *trackpoint;
     OSArray* transducers;
     elan_tp_data* data;
     bool awake;
+    bool trackpointScrolling;
     
     bool ignoreall;
     uint64_t maxaftertyping = 500000000;
@@ -137,6 +140,9 @@ private:
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();
+    
+    void unpublishTrackpoint();
+    bool publishTrackpoint();
 
     /* ELAN device functions */
     int tryInitialize();
