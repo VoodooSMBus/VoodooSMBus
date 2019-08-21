@@ -37,6 +37,15 @@
 		</dict>
 		<key>ELANTouchpadDriver</key>
 		<dict>
+			<key>Preferences</key>
+			<dict>
+				<key>afterTypingCooldownMs</key>
+				<integer>500</integer>
+				<key>ignoreVoodooDisableTrackpad</key>
+				<false/>
+				<key>palmDetection</key>
+				<true/>
+			</dict>
 			<key>RM,deliverNotifications</key>
 			<true/>
 			<key>IOProbeScore</key>

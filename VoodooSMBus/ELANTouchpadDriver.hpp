@@ -125,6 +125,7 @@ public:
     IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
 
 private:
+    void loadConfiguration();
     VoodooSMBusDeviceNub* device_nub;
     VoodooI2CMultitouchInterface *mt_interface;
     TrackpointDevice *trackpoint;
@@ -133,8 +134,12 @@ private:
     bool awake;
     bool trackpointScrolling;
     
-    bool ignoreall;
+    
+    bool palmDetection = true;
+    bool ignoreVoodooDisableTrackpad = false;
     uint64_t maxaftertyping = 500000000;
+    
+    bool ignoreall;
     uint64_t keytime = 0;
     
     void releaseResources();
