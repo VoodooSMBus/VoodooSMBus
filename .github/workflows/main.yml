@@ -8,6 +8,6 @@ jobs:
     runs-on: macOS-10.14
     
     steps:
-    - uses: actions/checkout@v1
+    - uses: textbook/git-checkout-submodule-action@master
     - name: build
       run: xcodebuild -scheme VoodooSMBus build
