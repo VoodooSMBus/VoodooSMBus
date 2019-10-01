@@ -45,6 +45,10 @@
 				<false/>
 				<key>DisableWhileTyping</key>
 				<true/>
+				<key>DisableWhileTrackpoint</key>
+				<true/>
+				<key>DisableWhileTrackpointTimeoutMs</key>
+				<string>500</string>
 			</dict>
 			<key>RM,deliverNotifications</key>
 			<true/>

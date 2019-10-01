@@ -30,9 +30,13 @@
 OSDefineMetaClassAndStructors(ELANTouchpadDriver, VoodooSMBusSlaveDeviceDriver);
 
 void ELANTouchpadDriver::loadConfiguration() {
-    disableWhileTyping = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
-    ignoreSetTouchpadStatus = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
-    disableWhileTypingTimeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
+    disable_while_typing = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
+    disable_while_trackpoint = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TRACKPOINT, true);
+    
+    ignore_set_touchpad_status = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
+    
+    disable_while_typing_timeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
+    disable_while_trackpoint_timeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TRACKPOINT_TIMEOUT_MS, 500) * 1000000 ;
 }
 
 bool ELANTouchpadDriver::init(OSDictionary *dict) {
@@ -230,24 +234,25 @@ void ELANTouchpadDriver::handleHostNotify() {
     }
     
     // Check if input is disabled via ApplePS2Keyboard request
-    if (ignoreall && !ignoreSetTouchpadStatus) {
+    if (ignoreall && !ignore_set_touchpad_status) {
         return;
     }
     
     // Ignore input for specified time after keyboard usage
     uint64_t timestamp_ns = clock_get_uptime_nanoseconds();
-    if (disableWhileTyping) {
-        if (timestamp_ns - ts_last_keyboard < disableWhileTypingTimeout) {
+    if (disable_while_typing) {
+        if (timestamp_ns - ts_last_keyboard < disable_while_typing_timeout) {
             return;
         }
     }
-
     
     switch (report[ETP_REPORT_ID_OFFSET]) {
         case ETP_REPORT_ID:
             // ignore touchpad for specified time after trackpoint usage
-            if(timestamp_ns - ts_last_trackpoint < disableWhileTypingTimeout) {
-                break;
+            if(disable_while_trackpoint) {
+                if(timestamp_ns - ts_last_trackpoint < disable_while_trackpoint_timeout) {
+                    break;
+                }
             }
             reportAbsolute(report);
             break;
