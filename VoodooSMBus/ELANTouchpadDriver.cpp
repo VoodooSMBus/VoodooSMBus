@@ -29,10 +29,16 @@
 
 OSDefineMetaClassAndStructors(ELANTouchpadDriver, VoodooSMBusSlaveDeviceDriver);
 
+void ELANTouchpadDriver::loadConfiguration() {
+    disableWhileTyping = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
+    ignoreSetTouchpadStatus = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
+    disableWhileTypingTimeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
+}
 
 bool ELANTouchpadDriver::init(OSDictionary *dict) {
     bool result = super::init(dict);
-   
+    loadConfiguration();
+    
     data = reinterpret_cast<elan_tp_data*>(IOMalloc(sizeof(elan_tp_data)));
 
     transducers = OSArray::withCapacity(ETP_MAX_FINGERS);
@@ -224,20 +230,23 @@ void ELANTouchpadDriver::handleHostNotify() {
     }
     
     // Check if input is disabled via ApplePS2Keyboard request
-    if (ignoreall) {
+    if (ignoreall && !ignoreSetTouchpadStatus) {
         return;
     }
     
     // Ignore input for specified time after keyboard usage
     uint64_t timestamp_ns = clock_get_uptime_nanoseconds();
-    if (timestamp_ns - ts_last_keyboard < ignore_time_after_input) {
-        return;
+    if (disableWhileTyping) {
+        if (timestamp_ns - ts_last_keyboard < disableWhileTypingTimeout) {
+            return;
+        }
     }
+
     
     switch (report[ETP_REPORT_ID_OFFSET]) {
         case ETP_REPORT_ID:
             // ignore touchpad for specified time after trackpoint usage
-            if(timestamp_ns - ts_last_trackpoint < ignore_time_after_input) {
+            if(timestamp_ns - ts_last_trackpoint < disableWhileTypingTimeout) {
                 break;
             }
             reportAbsolute(report);
