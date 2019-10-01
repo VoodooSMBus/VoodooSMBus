@@ -25,6 +25,8 @@ Some settings can be configured in the `Configuration` dictionary in `Info.plist
 
 * `DisableWhileTyping` Enable disable while typing functionality. After a key press the touchpad is deactivated for a certain amount of time, specified by
 * `DisableWhileTypingTimeoutMs` The amount of time in milliseconds that touch input is ignored after typing
+* `DisableWhileTrackpoint` Disables the touchpad when the trackpoint is in use.
+* `DisableWhileTrackpointTimeoutMs` The amount of time in milliseconds that touch input is ignored after trackpoint usage
 * `IgnoreSetTouchpadStatus` Ignores messages from the keyboard driver to disable the touchpad. If not ignored, the touchpad can usually be toggled with the `PrtSc` key. 
 
 ## Current Status
