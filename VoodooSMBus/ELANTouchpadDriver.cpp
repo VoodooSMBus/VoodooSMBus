@@ -30,9 +30,13 @@
 OSDefineMetaClassAndStructors(ELANTouchpadDriver, VoodooSMBusSlaveDeviceDriver);
 
 void ELANTouchpadDriver::loadConfiguration() {
-    disableWhileTyping = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
-    ignoreSetTouchpadStatus = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
-    disableWhileTypingTimeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
+    disable_while_typing = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
+    disable_while_trackpoint = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TRACKPOINT, true);
+    
+    ignore_set_touchpad_status = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
+    
+    disable_while_typing_timeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
+    disable_while_trackpoint_timeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TRACKPOINT_TIMEOUT_MS, 500) * 1000000 ;
 }
 
 bool ELANTouchpadDriver::init(OSDictionary *dict) {
@@ -230,25 +234,26 @@ void ELANTouchpadDriver::handleHostNotify() {
     }
     
     // Check if input is disabled via ApplePS2Keyboard request
-    if (ignoreall && !ignoreSetTouchpadStatus) {
+    if (ignoreall && !ignore_set_touchpad_status) {
         return;
     }
     
     // Ignore input for specified time after keyboard usage
-    if (disableWhileTyping) {
-        AbsoluteTime timestamp;
-        clock_get_uptime(&timestamp);
-        uint64_t timestamp_ns;
-        absolutetime_to_nanoseconds(timestamp, &timestamp_ns);
-        
-        if (timestamp_ns - keytime < disableWhileTypingTimeout) {
+    uint64_t timestamp_ns = clock_get_uptime_nanoseconds();
+    if (disable_while_typing) {
+        if (timestamp_ns - ts_last_keyboard < disable_while_typing_timeout) {
             return;
         }
     }
-
     
     switch (report[ETP_REPORT_ID_OFFSET]) {
         case ETP_REPORT_ID:
+            // ignore touchpad for specified time after trackpoint usage
+            if(disable_while_trackpoint) {
+                if(timestamp_ns - ts_last_trackpoint < disable_while_trackpoint_timeout) {
+                    break;
+                }
+            }
             reportAbsolute(report);
             break;
         case ETP_TP_REPORT_ID:
@@ -380,12 +385,21 @@ void ELANTouchpadDriver::reportTrackpoint(u8 *report) {
         y = (int)((packet[2] ^ 0x80) << 1) - packet[5];
     }
     
+    // trackpoint was used
+    if(x != 0 || y != 0) {
+        ts_last_trackpoint = clock_get_uptime_nanoseconds();
+    }
+    
+    // enable trackpoint scroll mode when middle button was pressed and the trackpoint moved
     if (btn_middle == 4 && x != 0 && y!=0) {
         trackpointScrolling = true;
     }
-    if (btn_middle == 0) {
+    
+    // disable trackpoint scrolling mode always when middle button is released
+    if (trackpointScrolling && btn_middle == 0) {
         trackpointScrolling = false;
     }
+    
     if(trackpointScrolling) {
         trackpoint->updateScrollwheel(-y, -x, 0);
     } else {
@@ -508,7 +522,7 @@ IOReturn ELANTouchpadDriver::message(UInt32 type, IOService* provider, void* arg
         }
         case kKeyboardKeyPressTime: {
             //  Remember last time key was pressed
-            keytime = *((uint64_t*)argument);
+            ts_last_keyboard = *((uint64_t*)argument);
             break;
         }
     }

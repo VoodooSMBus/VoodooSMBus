@@ -14,6 +14,8 @@ typedef SInt32 s32;
 #define IOLogError(arg...) IOLog("Error: " arg)
 #define IOLogDebug(arg...) IOLog("Debug: " arg)
 
+uint64_t clock_get_uptime_nanoseconds();
+
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 // from https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h
 

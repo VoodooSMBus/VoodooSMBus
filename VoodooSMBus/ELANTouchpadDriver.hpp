@@ -137,16 +137,21 @@ private:
     bool trackpointScrolling;
     
     static constexpr const char* CONFIG_DISABLE_WHILE_TYPING = "DisableWhileTyping";
+    static constexpr const char* CONFIG_DISABLE_WHILE_TRACKPOINT = "DisableWhileTrackpoint";
     static constexpr const char* CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS = "DisableWhileTypingTimeoutMs";
+    static constexpr const char* CONFIG_DISABLE_WHILE_TRACKPOINT_TIMEOUT_MS = "DisableWhileTrackpointTimeoutMs";
     static constexpr const char* CONFIG_IGNORE_SET_TOUCHPAD_STATUS = "IgnoreSetTouchpadStatus";
     
-    bool disableWhileTyping;
-    bool ignoreSetTouchpadStatus;
-    uint64_t disableWhileTypingTimeout;
+    bool disable_while_typing;
+    bool disable_while_trackpoint;
+    bool ignore_set_touchpad_status;
+    uint64_t disable_while_typing_timeout;
+    uint64_t disable_while_trackpoint_timeout;
     
     bool ignoreall;
-    uint64_t keytime = 0;
-    
+    uint64_t ts_last_keyboard = 0;
+    uint64_t ts_last_trackpoint = 0;
+
     void releaseResources();
     void unpublishMultitouchInterface();
     bool publishMultitouchInterface();

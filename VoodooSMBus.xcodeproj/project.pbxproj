@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EF3BA23035D16001DBD8E /* helpers.cpp */; };
 		B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */; };
 		B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */; };
 		B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B35EF3BA23035D16001DBD8E /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusIntelLpssI2C.cpp; sourceTree = "<group>"; };
 		B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusIntelLpssI2C.hpp; sourceTree = "<group>"; };
 		B3953FF922D8DBC100473323 /* VoodooSMBus.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoodooSMBus.kext; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +155,7 @@
 				B395400022D8DBC100473323 /* Info.plist */,
 				B395400622D8F7FE00473323 /* i2c_i801.cpp */,
 				B395400822D8FD6100473323 /* helpers.hpp */,
+				B35EF3BA23035D16001DBD8E /* helpers.cpp */,
 				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
 				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
 				B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */,
@@ -391,6 +394,7 @@
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
 				B3D4D4BE22DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp in Sources */,
 				B3D4D4C422DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp in Sources */,
+				B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */,
 				B3D4D4B322DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
