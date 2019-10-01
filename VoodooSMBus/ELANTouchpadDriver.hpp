@@ -35,6 +35,7 @@
 #include "helpers.hpp"
 #include "VoodooSMBusSlaveDeviceDriver.hpp"
 #include "TrackpointDevice.hpp"
+#include "Configuration.hpp"
 #include "../Dependencies/VoodooI2C/Multitouch Support/VoodooI2CMultitouchInterface.hpp"
 
 /* https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c.h */
@@ -111,6 +112,7 @@ enum {
     kKeyboardKeyPressTime = iokit_vendor_specific_msg(110)      // notify of timestamp a non-modifier key was pressed (data is uint64_t*)
 };
 
+
 class ELANTouchpadDriver : public VoodooSMBusSlaveDeviceDriver {
     OSDeclareDefaultStructors(ELANTouchpadDriver);
     
@@ -134,10 +136,13 @@ private:
     bool awake;
     bool trackpointScrolling;
     
+    static constexpr const char* CONFIG_DISABLE_WHILE_TYPING = "DisableWhileTyping";
+    static constexpr const char* CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS = "DisableWhileTypingTimeoutMs";
+    static constexpr const char* CONFIG_IGNORE_SET_TOUCHPAD_STATUS = "IgnoreSetTouchpadStatus";
     
-    bool palmDetection = true;
-    bool ignoreVoodooDisableTrackpad = false;
-    uint64_t maxaftertyping = 500000000;
+    bool disableWhileTyping;
+    bool ignoreSetTouchpadStatus;
+    uint64_t disableWhileTypingTimeout;
     
     bool ignoreall;
     uint64_t keytime = 0;

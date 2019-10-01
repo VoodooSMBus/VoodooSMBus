@@ -30,62 +30,9 @@
 OSDefineMetaClassAndStructors(ELANTouchpadDriver, VoodooSMBusSlaveDeviceDriver);
 
 void ELANTouchpadDriver::loadConfiguration() {
-    OSDictionary *Configuration;
-    Configuration = OSDynamicCast(OSDictionary, getProperty("Preferences"));
-    if (Configuration) {
-        OSString *tmpString = 0;
-        OSNumber *tmpNumber = 0;
-        OSData   *tmpData = 0;
-        OSBoolean *tmpBoolean = kOSBooleanFalse;
-        OSData   *tmpObj = 0;
-        bool tmpBool = false;
-        UInt64 tmpUI64 = 0;
-        
-        OSIterator *iter = 0;
-        const OSSymbol *dictKey = 0;
-        
-        iter = OSCollectionIterator::withCollection(Configuration);
-        if (iter) {
-            while ((dictKey = (const OSSymbol *)iter->getNextObject())) {
-                tmpObj = 0;
-                
-                tmpString = OSDynamicCast(OSString, Configuration->getObject(dictKey));
-                if (tmpString) {
-                    tmpObj = OSData::withBytes(tmpString->getCStringNoCopy(), tmpString->getLength()+1);
-                }
-                
-                tmpNumber = OSDynamicCast(OSNumber, Configuration->getObject(dictKey));
-                if (tmpNumber != nullptr) {
-                    tmpUI64 = tmpNumber->unsigned64BitValue();
-                    tmpObj = OSData::withBytes(&tmpUI64, sizeof(UInt32));
-                }
-                
-                tmpBoolean = OSDynamicCast(OSBoolean, Configuration->getObject(dictKey));
-                if (tmpBoolean != nullptr) {
-                    tmpBool = (bool)tmpBoolean->getValue();
-                    tmpObj = OSData::withBytes(&tmpBool, sizeof(bool));
-                    
-                }
-                
-                tmpData = OSDynamicCast(OSData, Configuration->getObject(dictKey));
-                if (tmpData) {
-                    tmpObj = tmpData;
-                }
-                if (tmpObj) {
-                    const char *tmpStr = dictKey->getCStringNoCopy();
-                    if(!strncmp(dictKey->getCStringNoCopy(),"palmDetection",strlen(tmpStr))) {
-                        palmDetection = tmpBool;
-                    }
-                    if(!strncmp(dictKey->getCStringNoCopy(),"ignoreVoodooDisableTrackpad",strlen(tmpStr))) {
-                        ignoreVoodooDisableTrackpad = tmpBool;
-                    }
-                    if(!strncmp(dictKey->getCStringNoCopy(),"afterTypingCooldownMs",strlen(tmpStr))) {
-                        maxaftertyping = tmpUI64 * 1000000 ;
-                    }
-                }
-            }
-        }
-    }
+    disableWhileTyping = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
+    ignoreSetTouchpadStatus = Configuration::loadBoolConfiguration(this, CONFIG_IGNORE_SET_TOUCHPAD_STATUS, false);
+    disableWhileTypingTimeout = Configuration::loadUInt64Configuration(this, CONFIG_DISABLE_WHILE_TYPING_TIMEOUT_MS, 500) * 1000000 ;
 }
 
 bool ELANTouchpadDriver::init(OSDictionary *dict) {
@@ -283,18 +230,18 @@ void ELANTouchpadDriver::handleHostNotify() {
     }
     
     // Check if input is disabled via ApplePS2Keyboard request
-    if (ignoreall && !ignoreVoodooDisableTrackpad) {
+    if (ignoreall && !ignoreSetTouchpadStatus) {
         return;
     }
     
     // Ignore input for specified time after keyboard usage
-    if (palmDetection) {
+    if (disableWhileTyping) {
         AbsoluteTime timestamp;
         clock_get_uptime(&timestamp);
         uint64_t timestamp_ns;
         absolutetime_to_nanoseconds(timestamp, &timestamp_ns);
         
-        if (timestamp_ns - keytime < maxaftertyping) {
+        if (timestamp_ns - keytime < disableWhileTypingTimeout) {
             return;
         }
     }

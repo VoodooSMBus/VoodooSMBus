@@ -18,6 +18,8 @@
 		B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */; };
 		B3B69D6622DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */; };
 		B3B69D6822DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */; };
+		B3CF122F2343A92C00DBBD8D /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3CF122D2343A92C00DBBD8D /* Configuration.cpp */; };
+		B3CF12302343A92C00DBBD8D /* Configuration.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3CF122E2343A92C00DBBD8D /* Configuration.hpp */; };
 		B3D4D4AE22DE380F00032061 /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3D4D48422DE380E00032061 /* helpers.cpp */; };
 		B3D4D4AF22DE380F00032061 /* VoodooI2CMultitouchInterface.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */; };
 		B3D4D4B022DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */; };
@@ -72,6 +74,8 @@
 		B3B31E6B22DA600700179497 /* i2c_smbus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i2c_smbus.h; sourceTree = "<group>"; };
 		B3B69D6422DBF226009E66FA /* VoodooSMBusSlaveDeviceDriver.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusSlaveDeviceDriver.hpp; sourceTree = "<group>"; };
 		B3B69D6722DBF70C009E66FA /* VoodooSMBusSlaveDeviceDriver.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusSlaveDeviceDriver.cpp; sourceTree = "<group>"; };
+		B3CF122D2343A92C00DBBD8D /* Configuration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
+		B3CF122E2343A92C00DBBD8D /* Configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
 		B3D4D48422DE380E00032061 /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helpers.cpp; path = Dependencies/VoodooI2C/Dependencies/helpers.cpp; sourceTree = "<group>"; };
 		B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMultitouchInterface.hpp; sourceTree = "<group>"; };
 		B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CDigitiserTransducer.hpp; sourceTree = "<group>"; };
@@ -160,6 +164,8 @@
 				B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */,
 				B3EF0B1E2302280A0035158B /* TrackpointDevice.cpp */,
 				B3EF0B1F2302280A0035158B /* TrackpointDevice.hpp */,
+				B3CF122D2343A92C00DBBD8D /* Configuration.cpp */,
+				B3CF122E2343A92C00DBBD8D /* Configuration.hpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 				B3EF0B212302280A0035158B /* TrackpointDevice.hpp in Headers */,
 				B3D4D4B222DE380F00032061 /* VoodooI2CDigitiserStylus.hpp in Headers */,
 				B3D4D4B822DE380F00032061 /* VoodooI2CNativeEngine.hpp in Headers */,
+				B3CF12302343A92C00DBBD8D /* Configuration.hpp in Headers */,
 				B3D4D4CF22DE380F00032061 /* OSBase.h in Headers */,
 				B3D4D4CD22DE380F00032061 /* IOHIDProperties.h in Headers */,
 				B3D4D4BA22DE380F00032061 /* VoodooI2CCSGestureEngine.hpp in Headers */,
@@ -371,6 +378,7 @@
 				B3D4D4AE22DE380F00032061 /* helpers.cpp in Sources */,
 				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
 				B3D4D4B422DE380F00032061 /* VoodooI2CNativeEngine.cpp in Sources */,
+				B3CF122F2343A92C00DBBD8D /* Configuration.cpp in Sources */,
 				B3D4D4BF22DE380F00032061 /* csgesturescroll.cpp in Sources */,
 				B3D4D4C722DE380F00032061 /* VoodooI2CDigitiserStylus.cpp in Sources */,
 				B3D4D4C522DE380F00032061 /* VoodooI2CMultitouchInterface.cpp in Sources */,

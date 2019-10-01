@@ -37,13 +37,13 @@
 		</dict>
 		<key>ELANTouchpadDriver</key>
 		<dict>
-			<key>Preferences</key>
+			<key>Configuration</key>
 			<dict>
-				<key>afterTypingCooldownMs</key>
-				<integer>500</integer>
-				<key>ignoreVoodooDisableTrackpad</key>
+				<key>DisableWhileTypingTimeoutMs</key>
+				<integer>400</integer>
+				<key>IgnoreSetTouchpadStatus</key>
 				<false/>
-				<key>palmDetection</key>
+				<key>DisableWhileTyping</key>
 				<true/>
 			</dict>
 			<key>RM,deliverNotifications</key>
