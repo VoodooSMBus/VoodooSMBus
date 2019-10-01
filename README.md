@@ -19,6 +19,14 @@ In the future we might want to split up the project,  similar as it has been don
 - Add the four patches found here https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467 and https://github.com/linusyang92/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 to supress loading of those kexts
 - Install this kext
 
+## Configuration
+
+Some settings can be configured in the `Configuration` dictionary in `Info.plist`:
+
+* `DisableWhileTyping` Enable disable while typing functionality. After a key press the touchpad is deactivated for a certain amount of time, specified by
+* `DisableWhileTypingTimeoutMs` The amount of time in milliseconds that touch input is ignored after typing
+* `IgnoreSetTouchpadStatus` Ignores messages from the keyboard driver to disable the touchpad. If not ignored, the touchpad can usually be toggled with the `PrtSc` key. 
+
 ## Current Status
 
 Currently the following Intel I/O Controller Hubs are supported and tested:
