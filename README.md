@@ -1,4 +1,4 @@
-## What is VoodooSMBus
+## What is VoodooSMBus? [![Actions Status](https://github.com/leo-labs/VoodooSMBus/workflows/CI/badge.svg)](https://github.com/leo-labs/VoodooSMBus/actions)
 
 VoodooSMBus solves two related problems: 
   
