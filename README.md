@@ -3,7 +3,7 @@
 VoodooSMBus solves two related problems: 
   
   1. VoodooSMBus is a project that provides a kernel extension (driver) for macOS that adds support for the SMBus capabilities of Intel I/O Controller Hubs (ICH), also called i801 SMBus. 
-  2. VoodooSMBus also contains a slave device driver for the ELAN Touchpad device found on the SMBus of some Thinkpad models (T480s, P52) making it possible to use multitouch gestures efficiently.
+  2. VoodooSMBus also contains a slave device driver for the ELAN Touchpad device found on the SMBus of some Thinkpad models (T480s, L380, P52) making it possible to use multitouch gestures efficiently.
 
 This project is heavily inspired by https://github.com/alexandred/VoodooI2C and a complete reimplementation of the ideas in https://github.com/gokula/ELANSMBus. Multitouch support is made possible by the implementation VoodooI2C.
 
