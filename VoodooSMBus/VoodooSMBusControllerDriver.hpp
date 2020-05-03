@@ -25,7 +25,7 @@
 #include "i2c_i801.cpp"
 #include "VoodooSMBusDeviceNub.hpp"
 
-#define ELAN_TOUCHPAD_ADDRESS 0x15
+#define ELAN_TOUCHPAD_ADDRESS 0x2c
 
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {

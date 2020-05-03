@@ -20,6 +20,17 @@
 	<string>2.1</string>
 	<key>IOKitPersonalities</key>
 	<dict>
+		<key>RMIBus</key>
+		<dict>
+			<key>IOProbeScore</key>
+			<integer>400</integer>
+			<key>IOProviderClass</key>
+			<string>VoodooSMBusDeviceNub</string>
+			<key>IOClass</key>
+			<string>RMIBus</string>
+			<key>CFBundleIdentifier</key>
+			<string>de.leo-labs.VoodooSMBus</string>
+		</dict>
 		<key>VoodooSMBusControllerDriver</key>
 		<dict>
 			<key>IOProbeScore</key>
@@ -32,32 +43,6 @@
 			<string>IOPCIDevice</string>
 			<key>IOClass</key>
 			<string>VoodooSMBusControllerDriver</string>
-			<key>CFBundleIdentifier</key>
-			<string>de.leo-labs.VoodooSMBus</string>
-		</dict>
-		<key>ELANTouchpadDriver</key>
-		<dict>
-			<key>Configuration</key>
-			<dict>
-				<key>DisableWhileTypingTimeoutMs</key>
-				<integer>400</integer>
-				<key>IgnoreSetTouchpadStatus</key>
-				<false/>
-				<key>DisableWhileTyping</key>
-				<true/>
-				<key>DisableWhileTrackpoint</key>
-				<true/>
-				<key>DisableWhileTrackpointTimeoutMs</key>
-				<string>500</string>
-			</dict>
-			<key>RM,deliverNotifications</key>
-			<true/>
-			<key>IOProbeScore</key>
-			<integer>400</integer>
-			<key>IOProviderClass</key>
-			<string>VoodooSMBusDeviceNub</string>
-			<key>IOClass</key>
-			<string>ELANTouchpadDriver</string>
 			<key>CFBundleIdentifier</key>
 			<string>de.leo-labs.VoodooSMBus</string>
 		</dict>
