@@ -12,6 +12,7 @@
 #include <IOKit/IOLib.h>
 #include "VoodooSMBusSlaveDeviceDriver.hpp"
 #include "VoodooSMBusDeviceNub.hpp"
+#include "rmi_smbus.cpp"
 
 class RMIBus : public VoodooSMBusSlaveDeviceDriver {
     OSDeclareDefaultStructors(RMIBus);

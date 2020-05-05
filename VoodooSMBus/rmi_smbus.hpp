@@ -9,9 +9,9 @@
 #ifndef rmi_smbus_h
 #define rmi_smbus_h
 
-#include "RMIBus.hpp"
+//#include "RMIBus.hpp"
 #include "VoodooSMBusDeviceNub.hpp"
 
-static int rmi_smb_get_version(VoodooSMBusDeviceNub* dev);
+//static int rmi_smb_get_version(VoodooSMBusDeviceNub* dev);
 
 #endif /* rmi_smbus_h */

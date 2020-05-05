@@ -10,7 +10,7 @@
 
 #define SMB_PROTOCOL_VERSION_ADDRESS 0xfd
 
-static int rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
+static int  rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
 {
     int retval;
     

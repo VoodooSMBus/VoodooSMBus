@@ -7,7 +7,6 @@
 //
 
 #include "RMIBus.hpp"
-#include "rmi_smbus.hpp"
 
 OSDefineMetaClassAndStructors(RMIBus, VoodooSMBusSlaveDeviceDriver)
 
@@ -41,7 +40,12 @@ bool RMIBus::start(IOService *provider) {
     
     device_nub->setSlaveDeviceFlags(I2C_CLIENT_HOST_NOTIFY);
     
-    IOLog("Recieving SMBus version: %d\n", rmi_smb_get_version(device_nub));
+    int i = 0;
+    IOSleep(3000);
+    while (i++ < 10) {
+        IOLog("Recieving SMBus version: %d\n", rmi_smb_get_version(device_nub));
+        IOSleep(300);
+    }
     
     registerService();
     return true;
