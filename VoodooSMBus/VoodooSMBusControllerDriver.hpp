@@ -71,6 +71,12 @@ public:
     IOReturn readBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values);
     
     /**
+     *
+     * TODO: Comment
+     */
+    IOReturn readByteData(VoodooSMBusSlaveDevice *client, u8 command);
+    
+    /**
      * writeByteData - SMBus "write byte" protocol
      * @client: Handle to slave device
      * @command: Byte interpreted by slave

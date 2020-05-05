@@ -313,6 +313,17 @@ IOReturn VoodooSMBusControllerDriver::readBlockData(VoodooSMBusSlaveDevice *clie
     return data.block[0];
 }
 
+IOReturn VoodooSMBusControllerDriver::readByteData(VoodooSMBusSlaveDevice *client, u8 command) {
+    union i2c_smbus_data data;
+    IOReturn status;
+    
+    status = transfer(client, I2C_SMBUS_READ, command, I2C_SMBUS_BYTE_DATA, &data);
+    if (status != kIOReturnSuccess)
+        return status;
+    
+    return data.byte;
+}
+
 IOReturn VoodooSMBusControllerDriver::writeByteData(VoodooSMBusSlaveDevice *client, u8 command, u8 value) {
     union i2c_smbus_data data;
     data.byte = value;

@@ -36,6 +36,7 @@ public:
     
     IOReturn writeByteData(u8 command, u8 value);
     IOReturn readBlockData(u8 command, u8 *values);
+    IOReturn readByteData(u8 command);
     IOReturn writeByte(u8 value);
     IOReturn writeBlockData(u8 command, u8 length, const u8 *values);
 

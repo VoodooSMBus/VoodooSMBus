@@ -22,9 +22,10 @@ public:
     bool init(OSDictionary *dictionary) override;
     bool start(IOService *provider) override;
     void stop(IOService *provider) override;
+    VoodooSMBusDeviceNub* device_nub;
     
 private:
-    VoodooSMBusDeviceNub* device_nub;
+//    VoodooSMBusDeviceNub* device_nub;
 };
     
 #endif /* RMIBus_h */

@@ -86,6 +86,10 @@ IOReturn VoodooSMBusDeviceNub::readBlockData(u8 command, u8 *values) {
     return controller->readBlockData(slave_device, command, values);
 }
 
+IOReturn VoodooSMBusDeviceNub::readByteData(u8 command) {
+    return controller->readByteData(slave_device, command);
+}
+
 IOReturn VoodooSMBusDeviceNub::writeByteData(u8 command, u8 value) {
     return controller->writeByteData(slave_device, command, value);
 }
