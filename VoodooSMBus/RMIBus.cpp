@@ -59,3 +59,9 @@ void RMIBus::stop(IOService *provider) {
     PMstop();
     super::stop(provider);
 }
+
+void RMIBus::initialize() {
+    
+    rmi_write_block
+    
+}

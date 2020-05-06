@@ -10,7 +10,7 @@
 
 #define SMB_PROTOCOL_VERSION_ADDRESS 0xfd
 
-static int  rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
+static int rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
 {
     int retval;
     
@@ -22,4 +22,17 @@ static int  rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
     }
     
     return retval + 1;
+}
+
+static int smb_block_write(VoodooSMBusDeviceNub* dev, u8 command, const void *buf, size_t len)
+{
+    int retval;
+    
+    retval = dev->writeBlockData(command, len, buf);
+    if (retval < 0) {
+        IOLog("Failed to write block to SMBus");
+//        return retval;
+    }
+    
+    return retval;
 }
