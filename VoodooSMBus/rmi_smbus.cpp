@@ -24,7 +24,7 @@ static int rmi_smb_get_version(VoodooSMBusDeviceNub* dev)
     return retval + 1;
 }
 
-static int smb_block_write(VoodooSMBusDeviceNub* dev, u8 command, const void *buf, size_t len)
+static int smb_block_write(VoodooSMBusDeviceNub* dev, u8 command, u8 *buf, size_t len)
 {
     int retval;
     

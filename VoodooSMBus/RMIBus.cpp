@@ -52,16 +52,17 @@ bool RMIBus::start(IOService *provider) {
 }
 
 void RMIBus::handleHostNotify() {
+    // Read IRQ
+    // Fire off a thread to handle function
     IOLog("Notification recieved");
 }
 
 void RMIBus::stop(IOService *provider) {
     PMstop();
+    OSSafeReleaseNULL(device_nub);
     super::stop(provider);
 }
 
 void RMIBus::initialize() {
-    
-    rmi_write_block
     
 }
