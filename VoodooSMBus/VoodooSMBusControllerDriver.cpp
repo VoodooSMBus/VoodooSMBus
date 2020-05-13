@@ -48,6 +48,8 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
         IOLog("Failed to cast provider\n");
         return false;
     }
+
+    pci_device->setIOEnable(true);
    
     adapter->pci_device = pci_device;
     adapter->name = getMatchedName(provider);
