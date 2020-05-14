@@ -18,10 +18,11 @@ jobs:
       env: 
           VOODOOSMBUS_SHA: VoodooSMBus-${{ steps.vars.outputs.sha_short }}
       run: |
-        xcodebuild -scheme VoodooSMBus build CONFIGURATION_BUILD_DIR=/tmp/${VOODOOSMBUS_SHA}
-        mv /tmp/${VOODOOSMBUS_SHA}/VoodooSMBus.kext /tmp/${VOODOOSMBUS_SHA}/${VOODOOSMBUS_SHA}.kext
+        mkdir build
+        xcodebuild -scheme VoodooSMBus build CONFIGURATION_BUILD_DIR=build/${VOODOOSMBUS_SHA}
+        mv build/${VOODOOSMBUS_SHA}/VoodooSMBus.kext build/${VOODOOSMBUS_SHA}/${VOODOOSMBUS_SHA}.kext
     - uses: actions/upload-artifact@v2
       with:
         name: VoodooSMBus
-        path: /tmp/VoodooSMBus-*/
+        path: build/VoodooSMBus-*
   
