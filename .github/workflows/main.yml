@@ -13,3 +13,8 @@ jobs:
       run: git submodule update --init
     - name: build
       run: xcodebuild -scheme VoodooSMBus build
+    - uses: actions/upload-artifact@v2
+      with:
+        name: VoodooSMBus.kext
+        path: /Users/runner/Library/Developer/Xcode/DerivedData/VoodooSMBus-*/Build/Products/Debug/VoodooSMBus.kext
+  
