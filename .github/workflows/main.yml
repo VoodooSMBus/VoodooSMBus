@@ -23,5 +23,5 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: VoodooSMBus
-        path: /tmp/VoodooSMBus-*
+        path: /tmp/VoodooSMBus-*/
   
