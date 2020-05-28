@@ -37,6 +37,9 @@ Currently the following Intel I/O Controller Hubs are supported and tested:
 | ---------------------- | -------------- | -------------------- |
 | Sunrise Point-LP (PCH) | `pci8086,9d23` | Thinkpad T480s, L380 |
 | Cannon Lake-H (PCH)    | `pci8086,a323` | Thinkpad P52         |
+| Sunrise Point-H (PCH)  | `pci8086,a123` | HP Pavilion 15       |
+| Sunrise Point-H (PCH)  | `pci8086,9da3` | HP G. Pavilion 15    |
+
 
 
 It should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
