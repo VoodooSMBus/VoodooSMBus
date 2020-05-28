@@ -27,7 +27,7 @@
 
 #define super IOService
 
-OSDefineMetaClassAndStructors(ELANTouchpadDriver, VoodooSMBusSlaveDeviceDriver);
+OSDefineMetaClassAndStructors(ELANTouchpadDriver, IOService);
 
 void ELANTouchpadDriver::loadConfiguration() {
     disable_while_typing = Configuration::loadBoolConfiguration(this, CONFIG_DISABLE_WHILE_TYPING, true);
@@ -523,6 +523,10 @@ IOReturn ELANTouchpadDriver::message(UInt32 type, IOService* provider, void* arg
         case kKeyboardKeyPressTime: {
             //  Remember last time key was pressed
             ts_last_keyboard = *((uint64_t*)argument);
+            break;
+        }
+        case kIOMessageVoodooSMBusHostNotify: {
+            handleHostNotify();
             break;
         }
     }

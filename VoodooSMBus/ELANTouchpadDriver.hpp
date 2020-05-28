@@ -33,7 +33,6 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "i2c_smbus.h"
 #include "helpers.hpp"
-#include "VoodooSMBusSlaveDeviceDriver.hpp"
 #include "TrackpointDevice.hpp"
 #include "Configuration.hpp"
 #include "../Dependencies/VoodooI2C/Multitouch Support/VoodooI2CMultitouchInterface.hpp"
@@ -113,7 +112,7 @@ enum {
 };
 
 
-class ELANTouchpadDriver : public VoodooSMBusSlaveDeviceDriver {
+class ELANTouchpadDriver : public IOService {
     OSDeclareDefaultStructors(ELANTouchpadDriver);
     
 public:
@@ -121,7 +120,7 @@ public:
     bool start(IOService* provider) override;
     void stop(IOService* provider) override;
     ELANTouchpadDriver* probe(IOService* provider, SInt32* score) override;
-    void handleHostNotify() override;
+    void handleHostNotify();
     bool init(OSDictionary *dict) override;
     void free(void) override;
     IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;

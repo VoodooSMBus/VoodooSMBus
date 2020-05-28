@@ -24,6 +24,7 @@
 #include "../Dependencies/VoodooI2C/Dependencies/helpers.hpp"
 #include "i2c_i801.cpp"
 #include "VoodooSMBusDeviceNub.hpp"
+#include "HostNotifyMessage.h"
 
 #define ELAN_TOUCHPAD_ADDRESS 0x15
 
