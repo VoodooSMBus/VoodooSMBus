@@ -13,7 +13,6 @@
 
 // an empty message that is sent from `VoodooSMBusControllerDriver to a slave device driver indicating that
 // a host notify interrupt for the address of the slave device occurred.
-struct  HostNotifyMessage {
-};
+struct  HostNotifyMessage { };
 
 #endif /* HostNotifyMessage_h */
