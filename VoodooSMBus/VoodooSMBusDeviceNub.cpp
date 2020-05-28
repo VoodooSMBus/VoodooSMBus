@@ -27,8 +27,7 @@ void VoodooSMBusDeviceNub::handleHostNotifyThreaded () {
     IOService* device_driver = getClient();
     
     if(device_driver) {
-        HostNotifyMessage message;
-        super::messageClient(kIOMessageVoodooSMBusHostNotify, device_driver, &message, sizeof(HostNotifyMessage));
+        super::messageClient(kIOMessageVoodooSMBusHostNotify, device_driver);
     }
 }
 
