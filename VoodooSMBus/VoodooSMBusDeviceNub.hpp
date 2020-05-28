@@ -17,7 +17,6 @@
 #include <IOKit/IOCommandGate.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
 #include "VoodooSMBusControllerDriver.hpp"
-#include "VoodooSMBusSlaveDeviceDriver.hpp"
 
 class VoodooSMBusControllerDriver;
 

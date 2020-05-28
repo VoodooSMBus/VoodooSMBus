@@ -10,9 +10,7 @@
 #ifndef VoodooSMBusIntelLpssI2C_hpp
 #define VoodooSMBusIntelLpssI2C_hpp
 
-#include "VoodooSMBusSlaveDeviceDriver.hpp"
-
-
+#include "helpers.hpp"
 
 class VoodooSMBusIntelLpssI2C : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusIntelLpssI2C)
