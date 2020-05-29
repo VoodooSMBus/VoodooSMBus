@@ -60,7 +60,7 @@ public:
      * @command: Byte interpreted by slave
      *
      * This executes the SMBus "read byte" protocol, returning negative errno
-     * else zero on success.
+     * else the data byte received from the device.
      */
     IOReturn readByteData(VoodooSMBusSlaveDevice *client, u8 command);
     

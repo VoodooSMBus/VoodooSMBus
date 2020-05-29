@@ -376,8 +376,5 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
             break;
     }
     
-    if (res < 0)
-        return res;
-    
-    return kIOReturnSuccess;
+    return res;
 }
