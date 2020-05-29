@@ -82,6 +82,10 @@ void VoodooSMBusDeviceNub::setSlaveDeviceFlags(unsigned short flags) {
     slave_device->flags = flags;
 }
 
+IOReturn VoodooSMBusDeviceNub::readByteData(u8 command) {
+    return controller->readByteData(slave_device, command);
+}
+
 IOReturn VoodooSMBusDeviceNub::readBlockData(u8 command, u8 *values) {
     return controller->readBlockData(slave_device, command, values);
 }
