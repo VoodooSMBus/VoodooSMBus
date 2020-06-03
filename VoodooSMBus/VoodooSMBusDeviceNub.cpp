@@ -6,6 +6,7 @@
  *
  */
 
+#include "VoodooSMBusControllerDriver.hpp"
 #include "VoodooSMBusDeviceNub.hpp"
 
 #define super IOService
