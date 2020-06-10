@@ -43,13 +43,14 @@ public:
     IOPCIDevice* pci_device;
     i801_adapter* adapter;
     OSDictionary* device_nubs;
+    OSArray* addresses;
     
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
     virtual IOService *probe(IOService *provider, SInt32 *score) override;
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
-    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice);
+    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
 
     IOWorkLoop* getWorkLoop();
     void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
@@ -117,13 +118,13 @@ public:
     
     /**
      * transfer - execute SMBus protocol operations
-     * @adapter: Handle to I2C bus
-     * @addr: Address of SMBus slave on that bus
-     * @flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
-     * @read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
-     * @command: Byte interpreted by slave, for protocols which use such bytes
-     * @protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
-     * @data: Data to be read or written
+     * @ adapter: Handle to I2C bus
+     * @ addr: Address of SMBus slave on that bus
+     * @ flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
+     * @ read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
+     * @ command: Byte interpreted by slave, for protocols which use such bytes
+     * @ protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
+     * @ data: Data to be read or written
      *
      * This executes an SMBus protocol operation, and returns a negative
      * errno code else zero on success.
@@ -138,6 +139,7 @@ private:
     bool awake;
     
     IOReturn publishNub(UInt8 address);
+    IOReturn publishMultipleNubs();
     void releaseResources();
     
     void enableHostNotify();

@@ -66,6 +66,13 @@ void VoodooSMBusDeviceNub::releaseResources() {
 
 }
 
+IOReturn VoodooSMBusDeviceNub::wakeupController() {
+   if (controller)
+       return controller->makeUsable();
+   else
+       return kIOReturnError;
+}
+
 bool VoodooSMBusDeviceNub::start(IOService* provider) {
     if (!super::start(provider)) {
         return false;

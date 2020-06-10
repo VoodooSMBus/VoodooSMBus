@@ -110,7 +110,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
     pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
 
-    publishNub(ELAN_TOUCHPAD_ADDRESS);
+    publishMultipleNubs();
     interrupt_source->enable();
     enableHostNotify();
 
@@ -189,6 +189,24 @@ void VoodooSMBusControllerDriver::disableCommandGate() {
     command_gate->disable();
 }
 
+IOReturn VoodooSMBusControllerDriver::publishMultipleNubs() {
+    addresses = OSDynamicCast(OSArray, getProperty("Addresses"));
+    if (!addresses) {
+        return kIOReturnError;
+    }
+    
+    OSIterator *iter = OSCollectionIterator::withCollection(addresses);
+    IOReturn error = kIOReturnSuccess;
+    
+    while (OSNumber *addr = OSDynamicCast(OSNumber, iter->getNextObject()))
+    {
+        IOReturn res = publishNub(addr->unsigned8BitValue());
+        // Continue loading other nubs as theoretically those should be fine
+        if (res) error = res;
+    }
+    
+    return error;
+}
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     
@@ -209,7 +227,9 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-    device_nubs->setObject("0x15", device_nub);
+    char key[5];
+    snprintf(key, 5, "0x%x", address);
+    device_nubs->setObject(key, device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
     return kIOReturnSuccess;
@@ -257,7 +277,9 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
              * data, so we just ignore it.
              */
             
-            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x15"));
+            char key[5];
+            snprintf (key, 5, "0x%x", addr);
+            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject(key));
             if (nub) {
                 nub->handleHostNotify();
             } else {

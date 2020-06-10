@@ -34,6 +34,22 @@
 			<string>VoodooSMBusControllerDriver</string>
 			<key>CFBundleIdentifier</key>
 			<string>de.leo-labs.VoodooSMBus</string>
+			<key>Addresses</key>
+			<array>
+				<integer>44</integer>
+				<integer>21</integer>
+			</array>
+		</dict>
+		<key>ELANtechTouchpadDriver</key>
+		<dict>
+			<key>IOProbeScore</key>
+			<integer>400</integer>
+			<key>IOProviderClass</key>
+			<string>VoodooSMBusDeviceNub</string>
+			<key>IOClass</key>
+			<string>ELANTouchpadDriver</string>
+			<key>CFBundleIdentifier</key>
+			<string>de.leo-labs.VoodooSMBus</string>
 		</dict>
 		<key>VoodooSMBusIntelLpssI2C</key>
 		<dict>
