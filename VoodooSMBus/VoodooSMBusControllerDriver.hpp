@@ -26,8 +26,6 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "HostNotifyMessage.h"
 
-#define ELAN_TOUCHPAD_ADDRESS 0x2c
-
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {
     VoodooSMBusSlaveDevice* slave_device;
@@ -118,13 +116,13 @@ public:
     
     /**
      * transfer - execute SMBus protocol operations
-     * @ adapter: Handle to I2C bus
-     * @ addr: Address of SMBus slave on that bus
-     * @ flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
-     * @ read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
-     * @ command: Byte interpreted by slave, for protocols which use such bytes
-     * @ protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
-     * @ data: Data to be read or written
+     * @adapter: Handle to I2C bus
+     * @addr: Address of SMBus slave on that bus
+     * @flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
+     * @read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
+     * @command: Byte interpreted by slave, for protocols which use such bytes
+     * @protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
+     * @data: Data to be read or written
      *
      * This executes an SMBus protocol operation, and returns a negative
      * errno code else zero on success.
