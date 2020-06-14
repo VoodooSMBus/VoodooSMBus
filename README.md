@@ -17,6 +17,10 @@ In the future we might want to split up the project,  similar as it has been don
 - Add the patch in `config.plist.patch`, so `VoodooPS2Controller` does not attach itself to the PS2 interface of the touchpad
 - Delete `VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Mouse.kext`, otherwise the touchpad will not work after sleep
 - Add the four patches found here https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467 and https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 to supress loading of those kexts
+- If using Clover, disable FixSBUS under ACPI->DSDT->DSDT in your Config.plist
+- Config bootloader
+  - Clover: Disable FixSBUS under ACPI->DSDT->Fixes in your Config.plist
+  - OpenCore: Make sure you don't have SSDT-SBUS-MCHC or SSDT-SBUS
 - Install this kext
 
 ## Configuration
@@ -33,10 +37,10 @@ Some settings can be configured in the `Configuration` dictionary in `Info.plist
 
 Currently the following Intel I/O Controller Hubs are supported and tested:
 
-| Name                   | Id             |  Device              |
-| ---------------------- | -------------- | -------------------- |
-| Sunrise Point-LP (PCH) | `pci8086,9d23` | Thinkpad T480s, L380 |
-| Cannon Lake-H (PCH)    | `pci8086,a323` | Thinkpad P52         |
+| Name                   | Id             |  Device                  |
+| ---------------------- | -------------- | ------------------------- |
+| Sunrise Point-LP (PCH) | `pci8086,9d23` | Thinkpad T480s, L380     |
+| Cannon Lake-H (PCH)    | `pci8086,a323` | Thinkpad P52, X1 Extreme |
 
 
 It should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
