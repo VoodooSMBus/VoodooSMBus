@@ -59,8 +59,8 @@ For supported gestures please see https://voodooi2c.github.io/#Supported%20Gestu
 - If AppleSMBUSControllerPCI does not attach, then you may need to add your own SMBus device ID to Info.plist.
   - Finding your device ID:
     - Windows: 
-	- Under Device Manager, look for your SMBus controller. For Synaptic devices, it may appear as Synaptics SMBus Driver.
-	- Once you've found the device, look at it's properties, go into details and select "Hardware Ids". VEN_xxxx is the vendor id, and DEV_xxxx is the device id.
+      - Under Device Manager, look for your SMBus controller. For Synaptic devices, it may appear as Synaptics SMBus Driver.
+      - Once you've found the device, look at it's properties, go into details and select "Hardware Ids". VEN_xxxx is the vendor id, and DEV_xxxx is the device id.
     - MacOS:
       - Open IORegistryEditor, and find the SBUS device.
       - Look on the right hand side. You should see Vendor-id and device-id. You should only take the first two bytes of each and swap them. For example, the first two bytes of `86 80 00 00` is `86 80`. If we swap the position of these, it should be `80 86`.
