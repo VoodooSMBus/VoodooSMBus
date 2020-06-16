@@ -56,7 +56,7 @@ For supported gestures please see https://voodooi2c.github.io/#Supported%20Gestu
 - Check IORegistryExplorer and make sure AppleSMBUSControllerPCI does not attach. If it does:
   - Clover: Check that you don't have FixSBUS enabled in your Config.plist.
   - OpenCore/Clover: Make sure you don't have an SSDT which adds properties to SBUS
-- If AppleSMBUSControllerPCI does not attach, then you may need to add your own SMBus device ID to Info.plist.
+- If VoodooSMBus still does not attach after getting AppleSMBusController out of the way, then you may need to add your own SMBus controller device ID to the Info.plist.
   - Finding your device ID:
     - Windows: 
       - Under Device Manager, look for your SMBus controller. For Synaptic devices, it may appear as Synaptics SMBus Driver.
