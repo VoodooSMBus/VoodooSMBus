@@ -196,16 +196,16 @@ IOReturn VoodooSMBusControllerDriver::publishMultipleNubs() {
     }
     
     OSIterator *iter = OSCollectionIterator::withCollection(addresses);
-    IOReturn error = kIOReturnSuccess;
     
     while (OSNumber *addr = OSDynamicCast(OSNumber, iter->getNextObject()))
     {
         IOReturn res = publishNub(addr->unsigned8BitValue());
-        // Continue loading other nubs as theoretically those should be fine
-        if (res) error = res;
+        if (res) {
+            return res;
+        }
     }
     
-    return error;
+    return kIOReturnSuccess;
 }
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
@@ -227,9 +227,8 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-    char key[5];
-    snprintf(key, 5, "0x%x", address);
-    device_nubs->setObject(key, device_nub);
+
+    device_nubs->setObject(addrToDictKey(address), device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
     return kIOReturnSuccess;
@@ -277,8 +276,7 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
              * data, so we just ignore it.
              */
             
-            char key[5];
-            snprintf (key, 5, "0x%x", addr);
+            char *key = addrToDictKey(address);
             VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject(key));
             if (nub) {
                 nub->handleHostNotify();
