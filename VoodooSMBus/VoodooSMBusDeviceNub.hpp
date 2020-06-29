@@ -29,8 +29,6 @@ public:
     bool start(IOService* provider) override;
     void stop(IOService* provider) override;
     void free(void) override;
-    
-    IOReturn makeUsable() override;
 
     void handleHostNotify();
     void setSlaveDeviceFlags(unsigned short flags);
@@ -40,7 +38,8 @@ public:
     IOReturn readBlockData(u8 command, u8 *values);
     IOReturn writeByte(u8 value);
     IOReturn writeBlockData(u8 command, u8 length, const u8 *values);
-
+    IOReturn wakeupController();
+    
 private:
     VoodooSMBusControllerDriver* controller;
     void releaseResources();

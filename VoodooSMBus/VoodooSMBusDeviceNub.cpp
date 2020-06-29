@@ -66,7 +66,7 @@ void VoodooSMBusDeviceNub::releaseResources() {
 
 }
 
-IOReturn VoodooSMBusDeviceNub::makeUsable() {
+IOReturn VoodooSMBusDeviceNub::wakeupController() {
     if (controller) {
        return controller->makeUsable();
     } else {

@@ -276,7 +276,7 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
              * data, so we just ignore it.
              */
             
-            char *key = addrToDictKey(address);
+            char *key = addrToDictKey(addr);
             VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject(key));
             if (nub) {
                 nub->handleHostNotify();
