@@ -209,7 +209,7 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-    device_nubs->setObject("0x15", device_nub);
+    device_nubs->setObject("0x2c", device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
     return kIOReturnSuccess;
@@ -257,7 +257,7 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
              * data, so we just ignore it.
              */
             
-            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x15"));
+            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x2c"));
             if (nub) {
                 nub->handleHostNotify();
             } else {
@@ -376,5 +376,7 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
             break;
     }
     
-    return res;
+    if (res < 0) return res;
+    
+    return kIOReturnSuccess;
 }

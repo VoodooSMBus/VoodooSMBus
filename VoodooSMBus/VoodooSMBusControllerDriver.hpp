@@ -26,7 +26,7 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "HostNotifyMessage.h"
 
-#define ELAN_TOUCHPAD_ADDRESS 0x15
+#define ELAN_TOUCHPAD_ADDRESS 0x2c
 
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28616574245BAAEE0062CFED /* RMIBus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 28616572245BAAEE0062CFED /* RMIBus.hpp */; };
+		28616575245BAAEE0062CFED /* RMIBus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28616573245BAAEE0062CFED /* RMIBus.cpp */; };
+		A46E495724611F5A00749F79 /* rmi_smbus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A46E495524611F5A00749F79 /* rmi_smbus.hpp */; };
+		A46E495824611F5A00749F79 /* rmi_smbus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A46E495624611F5A00749F79 /* rmi_smbus.cpp */; };
 		B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EF3BA23035D16001DBD8E /* helpers.cpp */; };
 		B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */; };
 		B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */; };
@@ -58,6 +62,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28616572245BAAEE0062CFED /* RMIBus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RMIBus.hpp; sourceTree = "<group>"; };
+		28616573245BAAEE0062CFED /* RMIBus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RMIBus.cpp; sourceTree = "<group>"; };
+		A46E495524611F5A00749F79 /* rmi_smbus.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rmi_smbus.hpp; sourceTree = "<group>"; };
+		A46E495624611F5A00749F79 /* rmi_smbus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rmi_smbus.cpp; sourceTree = "<group>"; };
 		B35EF3BA23035D16001DBD8E /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusIntelLpssI2C.cpp; sourceTree = "<group>"; };
 		B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusIntelLpssI2C.hpp; sourceTree = "<group>"; };
@@ -165,6 +173,10 @@
 				B3CF122D2343A92C00DBBD8D /* Configuration.cpp */,
 				B3CF122E2343A92C00DBBD8D /* Configuration.hpp */,
 				B39530D6247F38A300F1751C /* HostNotifyMessage.h */,
+				28616572245BAAEE0062CFED /* RMIBus.hpp */,
+				28616573245BAAEE0062CFED /* RMIBus.cpp */,
+				A46E495524611F5A00749F79 /* rmi_smbus.hpp */,
+				A46E495624611F5A00749F79 /* rmi_smbus.cpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -274,6 +286,7 @@
 			files = (
 				B3D4D4AF22DE380F00032061 /* VoodooI2CMultitouchInterface.hpp in Headers */,
 				B3B31E6A22DA3C9E00179497 /* ELANTouchpadDriver.hpp in Headers */,
+				28616574245BAAEE0062CFED /* RMIBus.hpp in Headers */,
 				B3D4D4BD22DE380F00032061 /* VoodooCSGestureHIDWrapper.h in Headers */,
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
 				B3EF0B212302280A0035158B /* TrackpointDevice.hpp in Headers */,
@@ -289,6 +302,7 @@
 				B3D4D4CA22DE380F00032061 /* AppleHIDUsageTables.h in Headers */,
 				B3D4D4C822DE380F00032061 /* helpers.hpp in Headers */,
 				B3D4D4B722DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp in Headers */,
+				A46E495724611F5A00749F79 /* rmi_smbus.hpp in Headers */,
 				B3D4D4B122DE380F00032061 /* VoodooI2CMultitouchEngine.hpp in Headers */,
 				B3D4D4BB22DE380F00032061 /* AverageClasses.h in Headers */,
 				B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */,
@@ -376,6 +390,7 @@
 				B3D4D4AE22DE380F00032061 /* helpers.cpp in Sources */,
 				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
 				B3D4D4B422DE380F00032061 /* VoodooI2CNativeEngine.cpp in Sources */,
+				A46E495824611F5A00749F79 /* rmi_smbus.cpp in Sources */,
 				B3CF122F2343A92C00DBBD8D /* Configuration.cpp in Sources */,
 				B3D4D4BF22DE380F00032061 /* csgesturescroll.cpp in Sources */,
 				B3D4D4C722DE380F00032061 /* VoodooI2CDigitiserStylus.cpp in Sources */,
@@ -384,6 +399,7 @@
 				B3D4D4C122DE380F00032061 /* VoodooI2CCSGestureEngine.cpp in Sources */,
 				B3D4D4B622DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp in Sources */,
 				B3D4D4BC22DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp in Sources */,
+				28616575245BAAEE0062CFED /* RMIBus.cpp in Sources */,
 				B3EF0B202302280A0035158B /* TrackpointDevice.cpp in Sources */,
 				B3B31E6922DA3C9E00179497 /* ELANTouchpadDriver.cpp in Sources */,
 				B3D4D4BE22DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp in Sources */,
