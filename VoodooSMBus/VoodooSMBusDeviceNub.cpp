@@ -6,6 +6,7 @@
  *
  */
 
+#include "VoodooSMBusControllerDriver.hpp"
 #include "VoodooSMBusDeviceNub.hpp"
 
 #define super IOService
@@ -63,6 +64,14 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
 
 void VoodooSMBusDeviceNub::releaseResources() {
 
+}
+
+IOReturn VoodooSMBusDeviceNub::wakeupController() {
+    if (controller) {
+       return controller->makeUsable();
+    } else {
+       return kIOReturnError;
+    }
 }
 
 bool VoodooSMBusDeviceNub::start(IOService* provider) {

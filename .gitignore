@@ -28,3 +28,6 @@ DerivedData/
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
 /*.gcno
+
+## Project Specific
+**/.DS_STORE
