@@ -153,8 +153,8 @@
 				B395400622D8F7FE00473323 /* i2c_i801.cpp */,
 				B395400822D8FD6100473323 /* helpers.hpp */,
 				B35EF3BA23035D16001DBD8E /* helpers.cpp */,
-				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
 				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
+				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
 				B3B31E6722DA3C9E00179497 /* ELANTouchpadDriver.cpp */,
 				B3B31E6822DA3C9E00179497 /* ELANTouchpadDriver.hpp */,
 				B3B31E6B22DA600700179497 /* i2c_smbus.h */,
@@ -315,7 +315,6 @@
 				B3953FF522D8DBC100473323 /* Sources */,
 				B3953FF622D8DBC100473323 /* Frameworks */,
 				B3953FF722D8DBC100473323 /* Resources */,
-				284EE8CB24883B750055A458 /* Copy Headers */,
 			);
 			buildRules = (
 			);
@@ -366,27 +365,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		284EE8CB24883B750055A458 /* Copy Headers */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Headers";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/VoodooSMBus.kext/Contents/Resources/Headers\"\ncp \"${SRCROOT}/VoodooSMBus/VoodooSMBusDeviceNub.hpp\" \"${BUILT_PRODUCTS_DIR}/VoodooSMBus.kext/Contents/Resources/Headers\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B3953FF522D8DBC100473323 /* Sources */ = {
