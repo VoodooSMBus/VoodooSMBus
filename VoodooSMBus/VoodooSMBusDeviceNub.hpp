@@ -10,17 +10,17 @@
 #ifndef VoodooSMBusDeviceNub_hpp
 #define VoodooSMBusDeviceNub_hpp
 
+
+#include <IOKit/IOLib.h>
+#include <IOKit/IOKitKeys.h>
 #include <IOKit/IOService.h>
+#include <IOKit/IOCommandGate.h>
+#include <IOKit/acpi/IOACPIPlatformDevice.h>
+#include "VoodooSMBusControllerDriver.hpp"
 
 class VoodooSMBusControllerDriver;
-class VoodooSMBusSlaveDevice;
-typedef UInt8 u8;
 
-#ifndef EXPORT
-#define EXPORT __attribute__((visibility("default")))
-#endif
-
-class EXPORT VoodooSMBusDeviceNub : public IOService {
+class VoodooSMBusDeviceNub : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusDeviceNub);
     
 public:
@@ -38,8 +38,7 @@ public:
     IOReturn readBlockData(u8 command, u8 *values);
     IOReturn writeByte(u8 value);
     IOReturn writeBlockData(u8 command, u8 length, const u8 *values);
-    IOReturn wakeupController();
-    
+
 private:
     VoodooSMBusControllerDriver* controller;
     void releaseResources();

@@ -30,13 +30,12 @@
 #include <IOKit/IOService.h>
 #include <IOKit/IOCommandGate.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
+#include "VoodooSMBusDeviceNub.hpp"
 #include "i2c_smbus.h"
 #include "helpers.hpp"
 #include "TrackpointDevice.hpp"
 #include "Configuration.hpp"
 #include "../Dependencies/VoodooI2C/Multitouch Support/VoodooI2CMultitouchInterface.hpp"
-#include "VoodooSMBusDeviceNub.hpp"
-#include "VoodooSMBusControllerDriver.hpp"
 
 /* https://github.com/torvalds/linux/blob/master/drivers/input/mouse/elan_i2c.h */
 #define ETP_ENABLE_ABS                      0x0001

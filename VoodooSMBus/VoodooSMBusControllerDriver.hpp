@@ -26,6 +26,8 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "HostNotifyMessage.h"
 
+#define ELAN_TOUCHPAD_ADDRESS 0x15
+
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {
     VoodooSMBusSlaveDevice* slave_device;
@@ -41,14 +43,13 @@ public:
     IOPCIDevice* pci_device;
     i801_adapter* adapter;
     OSDictionary* device_nubs;
-    OSArray* addresses;
     
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
     virtual IOService *probe(IOService *provider, SInt32 *score) override;
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
-    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
+    IOReturn setPowerState(unsigned long whichState, IOService* whatDevice);
 
     IOWorkLoop* getWorkLoop();
     void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
@@ -137,7 +138,6 @@ private:
     bool awake;
     
     IOReturn publishNub(UInt8 address);
-    IOReturn publishMultipleNubs();
     void releaseResources();
     
     void enableHostNotify();

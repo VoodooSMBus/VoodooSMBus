@@ -34,11 +34,6 @@
 			<string>VoodooSMBusControllerDriver</string>
 			<key>CFBundleIdentifier</key>
 			<string>de.leo-labs.VoodooSMBus</string>
-			<key>Addresses</key>
-			<array>
-				<integer>44</integer>
-				<integer>21</integer>
-			</array>
 		</dict>
 		<key>ELANTouchpadDriver</key>
 		<dict>
@@ -48,10 +43,12 @@
 				<integer>400</integer>
 				<key>IgnoreSetTouchpadStatus</key>
 				<false/>
+				<key>DisableWhileTyping</key>
+				<true/>
 				<key>DisableWhileTrackpoint</key>
 				<true/>
 				<key>DisableWhileTrackpointTimeoutMs</key>
-				<integer>500</integer>
+				<string>500</string>
 			</dict>
 			<key>RM,deliverNotifications</key>
 			<true/>
@@ -487,8 +484,6 @@
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 leo-labs. All rights reserved.</string>
-	<key>OSBundleCompatibleVersion</key>
-	<string>2.1</string>
 	<key>OSBundleLibraries</key>
 	<dict>
 		<key>com.apple.iokit.IOHIDFamily</key>
