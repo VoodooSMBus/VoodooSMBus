@@ -15,9 +15,17 @@ typedef SInt32 s32;
 #define IOLogDebug(arg...) IOLog("Debug: " arg)
 
 char * addrToDictKey(u8 key);
+const char* getMatchedName(IOService* provider);
+
+#define kIOPMPowerOff 0
+#define kVoodooSMBusPowerStates 2
+static IOPMPowerState VoodooSMBusPowerStates[kVoodooSMBusPowerStates] = {
+    {1, kIOPMPowerOff, kIOPMPowerOff, kIOPMPowerOff, 0, 0, 0, 0, 0, 0, 0, 0},
+    {1, kIOPMPowerOn, kIOPMPowerOn, kIOPMPowerOn, 0, 0, 0, 0, 0, 0, 0, 0}
+};
 
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
-// from https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h
+/* from https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h */
 
 #define EIO              5      /* I/O error */
 #define ENXIO            6      /* No such device or address */
@@ -27,5 +35,9 @@ char * addrToDictKey(u8 key);
 #define EBADMSG         74      /* Not a data message */
 #define EOPNOTSUPP      95      /* Operation not supported on transport endpoint */
 #define ETIMEDOUT       110     /* Connection timed out */
+
+/* SPDX-License-Identifier: GPL-2.0 */
+/* from https://github.com/torvalds/linux/blob/master/include/vdso/bits.h */
+#define BIT(nr) (1UL << (nr))
 
 #endif /* smbus_helpers_hpp */

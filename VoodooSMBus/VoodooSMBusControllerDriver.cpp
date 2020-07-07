@@ -107,7 +107,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     
     PMinit();
     provider->joinPMtree(this);
-    registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
+    registerPowerDriver(this, VoodooSMBusPowerStates, kVoodooSMBusPowerStates);
     pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
 
     publishMultipleNubs();
