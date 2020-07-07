@@ -40,30 +40,6 @@
 				<integer>21</integer>
 			</array>
 		</dict>
-		<key>ELANTouchpadDriver</key>
-		<dict>
-			<key>Configuration</key>
-			<dict>
-				<key>DisableWhileTypingTimeoutMs</key>
-				<integer>400</integer>
-				<key>IgnoreSetTouchpadStatus</key>
-				<false/>
-				<key>DisableWhileTrackpoint</key>
-				<true/>
-				<key>DisableWhileTrackpointTimeoutMs</key>
-				<integer>500</integer>
-			</dict>
-			<key>RM,deliverNotifications</key>
-			<true/>
-			<key>IOProbeScore</key>
-			<integer>400</integer>
-			<key>IOProviderClass</key>
-			<string>VoodooSMBusDeviceNub</string>
-			<key>IOClass</key>
-			<string>ELANTouchpadDriver</string>
-			<key>CFBundleIdentifier</key>
-			<string>de.leo-labs.VoodooSMBus</string>
-		</dict>
 		<key>VoodooSMBusIntelLpssI2C</key>
 		<dict>
 			<key>IOProbeScore</key>

@@ -14,7 +14,6 @@ typedef SInt32 s32;
 #define IOLogError(arg...) IOLog("Error: " arg)
 #define IOLogDebug(arg...) IOLog("Debug: " arg)
 
-uint64_t clock_get_uptime_nanoseconds();
 char * addrToDictKey(u8 key);
 
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
