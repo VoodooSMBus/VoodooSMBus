@@ -15,7 +15,8 @@ jobs:
       run: |
         echo ::set-output name=sha_short::$(git rev-parse --short=8 ${{ github.sha }})
     - name: build
-      env: 
+      env:
+          DEVELOPER_DIR: /Applications/Xcode_10.3.app/Contents/Developer
           VOODOOSMBUS_SHA: VoodooSMBus-${{ steps.vars.outputs.sha_short }}
       run: |
         mkdir build
