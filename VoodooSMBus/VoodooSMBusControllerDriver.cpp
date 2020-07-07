@@ -110,7 +110,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     registerPowerDriver(this, VoodooI2CIOPMPowerStates, kVoodooI2CIOPMNumberPowerStates);
     pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
 
-    publishNub(ELAN_TOUCHPAD_ADDRESS);
+    publishMultipleNubs();
     interrupt_source->enable();
     enableHostNotify();
 
@@ -189,6 +189,24 @@ void VoodooSMBusControllerDriver::disableCommandGate() {
     command_gate->disable();
 }
 
+IOReturn VoodooSMBusControllerDriver::publishMultipleNubs() {
+    addresses = OSDynamicCast(OSArray, getProperty("Addresses"));
+    if (!addresses) {
+        return kIOReturnError;
+    }
+    
+    OSIterator *iter = OSCollectionIterator::withCollection(addresses);
+    
+    while (OSNumber *addr = OSDynamicCast(OSNumber, iter->getNextObject()))
+    {
+        IOReturn res = publishNub(addr->unsigned8BitValue());
+        if (res) {
+            return res;
+        }
+    }
+    
+    return kIOReturnSuccess;
+}
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     
@@ -209,7 +227,8 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-    device_nubs->setObject("0x15", device_nub);
+
+    device_nubs->setObject(addrToDictKey(address), device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
     return kIOReturnSuccess;
@@ -257,7 +276,8 @@ void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEv
              * data, so we just ignore it.
              */
             
-            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject("0x15"));
+            char *key = addrToDictKey(addr);
+            VoodooSMBusDeviceNub* nub = OSDynamicCast(VoodooSMBusDeviceNub, device_nubs->getObject(key));
             if (nub) {
                 nub->handleHostNotify();
             } else {

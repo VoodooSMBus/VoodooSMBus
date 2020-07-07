@@ -26,7 +26,6 @@
 #define i2c_smbus_h
 
 #include "helpers.hpp"
-#include "i2c_i801.cpp"
 
 /*
  * Data for SMBus Messages
