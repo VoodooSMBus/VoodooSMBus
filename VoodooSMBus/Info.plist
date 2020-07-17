@@ -25,9 +25,9 @@
 			<key>IOProbeScore</key>
 			<integer>400</integer>
 			<key>IOPCIMatchComment</key>
-			<string>Intel SMBus Controller i80 (9d23: Sunrise Point-LP (PCH), a323: Cannon Lake-H (PCH))</string>
+			<string>Intel SMBus Controller i80 (9d23: Sunrise Point-LP (PCH), a323: Cannon Lake-H (PCH),9ca2: Wildcat Point-LP (PCH))</string>
 			<key>IOPCIMatch</key>
-			<string>0x9d238086 0xa3238086</string>
+			<string>0x9d238086 0xa3238086 0x9ca28086</string>
 			<key>IOProviderClass</key>
 			<string>IOPCIDevice</string>
 			<key>IOClass</key>
