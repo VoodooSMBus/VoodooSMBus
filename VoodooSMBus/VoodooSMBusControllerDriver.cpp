@@ -303,6 +303,17 @@ void VoodooSMBusControllerDriver::disableHostNotify() {
     pci_device->ioWrite8(SMBSLVCMD(adapter), adapter->original_slvcmd);
 }
 
+IOReturn VoodooSMBusControllerDriver::readByteData(VoodooSMBusSlaveDevice *client, u8 command) {
+    union i2c_smbus_data data;
+    IOReturn status;
+    
+    status = transfer(client, I2C_SMBUS_READ, command, I2C_SMBUS_BYTE_DATA, &data);
+    if (status != kIOReturnSuccess)
+        return status;
+    
+    return data.byte;
+}
+
 IOReturn VoodooSMBusControllerDriver::readBlockData(VoodooSMBusSlaveDevice *client, u8 command, u8 *values) {
     union i2c_smbus_data data;
     IOReturn status;
@@ -365,5 +376,5 @@ IOReturn VoodooSMBusControllerDriver::transferGated(VoodooSMBusControllerMessage
             break;
     }
     
-    return kIOReturnSuccess;
+    return res;
 }

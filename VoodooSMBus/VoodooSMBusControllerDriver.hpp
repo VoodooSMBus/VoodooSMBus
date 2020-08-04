@@ -55,6 +55,16 @@ public:
     void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
 
     /**
+     * readByteData - SMBus "read byte" protocol
+     * @client: Handle to slave device
+     * @command: Byte interpreted by slave
+     *
+     * This executes the SMBus "read byte" protocol, returning negative errno
+     * else the data byte received from the device.
+     */
+    IOReturn readByteData(VoodooSMBusSlaveDevice *client, u8 command);
+    
+    /**
      * readBlockData - SMBus "block read" protocol
      * @client: Handle to slave device
      * @command: Byte interpreted by slave
