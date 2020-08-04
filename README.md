@@ -16,7 +16,12 @@ In the future we might want to split up the project,  similar as it has been don
 - Add `VoodooPS2Controller.kext`
 - Add the patch in `config.plist.patch`, so `VoodooPS2Controller` does not attach itself to the PS2 interface of the touchpad
 - Delete `VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Mouse.kext`, otherwise the touchpad will not work after sleep
-- Add the four patches found here https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467 and https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 to supress loading of those kexts
+- Add the four patches found here to supress loading of those kexts:
+  - https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L436-L467
+  - https://github.com/leo-labs/macOS-ThinkPad-T480s/blob/master/EFI/CLOVER/config.example.plist#L500-L535 
+- In some laptops it's necessary to install the DSDT to make the kext working.
+  - Use MaciAsl and add http://raw.github.com/alexandred/VoodooI2C-Patches/master
+  - Apply the Windows 10 Patch
 - Install this kext
 
 ## Configuration
@@ -37,6 +42,9 @@ Currently the following Intel I/O Controller Hubs are supported and tested:
 | ---------------------- | -------------- | -------------------- |
 | Sunrise Point-LP (PCH) | `pci8086,9d23` | Thinkpad T480s, L380 |
 | Cannon Lake-H (PCH)    | `pci8086,a323` | Thinkpad P52         |
+| Sunrise Point-H (PCH)  | `pci8086,a123` | HP Pavilion 15       |
+| Cannon Lake-LP (PCH)   | `pci8086,9da3` | HP G. Pavilion 15    |
+
 
 
 It should be trivial to add support for all controllers listed in <sup>[1](#i2c-i801)</sup>. 
