@@ -314,7 +314,7 @@ static int i801_transaction(struct i801_adapter *priv, int xact)
     int status;
     int result;
     IOReturn sleep_result;
-    AbsoluteTime abstime;
+    AbsoluteTime timeout, curTime;
     
     result = i801_check_pre(priv);
     if (result < 0)
@@ -324,8 +324,9 @@ static int i801_transaction(struct i801_adapter *priv, int xact)
         priv->outb_p(xact | SMBHSTCNT_INTREN | SMBHSTCNT_START,
                SMBHSTCNT(priv));
         
-        nanoseconds_to_absolutetime(priv->timeout, &abstime);
-        sleep_result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
+        clock_get_uptime(&curTime);
+        nanoseconds_to_absolutetime(priv->timeout, &timeout);
+        sleep_result = priv->command_gate->commandSleep(&priv->status, curTime + timeout, THREAD_ABORTSAFE);
         
         if ( sleep_result == THREAD_TIMED_OUT ) {
             IOLog("Timeout waiting for bus to accept transfer request\n");
@@ -376,9 +377,9 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
 {
     int i, len;
     int smbcmd;
-    int status;
+    int status = 0;
     IOReturn result;
-    AbsoluteTime abstime;
+    AbsoluteTime curTime, timeout;
 
     result = i801_check_pre(priv);
     if (result < 0)
@@ -408,8 +409,9 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
         
         priv->outb_p(priv->cmd | SMBHSTCNT_START, SMBHSTCNT(priv));
         
-        nanoseconds_to_absolutetime(priv->timeout, &abstime);
-        result = priv->command_gate->commandSleep(&priv->status, (UInt32)abstime);
+        clock_get_uptime(&curTime);
+        nanoseconds_to_absolutetime(priv->timeout, &timeout);
+        result = priv->command_gate->commandSleep(&priv->status, curTime + timeout, THREAD_ABORTSAFE);
         
         if ( result == THREAD_TIMED_OUT ) {
             IOLog("Timeout waiting for bus to accept transfer request\n");
@@ -512,7 +514,7 @@ static int i801_block_transaction(struct i801_adapter *priv,
                                   int command, int hwpec)
 {
     int result = 0;
-    unsigned char hostc;
+    unsigned char hostc = 0;
     
     if (command == I2C_SMBUS_I2C_BLOCK_DATA) {
         if (read_write == I2C_SMBUS_WRITE) {

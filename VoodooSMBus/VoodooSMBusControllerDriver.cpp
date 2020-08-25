@@ -16,6 +16,7 @@
 OSDefineMetaClassAndStructors(VoodooSMBusControllerDriver, IOService)
 
 #define super IOService
+#define MILLI_TO_NANO 1000000
 
 bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
     bool result = super::init(dict);
@@ -81,7 +82,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     adapter->features |= FEATURE_BLOCK_BUFFER;
     adapter->features |= FEATURE_HOST_NOTIFY;
     adapter->retries = 3;
-    adapter->timeout = 200000000;
+    adapter->timeout = 200 * MILLI_TO_NANO;
     
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
