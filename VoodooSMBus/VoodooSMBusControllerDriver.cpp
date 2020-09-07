@@ -30,12 +30,8 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
 }
 
 void VoodooSMBusControllerDriver::free(void) {
-    if (device_nubs) {
-        device_nubs->flushCollection();
-        OSSafeReleaseNULL(device_nubs);
-    }
-    
     IOFree(adapter, sizeof(i801_adapter));
+    OSSafeReleaseNULL(device_nubs);
     super::free();
 }
 
