@@ -30,8 +30,12 @@ bool VoodooSMBusControllerDriver::init(OSDictionary *dict) {
 }
 
 void VoodooSMBusControllerDriver::free(void) {
+    if (device_nubs) {
+        device_nubs->flushCollection();
+        OSSafeReleaseNULL(device_nubs);
+    }
+    
     IOFree(adapter, sizeof(i801_adapter));
-    OSSafeReleaseNULL(device_nubs);
     super::free();
 }
 
@@ -228,17 +232,16 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-
     char key[5];
     addrToDictKey(address, key);
     device_nubs->setObject(key, device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
+    OSSafeReleaseNULL(device_nub);
     return kIOReturnSuccess;
     
 exit:
     OSSafeReleaseNULL(device_nub);
-    
     return kIOReturnError;
 }
 
