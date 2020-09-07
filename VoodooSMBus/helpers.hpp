@@ -11,8 +11,13 @@ typedef UInt16 __u16;
 typedef __u16 u16;
 typedef SInt32 s32;
 
+#define IOLogInfo(format, ...) IOLog("VSMB - Info: " format "\n", ## __VA_ARGS__)
 #define IOLogError(format, ...) IOLog("VSMB - Error: " format "\n", ## __VA_ARGS__)
+#ifdef DEBUG
 #define IOLogDebug(format, ...) IOLog("VSMB - Debug: " format "\n", ## __VA_ARGS__)
+#elif
+#define IOLogDebug(format, ...)
+#endif
 
 void addrToDictKey(u8 address, char* key);
 const char* getMatchedName(IOService* provider);

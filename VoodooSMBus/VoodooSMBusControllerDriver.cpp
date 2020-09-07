@@ -46,7 +46,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     pci_device = OSDynamicCast(IOPCIDevice, provider);
     
     if (!(pci_device = OSDynamicCast(IOPCIDevice, provider))) {
-        IOLog("Failed to cast provider\n");
+        IOLogError("Failed to cast provider");
         return false;
     }
 
@@ -57,20 +57,20 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     
     pci_device->retain();
     if (!pci_device->open(this)) {
-        IOLog("%s::%s Could not open provider\n", getName(), pci_device->getName());
+        IOLogError("%s::%s Could not open provider", getName(), pci_device->getName());
         return false;
     }
     
     uint32_t host_config = pci_device->configRead8(SMBHSTCFG);
     if ((host_config & SMBHSTCFG_HST_EN) == 0) {
-        IOLog("SMBus disabled\n");
+        IOLogError("SMBus disabled");
         return false;
     }
     
     adapter->smba = pci_device->configRead16(ICH_SMB_BASE) & 0xFFFE;
     
     if (host_config & SMBHSTCFG_SMB_SMI_EN) {
-        IOLog("No PCI IRQ. Poll mode is not implemented. Unloading.\n");
+        IOLogError("No PCI IRQ. Poll mode is not implemented. Unloading.");
         return false;
     }
     
@@ -86,7 +86,7 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
-        IOLog("%s Could not get work loop\n", getName());
+        IOLogError("%s Could not get work loop", getName());
         goto exit;
     }
     
@@ -94,13 +94,13 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt),provider);
     
     if (!interrupt_source || work_loop->addEventSource(interrupt_source) != kIOReturnSuccess) {
-        IOLog("%s Could not add interrupt source to work loop\n", getName());
+        IOLogError("%s Could not add interrupt source to work loop", getName());
         goto exit;
     }
     
     command_gate = IOCommandGate::commandGate(this);
     if (!command_gate || (work_loop->addEventSource(command_gate) != kIOReturnSuccess)) {
-        IOLog("%s Could not open command gate\n", getName());
+        IOLogError("%s Could not open command gate", getName());
         goto exit;
     }
     adapter->command_gate = command_gate;
@@ -132,7 +132,7 @@ void VoodooSMBusControllerDriver::releaseResources() {
         OSCollectionIterator* iterator = OSCollectionIterator::withCollection(device_nubs);
         
         while (VoodooSMBusDeviceNub *device_nub = OSDynamicCast(VoodooSMBusDeviceNub, iterator->getNextObject())) {
-            IOLog("detaching device nub");
+            IOLogDebug("Detaching device nub");
             device_nub->detach(this);
         }
         device_nubs->flushCollection();
@@ -214,17 +214,17 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     VoodooSMBusDeviceNub* device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
     
     if (!device_nub || !device_nub->init()) {
-        IOLog("%s::%s Could not initialise nub\n", getName(), adapter->name);
+        IOLogError("%s::%s Could not initialise nub", getName(), adapter->name);
         goto exit;
     }
     
     if (!device_nub->attach(this, address)) {
-        IOLog("%s::%s Could not attach nub\n", getName(), adapter->name);
+        IOLogError("%s::%s Could not attach nub", getName(), adapter->name);
         goto exit;
     }
     
     if (!device_nub->start(this)) {
-        IOLog("%s::%s Could not start nub\n", getName(), adapter->name);
+        IOLogError("%s::%s Could not start nub", getName(), adapter->name);
         goto exit;
     }
     
