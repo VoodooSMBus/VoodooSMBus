@@ -22,12 +22,12 @@
 	<dict>
 		<key>VoodooSMBusControllerDriver</key>
 		<dict>
+			<key>IOPCIClassMatch</key>
+			<string>0c050000&amp;0xffffff00</string>
 			<key>IOProbeScore</key>
 			<integer>400</integer>
 			<key>IOPCIMatchComment</key>
-			<string>Intel SMBus Controller i80 (9d23: Sunrise Point-LP (PCH), a323: Cannon Lake-H (PCH))</string>
-			<key>IOPCIMatch</key>
-			<string>0x9d238086 0xa3238086</string>
+			<string>Intel SMBus Controller i801 (Class 0x0C05)</string>
 			<key>IOProviderClass</key>
 			<string>IOPCIDevice</string>
 			<key>IOClass</key>
