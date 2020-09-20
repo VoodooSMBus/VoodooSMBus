@@ -228,17 +228,16 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
         goto exit;
     }
     
-
     char key[5];
     addrToDictKey(address, key);
     device_nubs->setObject(key, device_nub);
     IOLogDebug("Publishing nub for slave device at address %#04x", address);
 
+    OSSafeReleaseNULL(device_nub);
     return kIOReturnSuccess;
     
 exit:
     OSSafeReleaseNULL(device_nub);
-    
     return kIOReturnError;
 }
 
