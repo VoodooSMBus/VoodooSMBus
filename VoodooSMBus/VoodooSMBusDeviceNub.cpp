@@ -37,7 +37,7 @@ void VoodooSMBusDeviceNub::handleHostNotify() {
     kern_return_t ret = kernel_thread_start(OSMemberFunctionCast(thread_continue_t, this, &VoodooSMBusDeviceNub::handleHostNotifyThreaded), this, &new_thread);
 
     if (ret != KERN_SUCCESS) {
-        IOLogDebug(" Thread error while attemping to handle host notify in device nub.\n");
+        IOLogDebug(" Thread error while attemping to handle host notify in device nub.");
     } else {
         thread_deallocate(new_thread);
     }
@@ -50,7 +50,7 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     
     controller = OSDynamicCast(VoodooSMBusControllerDriver, provider);
     if (!controller) {
-        IOLog("%s Could not get controller\n", provider->getName());
+        IOLogError("%s Could not get controller", provider->getName());
         return false;
     }
     

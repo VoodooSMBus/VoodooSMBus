@@ -172,18 +172,18 @@ static int i801_check_pre(struct i801_adapter *priv)
     
     status = priv->inb_p(SMBHSTSTS(priv));
     if (status & SMBHSTSTS_HOST_BUSY) {
-        IOLogError("SMBus is busy, can't use it! (%02x)\n", status);
+        IOLogError("SMBus is busy, can't use it! (%02x)", status);
         return -EBUSY;
     }
     
     status &= STATUS_FLAGS;
     if (status) {
-        IOLogDebug("Clearing status flags (%02x)\n",
+        IOLogDebug("Clearing status flags (%02x)",
                    status);
         priv->outb_p(status, SMBHSTSTS(priv));
         status = priv->inb_p(SMBHSTSTS(priv)) & STATUS_FLAGS;
         if (status) {
-            IOLogError("Failed clearing status flags (%02x)\n",
+            IOLogError("Failed clearing status flags (%02x)",
                        status);
             return -EBUSY;
         }
@@ -199,11 +199,11 @@ static int i801_check_pre(struct i801_adapter *priv)
     if (priv->features & FEATURE_SMBUS_PEC) {
         status = priv->inb_p(SMBAUXSTS(priv)) & SMBAUXSTS_CRCE;
         if (status) {
-            IOLogDebug("Clearing aux status flags (%02x)\n", status);
+            IOLogDebug("Clearing aux status flags (%02x)", status);
             priv->outb_p(status, SMBAUXSTS(priv));
             status = priv->inb_p(SMBAUXSTS(priv)) & SMBAUXSTS_CRCE;
             if (status) {
-                IOLogError("Failed clearing aux status flags (%02x)\n",
+                IOLogError("Failed clearing aux status flags (%02x)",
                            status);
                 return -EBUSY;
             }
@@ -229,9 +229,9 @@ static int i801_check_post(struct i801_adapter *priv, int status)
      * DEV_ERR.
      */
     if (status < 0) {
-        IOLogError("Transaction timeout\n");
+        IOLogError("Transaction timeout");
         /* try to stop the current command */
-        IOLogDebug("Terminating the current operation\n");
+        IOLogDebug("Terminating the current operation");
         priv->outb_p(priv->inb_p(SMBHSTCNT(priv)) | SMBHSTCNT_KILL,
                SMBHSTCNT(priv));
         IODelay(1000);
@@ -242,14 +242,14 @@ static int i801_check_post(struct i801_adapter *priv, int status)
         status = priv->inb_p(SMBHSTSTS(priv));
         if ((status & SMBHSTSTS_HOST_BUSY) ||
             !(status & SMBHSTSTS_FAILED))
-            IOLogError("Failed terminating the transaction\n");
+            IOLogError("Failed terminating the transaction");
         priv->outb_p(STATUS_FLAGS, SMBHSTSTS(priv));
         return -ETIMEDOUT;
     }
     
     if (status & SMBHSTSTS_FAILED) {
         result = -EIO;
-        IOLogError("Transaction failed\n");
+        IOLogError("Transaction failed");
     }
     if (status & SMBHSTSTS_DEV_ERR) {
         /*
@@ -271,15 +271,15 @@ static int i801_check_post(struct i801_adapter *priv, int status)
             (priv->inb_p(SMBAUXSTS(priv)) & SMBAUXSTS_CRCE)) {
             priv->outb_p(SMBAUXSTS_CRCE, SMBAUXSTS(priv));
             result = -EBADMSG;
-            IOLogDebug("PEC error\n");
+            IOLogDebug("PEC error");
         } else {
             result = -ENXIO;
-            IOLogDebug("No response\n");
+            IOLogDebug("No response");
         }
     }
     if (status & SMBHSTSTS_BUS_ERR) {
         result = -EAGAIN;
-        IOLogDebug("Lost arbitration\n");
+        IOLogDebug("Lost arbitration");
     }
     
     /* Clear status flags except BYTE_DONE, to be cleared by caller */
@@ -303,7 +303,7 @@ static int i801_wait_intr(struct i801_adapter *priv)
              (timeout++ < MAX_RETRIES));
     
     if (timeout > MAX_RETRIES) {
-        IOLogDebug("INTR Timeout!\n");
+        IOLogDebug("INTR Timeout!");
         return -ETIMEDOUT;
     }
     return status & (STATUS_ERROR_FLAGS | SMBHSTSTS_INTR);
@@ -329,7 +329,7 @@ static int i801_transaction(struct i801_adapter *priv, int xact)
         sleep_result = priv->command_gate->commandSleep(&priv->status, curTime + timeout, THREAD_ABORTSAFE);
         
         if ( sleep_result == THREAD_TIMED_OUT ) {
-            IOLog("Timeout waiting for bus to accept transfer request\n");
+            IOLogError("Timeout waiting for bus to accept transfer request");
             return -ETIMEDOUT;
         }
         status = priv->status;
@@ -359,7 +359,7 @@ static int i801_wait_byte_done(struct i801_adapter *priv)
              (timeout++ < MAX_RETRIES));
     
     if (timeout > MAX_RETRIES) {
-        IOLogDebug("BYTE_DONE Timeout!\n");
+        IOLogDebug("BYTE_DONE Timeout!");
         return -ETIMEDOUT;
     }
     return status & STATUS_ERROR_FLAGS;
@@ -414,7 +414,7 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
         result = priv->command_gate->commandSleep(&priv->status, curTime + timeout, THREAD_ABORTSAFE);
         
         if ( result == THREAD_TIMED_OUT ) {
-            IOLog("Timeout waiting for bus to accept transfer request\n");
+            IOLogError("Timeout waiting for bus to accept transfer request");
             return -ETIMEDOUT;
         }
         
@@ -439,7 +439,7 @@ static int i801_block_transaction_byte_by_byte(struct i801_adapter *priv,
             && command != I2C_SMBUS_I2C_BLOCK_DATA) {
             len = priv->inb_p(SMBHSTDAT0(priv));
             if (len < 1 || len > I2C_SMBUS_BLOCK_MAX) {
-                IOLogError("Illegal SMBus block read size %d\n",
+                IOLogError("Illegal SMBus block read size %d",
                         len);
                 /* Recover */
                 while (priv->inb_p(SMBHSTSTS(priv)) &
@@ -523,7 +523,7 @@ static int i801_block_transaction(struct i801_adapter *priv,
             priv->outb_p(hostc | SMBHSTCFG_I2C_EN, SMBHSTCFG);
             
         } else if (!(priv->features & FEATURE_I2C_BLOCK_READ)) {
-            IOLogError("I2C block read is unsupported!\n");
+            IOLogError("I2C block read is unsupported!");
             return -EOPNOTSUPP;
         }
     }
@@ -631,7 +631,7 @@ static s32 i801_access(struct i801_adapter *priv, u16 addr,
             block = 1;
             break;
         default:
-            IOLog("Unsupported transaction %d\n",
+            IOLogError("Unsupported transaction %d",
                   size);
             ret = -EOPNOTSUPP;
             goto out;
@@ -686,12 +686,12 @@ static void i801_isr_byte_done(struct i801_adapter *priv)
             (priv->count == 0)) {
             priv->len = priv->inb_p(SMBHSTDAT0(priv));
             if (priv->len < 1 || priv->len > I2C_SMBUS_BLOCK_MAX) {
-                IOLogError("Illegal SMBus block read size %d\n",
+                IOLogError("Illegal SMBus block read size %d",
                         priv->len);
                 /* FIXME: Recover */
                 priv->len = I2C_SMBUS_BLOCK_MAX;
             } else {
-                IOLogDebug("SMBus block read size is %d\n",
+                IOLogDebug("SMBus block read size is %d",
                         priv->len);
             }
             priv->data[-1] = priv->len;
@@ -701,7 +701,7 @@ static void i801_isr_byte_done(struct i801_adapter *priv)
         if (priv->count < priv->len)
             priv->data[priv->count++] = priv->inb_p(SMBBLKDAT(priv));
         else
-            IOLogDebug("Discarding extra byte on block read\n");
+            IOLogDebug("Discarding extra byte on block read");
         
         /* Set LAST_BYTE for last byte of read transaction */
         if (priv->count == priv->len - 1)
