@@ -84,6 +84,12 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
     adapter->retries = 3;
     adapter->timeout = 200 * MILLI_TO_NANO;
     
+    // Clear special mode bits
+    if (adapter->features & (FEATURE_SMBUS_PEC | FEATURE_BLOCK_BUFFER)) {
+        u8 cur_aux_ctl = pci_device->ioRead8(SMBAUXCTL(adapter));
+        pci_device->ioWrite8(SMBAUXCTL(adapter), cur_aux_ctl & ~(SMBAUXCTL_CRC | SMBAUXCTL_E32B));
+    }
+    
     work_loop = reinterpret_cast<IOWorkLoop*>(getWorkLoop());
     if (!work_loop) {
         IOLogError("%s Could not get work loop", getName());
@@ -263,8 +269,15 @@ IOWorkLoop* VoodooSMBusControllerDriver::getWorkLoop() {
 
 
 void VoodooSMBusControllerDriver::handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount) {
+    u16 pci_status = 0;
     u8 status;
-
+    
+    // Confirm this is our interrupt
+    pci_status = pci_device->configRead16(SMBPCISTS);
+    if (!(pci_status & SMBPCISTS_INTS)) {
+        return;
+    }
+    
     if (adapter->features & FEATURE_HOST_NOTIFY) {
         status = adapter->inb_p(SMBSLVSTS(adapter));
         if (status & SMBSLVSTS_HST_NTFY_STS) {

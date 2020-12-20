@@ -519,8 +519,8 @@ static int i801_block_transaction(struct i801_adapter *priv,
     if (command == I2C_SMBUS_I2C_BLOCK_DATA) {
         if (read_write == I2C_SMBUS_WRITE) {
             /* set I2C_EN bit in configuration register */
-            hostc = priv->inb_p(SMBHSTCFG);
-            priv->outb_p(hostc | SMBHSTCFG_I2C_EN, SMBHSTCFG);
+            hostc = priv->pci_device->configRead8(SMBHSTCFG);
+            priv->pci_device->configWrite8(SMBHSTCFG, hostc | SMBHSTCFG_I2C_EN);
             
         } else if (!(priv->features & FEATURE_I2C_BLOCK_READ)) {
             IOLogError("I2C block read is unsupported!");
@@ -554,7 +554,7 @@ static int i801_block_transaction(struct i801_adapter *priv,
     if (command == I2C_SMBUS_I2C_BLOCK_DATA
         && read_write == I2C_SMBUS_WRITE) {
         /* restore saved configuration register value */
-        priv->outb_p(hostc, SMBHSTCFG);
+        priv->pci_device->configWrite8(SMBHSTCFG, hostc);
     }
     return result;
 }
