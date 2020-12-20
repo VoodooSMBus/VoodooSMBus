@@ -65,7 +65,6 @@ union i2c_smbus_data {
 #define I2C_CLIENT_SCCB             0x9000    /* Use Omnivision SCCB protocol */
 /* Must match I2C_M_STOP|IGNORE_NAK */
 
-
 #define I2C_M_TEN                   0x0010    /* this is a ten bit chip address */
 
 #endif /* i2c_smbus_h */
