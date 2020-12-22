@@ -21,9 +21,13 @@
 #include <IOKit/pci/IOPCIDevice.h>
 #include <IOKit/acpi/IOACPIPlatformDevice.h>
 #include <IOKit/IOPlatformExpert.h>
-#include "i2c_i801.hpp"
+#include "i2c_i801.cpp"
 #include "VoodooSMBusDeviceNub.hpp"
 #include "HostNotifyMessage.h"
+
+#ifndef __ACIDANTHERA_MAC_SDK
+#error "No Acidanthera SDK"
+#endif
 
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {

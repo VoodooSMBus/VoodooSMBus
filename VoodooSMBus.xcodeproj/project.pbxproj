@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A4975C3B258FFD6300E58257 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4975C39258FFD5700E58257 /* libkmod.a */; };
-		A4975C412590000B00E58257 /* i2c_i801.hpp in Headers */ = {isa = PBXBuildFile; fileRef = A4975C402590000B00E58257 /* i2c_i801.hpp */; };
 		B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EF3BA23035D16001DBD8E /* helpers.cpp */; };
 		B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */; };
 		B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */; };
@@ -23,7 +22,6 @@
 
 /* Begin PBXFileReference section */
 		A4975C39258FFD5700E58257 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = usr/lib/libkmod.a; sourceTree = SDKROOT; };
-		A4975C402590000B00E58257 /* i2c_i801.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = i2c_i801.hpp; sourceTree = "<group>"; };
 		B35EF3BA23035D16001DBD8E /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusIntelLpssI2C.cpp; sourceTree = "<group>"; };
 		B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusIntelLpssI2C.hpp; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 				B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */,
 				B395400022D8DBC100473323 /* Info.plist */,
 				B395400622D8F7FE00473323 /* i2c_i801.cpp */,
-				A4975C402590000B00E58257 /* i2c_i801.hpp */,
 				B395400822D8FD6100473323 /* helpers.hpp */,
 				B35EF3BA23035D16001DBD8E /* helpers.cpp */,
 				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
@@ -110,7 +107,6 @@
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
 				B3CF12302343A92C00DBBD8D /* Configuration.hpp in Headers */,
 				B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */,
-				A4975C412590000B00E58257 /* i2c_i801.hpp in Headers */,
 				B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */,
 				B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */,
 			);
