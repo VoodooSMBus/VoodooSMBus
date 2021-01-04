@@ -15,7 +15,7 @@ typedef SInt32 s32;
 #define IOLogError(format, ...) IOLog("VSMB - Error: " format "\n", ## __VA_ARGS__)
 #ifdef DEBUG
 #define IOLogDebug(format, ...) IOLog("VSMB - Debug: " format "\n", ## __VA_ARGS__)
-#elif
+#else
 #define IOLogDebug(format, ...)
 #endif
 

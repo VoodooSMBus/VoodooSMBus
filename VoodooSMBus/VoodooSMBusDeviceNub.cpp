@@ -54,7 +54,7 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
         return false;
     }
     
-    setProperty("VoodooSMBUS Slave Device Address", OSNumber::withNumber(address, 8));
+    setProperty("VoodooSMBUS Slave Device Address", address, 8);
     slave_device->addr = address;
     slave_device->flags = 0;
     

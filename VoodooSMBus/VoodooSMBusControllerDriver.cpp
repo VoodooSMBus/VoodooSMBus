@@ -136,6 +136,7 @@ void VoodooSMBusControllerDriver::releaseResources() {
             device_nub->detach(this);
         }
         device_nubs->flushCollection();
+        OSSafeReleaseNULL(iterator);
     }
     
     if (command_gate) {
@@ -197,14 +198,20 @@ IOReturn VoodooSMBusControllerDriver::publishMultipleNubs() {
     }
     
     OSIterator *iter = OSCollectionIterator::withCollection(addresses);
+    if (!iter) {
+        return kIOReturnError;
+    }
     
     while (OSNumber *addr = OSDynamicCast(OSNumber, iter->getNextObject()))
     {
         IOReturn res = publishNub(addr->unsigned8BitValue());
         if (res) {
+            OSSafeReleaseNULL(iter);
             return res;
         }
     }
+    
+    OSSafeReleaseNULL(iter);
     
     return kIOReturnSuccess;
 }

@@ -14,13 +14,15 @@ jobs:
       id: vars
       run: |
         echo ::set-output name=sha_short::$(git rev-parse --short=8 ${{ github.sha }})
+    - name: Get SDK
+      run: |
+        git clone --depth 1 https://github.com/acidanthera/MacKernelSDK.git
     - name: build
       env:
-          DEVELOPER_DIR: /Applications/Xcode_10.3.app/Contents/Developer
           VOODOOSMBUS_SHA: VoodooSMBus-${{ steps.vars.outputs.sha_short }}
       run: |
         mkdir build
-        xcodebuild -sdk macosx10.14 -scheme VoodooSMBus build CONFIGURATION_BUILD_DIR=build/${VOODOOSMBUS_SHA}
+        xcodebuild -scheme VoodooSMBus build CONFIGURATION_BUILD_DIR=build/${VOODOOSMBUS_SHA}
         mv build/${VOODOOSMBUS_SHA}/VoodooSMBus.kext build/${VOODOOSMBUS_SHA}/${VOODOOSMBUS_SHA}.kext
     - uses: actions/upload-artifact@v2
       with:

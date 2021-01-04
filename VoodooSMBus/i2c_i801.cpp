@@ -127,7 +127,6 @@ STATUS_ERROR_FLAGS)
 
 #define ICH_SMB_BASE                0x20
 
-
 /* An SMBus device on a PCI controller */
 /* This is a mix of i2c_adapter and i801_priv */
 struct i801_adapter {
