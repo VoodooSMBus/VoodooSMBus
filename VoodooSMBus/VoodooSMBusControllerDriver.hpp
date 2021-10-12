@@ -30,21 +30,27 @@
 #endif
 
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
-typedef struct  {
+struct VoodooSMBusControllerMessage {
     VoodooSMBusSlaveDevice* slave_device;
     char read_write;
     u8 command;
     int protocol;
-} VoodooSMBusControllerMessage;
+};
 
+struct VoodooSMBusDevice {
+    VoodooSMBusDeviceNub *nub;
+    VoodooSMBusDevice *next;
+    u8 addr;
+};
 
 class VoodooSMBusControllerDriver : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusControllerDriver)
 public:
     IOPCIDevice* pci_device;
     i801_adapter* adapter;
-    OSDictionary* device_nubs;
     OSArray* addresses;
+    
+    VoodooSMBusDevice *devicesListHead {nullptr};
     
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
@@ -54,7 +60,7 @@ public:
     IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
 
     IOWorkLoop* getWorkLoop();
-    void handleInterrupt(OSObject* owner, IOInterruptEventSource* src, int intCount);
+    static void handleInterrupt(OSObject* owner, void *refCon, IOService *nub, int source);
 
     /**
      * readByteData - SMBus "read byte" protocol
@@ -134,9 +140,8 @@ public:
     
     
 private:
-    IOCommandGate* command_gate;
-    IOWorkLoop* work_loop;
-    IOInterruptEventSource* interrupt_source;
+    IOCommandGate* command_gate {nullptr};
+    IOWorkLoop* work_loop {nullptr};
     bool awake;
     
     IOReturn publishNub(UInt8 address);

@@ -14,17 +14,23 @@ OSDefineMetaClassAndStructors(VoodooSMBusDeviceNub, IOService);
 
 bool VoodooSMBusDeviceNub::init() {
     bool result = super::init();
+    
+    workloop = IOWorkLoop::workLoop();
+    if (!workloop) return false;
+    
+    interruptSource = IOInterruptEventSource::interruptEventSource(
+                       this,
+                       OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusDeviceNub::handleHostNotifyInterrupt),
+                       nullptr
+                   );
 
-    slave_device = reinterpret_cast<VoodooSMBusSlaveDevice*>(IOMalloc(sizeof(VoodooSMBusSlaveDevice)));
+    if (!interruptSource) return false;
+    workloop->addEventSource(interruptSource);
+    
     return result;
 }
 
-void VoodooSMBusDeviceNub::free(void) {
-    IOFree(slave_device, sizeof(VoodooSMBusSlaveDevice));
-    super::free();
-}
-
-void VoodooSMBusDeviceNub::handleHostNotifyThreaded () {
+void VoodooSMBusDeviceNub::handleHostNotifyInterrupt (OSObject* owner, IOInterruptEventSource* src, int intCount) {
     IOService* device_driver = getClient();
     
     if(device_driver) {
@@ -33,14 +39,7 @@ void VoodooSMBusDeviceNub::handleHostNotifyThreaded () {
 }
 
 void VoodooSMBusDeviceNub::handleHostNotify() {
-    thread_t new_thread;
-    kern_return_t ret = kernel_thread_start(OSMemberFunctionCast(thread_continue_t, this, &VoodooSMBusDeviceNub::handleHostNotifyThreaded), this, &new_thread);
-
-    if (ret != KERN_SUCCESS) {
-        IOLogDebug(" Thread error while attemping to handle host notify in device nub.");
-    } else {
-        thread_deallocate(new_thread);
-    }
+    interruptSource->interruptOccurred(nullptr, nullptr, 0);
 }
 
 
@@ -55,15 +54,10 @@ bool VoodooSMBusDeviceNub::attach(IOService* provider, UInt8 address) {
     }
     
     setProperty("VoodooSMBUS Slave Device Address", address, 8);
-    slave_device->addr = address;
-    slave_device->flags = 0;
+    slave_device.addr = address;
+    slave_device.flags = 0;
     
     return true;
-}
-
-
-void VoodooSMBusDeviceNub::releaseResources() {
-
 }
 
 IOReturn VoodooSMBusDeviceNub::wakeupController() {
@@ -84,29 +78,36 @@ bool VoodooSMBusDeviceNub::start(IOService* provider) {
 }
 
 void VoodooSMBusDeviceNub::stop(IOService* provider) {
+    if (interruptSource) {
+        workloop->removeEventSource(interruptSource);
+        interruptSource->release();
+        interruptSource = nullptr;
+    }
+    
+    OSSafeReleaseNULL(workloop);
     super::stop(provider);
 }
 
 void VoodooSMBusDeviceNub::setSlaveDeviceFlags(unsigned short flags) {
-    slave_device->flags = flags;
+    slave_device.flags = flags;
 }
 
 IOReturn VoodooSMBusDeviceNub::readByteData(u8 command) {
-    return controller->readByteData(slave_device, command);
+    return controller->readByteData(&slave_device, command);
 }
 
 IOReturn VoodooSMBusDeviceNub::readBlockData(u8 command, u8 *values) {
-    return controller->readBlockData(slave_device, command, values);
+    return controller->readBlockData(&slave_device, command, values);
 }
 
 IOReturn VoodooSMBusDeviceNub::writeByteData(u8 command, u8 value) {
-    return controller->writeByteData(slave_device, command, value);
+    return controller->writeByteData(&slave_device, command, value);
 }
 
 IOReturn VoodooSMBusDeviceNub::writeByte(u8 value) {
-    return controller->writeByte(slave_device, value);
+    return controller->writeByte(&slave_device, value);
 }
 
 IOReturn VoodooSMBusDeviceNub::writeBlockData(u8 command, u8 length, const u8 *values) {
-    return controller->writeBlockData(slave_device, command, length, values);
+    return controller->writeBlockData(&slave_device, command, length, values);
 }

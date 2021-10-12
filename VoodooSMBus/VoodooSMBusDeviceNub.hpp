@@ -28,7 +28,6 @@ public:
     bool attach(IOService* provider, UInt8 address);
     bool start(IOService* provider) override;
     void stop(IOService* provider) override;
-    void free(void) override;
 
     void handleHostNotify();
     void setSlaveDeviceFlags(unsigned short flags);
@@ -41,10 +40,12 @@ public:
     IOReturn wakeupController();
     
 private:
+    IOWorkLoop *workloop {nullptr};
+    IOInterruptEventSource *interruptSource {nullptr};
+    
     VoodooSMBusControllerDriver* controller;
-    void releaseResources();
-    VoodooSMBusSlaveDevice* slave_device;
-    void handleHostNotifyThreaded();
+    VoodooSMBusSlaveDevice slave_device;
+    void handleHostNotifyInterrupt (OSObject* owner, IOInterruptEventSource* src, int intCount);
 };
 
 #endif /* VoodooSMBusDeviceNub_hpp */
