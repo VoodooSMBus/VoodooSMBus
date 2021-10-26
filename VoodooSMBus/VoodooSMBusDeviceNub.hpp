@@ -27,7 +27,7 @@ public:
     bool init() override;
     bool attach(IOService* provider, UInt8 address);
     bool start(IOService* provider) override;
-    void stop(IOService* provider) override;
+    void free() override;
 
     void handleHostNotify();
     void setSlaveDeviceFlags(unsigned short flags);

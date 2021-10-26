@@ -87,16 +87,8 @@ bool VoodooSMBusControllerDriver::start(IOService *provider) {
         goto exit;
     }
     
-//    interrupt_source =
-//    IOInterruptEventSource::interruptEventSource(this, OSMemberFunctionCast(IOInterruptEventAction, this, &VoodooSMBusControllerDriver::handleInterrupt),provider);
-    
     provider->registerInterrupt(0, nullptr, handleInterrupt, this);
     provider->enableInterrupt(0);
-    
-//    if (!interrupt_source || work_loop->addEventSource(interrupt_source) != kIOReturnSuccess) {
-//        IOLogError("%s Could not add interrupt source to work loop", getName());
-//        goto exit;
-//    }
     
     command_gate = IOCommandGate::commandGate(this);
     if (!command_gate || (work_loop->addEventSource(command_gate) != kIOReturnSuccess)) {
@@ -164,16 +156,13 @@ IOReturn VoodooSMBusControllerDriver::setPowerState(unsigned long whichState, IO
         return kIOPMAckImplied;
     
     if (whichState == kIOPMPowerOff) {
-        
-//        disableHostNotify();
-//        command_gate->runAction(OSMemberFunctionCast(IOCommandGate::Action, this, &VoodooSMBusControllerDriver::disableCommandGate));
+        disableHostNotify();
         pci_device->ioWrite8(SMBHSTCFG, adapter->original_hstcfg);
         awake = false;
 
     } else {
         if (!awake) {
             pci_device->enablePCIPowerManagement(kPCIPMCSPowerStateD0);
-//            command_gate->enable();
             enableHostNotify();
             awake = true;
         }
@@ -212,10 +201,9 @@ IOReturn VoodooSMBusControllerDriver::publishMultipleNubs() {
 }
 
 IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
-    VoodooSMBusDevice *newDevice = new VoodooSMBusDevice();
-    VoodooSMBusDevice *currentDevice = devicesListHead;
-    
-    VoodooSMBusDeviceNub* device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
+    auto *listHead = devicesListHead;
+    auto *newDevice = new VoodooSMBusDevice();
+    auto *device_nub = OSTypeAlloc(VoodooSMBusDeviceNub);
     
     if (!newDevice || !device_nub || !device_nub->init()) {
         IOLogError("%s::%s Could not initialise nub", getName(), adapter->name);
@@ -236,12 +224,13 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     newDevice->next = nullptr;
     newDevice->addr = address;
     
+    // Add device to list
     if (devicesListHead != nullptr) {
-        while (currentDevice->next != nullptr) {
-            currentDevice = currentDevice->next;
+        while (listHead->next != nullptr) {
+            listHead = listHead->next;
         }
         
-        currentDevice->next = newDevice;
+        listHead->next = newDevice;
     } else {
         devicesListHead = newDevice;
     }
@@ -251,7 +240,7 @@ IOReturn VoodooSMBusControllerDriver::publishNub(UInt8 address) {
     return kIOReturnSuccess;
     
 exit:
-    if (newDevice != nullptr) IOFree(newDevice, sizeof(VoodooSMBusDeviceNub));
+    if (newDevice != nullptr) delete newDevice;
     OSSafeReleaseNULL(device_nub);
     return kIOReturnError;
 }
