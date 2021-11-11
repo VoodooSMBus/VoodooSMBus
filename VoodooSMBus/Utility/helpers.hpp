@@ -19,7 +19,6 @@ typedef SInt32 s32;
 #define IOLogDebug(format, ...)
 #endif
 
-void addrToDictKey(u8 address, char* key);
 const char* getMatchedName(IOService* provider);
 
 #define kIOPMPowerOff 0

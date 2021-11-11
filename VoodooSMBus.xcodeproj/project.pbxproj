@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A40E3485273C64A700399422 /* DeviceList.h in Headers */ = {isa = PBXBuildFile; fileRef = A40E3483273C64A700399422 /* DeviceList.h */; };
+		A40E3486273C64A700399422 /* DeviceList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A40E3484273C64A700399422 /* DeviceList.cpp */; };
 		A4975C3B258FFD6300E58257 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4975C39258FFD5700E58257 /* libkmod.a */; };
 		B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EF3BA23035D16001DBD8E /* helpers.cpp */; };
 		B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */; };
@@ -21,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A40E3480273B4BF100399422 /* VPS2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPS2.h; sourceTree = "<group>"; };
+		A40E3483273C64A700399422 /* DeviceList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceList.h; sourceTree = "<group>"; };
+		A40E3484273C64A700399422 /* DeviceList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DeviceList.cpp; sourceTree = "<group>"; };
 		A4975C39258FFD5700E58257 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = usr/lib/libkmod.a; sourceTree = SDKROOT; };
 		B35EF3BA23035D16001DBD8E /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusIntelLpssI2C.cpp; sourceTree = "<group>"; };
@@ -51,6 +56,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A40E3481273C643200399422 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				B395400822D8FD6100473323 /* helpers.hpp */,
+				B35EF3BA23035D16001DBD8E /* helpers.cpp */,
+				B3CF122E2343A92C00DBBD8D /* Configuration.hpp */,
+				B3CF122D2343A92C00DBBD8D /* Configuration.cpp */,
+				A40E3483273C64A700399422 /* DeviceList.h */,
+				A40E3484273C64A700399422 /* DeviceList.cpp */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		A40E3482273C645800399422 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				B39530D6247F38A300F1751C /* HostNotifyMessage.h */,
+				A40E3480273B4BF100399422 /* VPS2.h */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		A4975C38258FFD5600E58257 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -79,20 +106,17 @@
 		B3953FFB22D8DBC100473323 /* VoodooSMBus */ = {
 			isa = PBXGroup;
 			children = (
+				A40E3482273C645800399422 /* Headers */,
+				A40E3481273C643200399422 /* Utility */,
 				B3953FFC22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp */,
 				B3953FFE22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp */,
 				B395400022D8DBC100473323 /* Info.plist */,
 				B395400622D8F7FE00473323 /* i2c_i801.cpp */,
-				B395400822D8FD6100473323 /* helpers.hpp */,
-				B35EF3BA23035D16001DBD8E /* helpers.cpp */,
-				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
 				B3B31E6022DA2C4800179497 /* VoodooSMBusDeviceNub.hpp */,
+				B3B31E5F22DA2C4800179497 /* VoodooSMBusDeviceNub.cpp */,
 				B3B31E6B22DA600700179497 /* i2c_smbus.h */,
-				B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */,
 				B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */,
-				B3CF122D2343A92C00DBBD8D /* Configuration.cpp */,
-				B3CF122E2343A92C00DBBD8D /* Configuration.hpp */,
-				B39530D6247F38A300F1751C /* HostNotifyMessage.h */,
+				B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */,
 			);
 			path = VoodooSMBus;
 			sourceTree = "<group>";
@@ -106,6 +130,7 @@
 			files = (
 				B395400A22D8FD6100473323 /* helpers.hpp in Headers */,
 				B3CF12302343A92C00DBBD8D /* Configuration.hpp in Headers */,
+				A40E3485273C64A700399422 /* DeviceList.h in Headers */,
 				B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */,
 				B3953FFD22D8DBC100473323 /* VoodooSMBusControllerDriver.hpp in Headers */,
 				B3B31E6222DA2C4800179497 /* VoodooSMBusDeviceNub.hpp in Headers */,
@@ -181,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */,
+				A40E3486273C64A700399422 /* DeviceList.cpp in Sources */,
 				B3953FFF22D8DBC100473323 /* VoodooSMBusControllerDriver.cpp in Sources */,
 				B3B31E6122DA2C4800179497 /* VoodooSMBusDeviceNub.cpp in Sources */,
 				B3CF122F2343A92C00DBBD8D /* Configuration.cpp in Sources */,

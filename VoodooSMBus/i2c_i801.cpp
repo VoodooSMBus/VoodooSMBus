@@ -158,10 +158,6 @@ struct i801_adapter {
         return pci_device->ioRead8(offset);
     }
 };
-struct VoodooSMBusSlaveDevice {
-    UInt8 addr;
-    UInt8 flags;
-};
 
 /* Make sure the SMBus host is ready to start transmitting.
  Return 0 if it is, -EBUSY if it is not. */

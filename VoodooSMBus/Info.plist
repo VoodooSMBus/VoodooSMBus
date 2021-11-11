@@ -36,7 +36,6 @@
 			<string>de.leo-labs.VoodooSMBus</string>
 			<key>Addresses</key>
 			<array>
-				<integer>44</integer>
 				<integer>21</integer>
 			</array>
 		</dict>

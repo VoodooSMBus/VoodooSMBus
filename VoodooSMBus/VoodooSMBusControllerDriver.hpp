@@ -23,7 +23,9 @@
 #include <IOKit/IOPlatformExpert.h>
 #include "i2c_i801.cpp"
 #include "VoodooSMBusDeviceNub.hpp"
-#include "HostNotifyMessage.h"
+#include "./Headers/HostNotifyMessage.h"
+#include "./Headers/VPS2.h"
+#include "./Utility/DeviceList.h"
 
 #ifndef __ACIDANTHERA_MAC_SDK
 #error "No Acidanthera SDK"
@@ -37,20 +39,14 @@ struct VoodooSMBusControllerMessage {
     int protocol;
 };
 
-struct VoodooSMBusDevice {
-    VoodooSMBusDeviceNub *nub;
-    VoodooSMBusDevice *next;
-    u8 addr;
-};
-
 class VoodooSMBusControllerDriver : public IOService {
     OSDeclareDefaultStructors(VoodooSMBusControllerDriver)
 public:
     IOPCIDevice* pci_device;
     i801_adapter* adapter;
     OSArray* addresses;
-    
-    VoodooSMBusDevice *devicesListHead {nullptr};
+    DeviceList *deviceList {nullptr};
+    bool interruptEnabled {false};
     
     virtual bool init(OSDictionary *dictionary = 0) override;
     virtual void free(void) override;
@@ -58,6 +54,7 @@ public:
     virtual bool start(IOService *provider) override;
     virtual void stop(IOService *provider) override;
     IOReturn setPowerState(unsigned long whichState, IOService* whatDevice) override;
+    IOReturn message(UInt32 type, IOService *provider, void *arg = 0) override;
 
     IOWorkLoop* getWorkLoop();
     static void handleInterrupt(OSObject* owner, void *refCon, IOService *nub, int source);
@@ -144,7 +141,9 @@ private:
     IOWorkLoop* work_loop {nullptr};
     bool awake;
     
-    IOReturn publishNub(UInt8 address);
+    VoodooSMBusDeviceNub *createNub(UInt8 address, OSDictionary *props);
+    IOReturn publishNub(UInt8 address, OSDictionary *props);
+    IOReturn publishNubGated(UInt8 *address, bool *sync, OSDictionary *props);
     IOReturn publishMultipleNubs();
     void releaseResources();
     
