@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A4975C3B258FFD6300E58257 /* libkmod.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4975C39258FFD5700E58257 /* libkmod.a */; };
 		B35EF3BB23035D16001DBD8E /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B35EF3BA23035D16001DBD8E /* helpers.cpp */; };
 		B36B6EB022DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */; };
 		B36B6EB122DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A4975C39258FFD5700E58257 /* libkmod.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkmod.a; path = usr/lib/libkmod.a; sourceTree = SDKROOT; };
 		B35EF3BA23035D16001DBD8E /* helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 		B36B6EAE22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooSMBusIntelLpssI2C.cpp; sourceTree = "<group>"; };
 		B36B6EAF22DEBBA40062F8F4 /* VoodooSMBusIntelLpssI2C.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VoodooSMBusIntelLpssI2C.hpp; sourceTree = "<group>"; };
@@ -35,40 +37,6 @@
 		B3B31E6B22DA600700179497 /* i2c_smbus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = i2c_smbus.h; sourceTree = "<group>"; };
 		B3CF122D2343A92C00DBBD8D /* Configuration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
 		B3CF122E2343A92C00DBBD8D /* Configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
-		B3D4D48422DE380E00032061 /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = helpers.cpp; path = Dependencies/VoodooI2C/Dependencies/helpers.cpp; sourceTree = "<group>"; };
-		B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMultitouchInterface.hpp; sourceTree = "<group>"; };
-		B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CDigitiserTransducer.hpp; sourceTree = "<group>"; };
-		B3D4D48822DE380F00032061 /* VoodooI2CMultitouchEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMultitouchEngine.hpp; sourceTree = "<group>"; };
-		B3D4D48922DE380F00032061 /* VoodooI2CDigitiserStylus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CDigitiserStylus.hpp; sourceTree = "<group>"; };
-		B3D4D48B22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMT2ActuatorDevice.cpp; sourceTree = "<group>"; };
-		B3D4D48C22DE380F00032061 /* VoodooI2CNativeEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CNativeEngine.cpp; sourceTree = "<group>"; };
-		B3D4D48D22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMT2SimulatorDevice.hpp; sourceTree = "<group>"; };
-		B3D4D48E22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMT2SimulatorDevice.cpp; sourceTree = "<group>"; };
-		B3D4D48F22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CMT2ActuatorDevice.hpp; sourceTree = "<group>"; };
-		B3D4D49022DE380F00032061 /* VoodooI2CNativeEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CNativeEngine.hpp; sourceTree = "<group>"; };
-		B3D4D49122DE380F00032061 /* MultitouchHelpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MultitouchHelpers.hpp; sourceTree = "<group>"; };
-		B3D4D49322DE380F00032061 /* VoodooI2CCSGestureEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooI2CCSGestureEngine.hpp; sourceTree = "<group>"; };
-		B3D4D49422DE380F00032061 /* AverageClasses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AverageClasses.h; sourceTree = "<group>"; };
-		B3D4D49522DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooCSGestureHIDWrapper.cpp; sourceTree = "<group>"; };
-		B3D4D49622DE380F00032061 /* VoodooCSGestureHIDWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoodooCSGestureHIDWrapper.h; sourceTree = "<group>"; };
-		B3D4D49722DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooCSGestureHIPointingWrapper.cpp; sourceTree = "<group>"; };
-		B3D4D49822DE380F00032061 /* csgesturescroll.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = csgesturescroll.cpp; sourceTree = "<group>"; };
-		B3D4D49922DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = VoodooCSGestureHIPointingWrapper.hpp; sourceTree = "<group>"; };
-		B3D4D49A22DE380F00032061 /* VoodooI2CCSGestureEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CCSGestureEngine.cpp; sourceTree = "<group>"; };
-		B3D4D49B22DE380F00032061 /* csgesturescroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = csgesturescroll.h; sourceTree = "<group>"; };
-		B3D4D49C22DE380F00032061 /* csgesture-softc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "csgesture-softc.h"; sourceTree = "<group>"; };
-		B3D4D49D22DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CDigitiserTransducer.cpp; sourceTree = "<group>"; };
-		B3D4D49E22DE380F00032061 /* VoodooI2CMultitouchInterface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMultitouchInterface.cpp; sourceTree = "<group>"; };
-		B3D4D49F22DE380F00032061 /* VoodooI2CMultitouchEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CMultitouchEngine.cpp; sourceTree = "<group>"; };
-		B3D4D4A022DE380F00032061 /* VoodooI2CDigitiserStylus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VoodooI2CDigitiserStylus.cpp; sourceTree = "<group>"; };
-		B3D4D4A122DE380F00032061 /* helpers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = helpers.hpp; path = Dependencies/VoodooI2C/Dependencies/helpers.hpp; sourceTree = "<group>"; };
-		B3D4D4A522DE380F00032061 /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
-		B3D4D4A622DE380F00032061 /* AppleHIDUsageTables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleHIDUsageTables.h; sourceTree = "<group>"; };
-		B3D4D4A722DE380F00032061 /* IOHIDEventService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventService.h; sourceTree = "<group>"; };
-		B3D4D4A822DE380F00032061 /* IOHIDEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEvent.h; sourceTree = "<group>"; };
-		B3D4D4A922DE380F00032061 /* IOHIDProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDProperties.h; sourceTree = "<group>"; };
-		B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
-		B3D4D4AD22DE380F00032061 /* OSBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSBase.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,21 +44,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4975C3B258FFD6300E58257 /* libkmod.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A4975C38258FFD5600E58257 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A4975C39258FFD5700E58257 /* libkmod.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B3953FEF22D8DBC100473323 = {
 			isa = PBXGroup;
 			children = (
-				B3D4D4A222DE380F00032061 /* Headers */,
-				B3D4D48422DE380E00032061 /* helpers.cpp */,
-				B3D4D4A122DE380F00032061 /* helpers.hpp */,
-				B3D4D48522DE380F00032061 /* Multitouch Support */,
 				B3953FFB22D8DBC100473323 /* VoodooSMBus */,
 				B3953FFA22D8DBC100473323 /* Products */,
+				A4975C38258FFD5600E58257 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,102 +95,6 @@
 				B39530D6247F38A300F1751C /* HostNotifyMessage.h */,
 			);
 			path = VoodooSMBus;
-			sourceTree = "<group>";
-		};
-		B3D4D48522DE380F00032061 /* Multitouch Support */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D48622DE380F00032061 /* VoodooI2CMultitouchInterface.hpp */,
-				B3D4D48722DE380F00032061 /* VoodooI2CDigitiserTransducer.hpp */,
-				B3D4D48822DE380F00032061 /* VoodooI2CMultitouchEngine.hpp */,
-				B3D4D48922DE380F00032061 /* VoodooI2CDigitiserStylus.hpp */,
-				B3D4D48A22DE380F00032061 /* Native */,
-				B3D4D49122DE380F00032061 /* MultitouchHelpers.hpp */,
-				B3D4D49222DE380F00032061 /* CSGesture */,
-				B3D4D49D22DE380F00032061 /* VoodooI2CDigitiserTransducer.cpp */,
-				B3D4D49E22DE380F00032061 /* VoodooI2CMultitouchInterface.cpp */,
-				B3D4D49F22DE380F00032061 /* VoodooI2CMultitouchEngine.cpp */,
-				B3D4D4A022DE380F00032061 /* VoodooI2CDigitiserStylus.cpp */,
-			);
-			name = "Multitouch Support";
-			path = "Dependencies/VoodooI2C/Multitouch Support";
-			sourceTree = "<group>";
-		};
-		B3D4D48A22DE380F00032061 /* Native */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D48B22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.cpp */,
-				B3D4D48C22DE380F00032061 /* VoodooI2CNativeEngine.cpp */,
-				B3D4D48D22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.hpp */,
-				B3D4D48E22DE380F00032061 /* VoodooI2CMT2SimulatorDevice.cpp */,
-				B3D4D48F22DE380F00032061 /* VoodooI2CMT2ActuatorDevice.hpp */,
-				B3D4D49022DE380F00032061 /* VoodooI2CNativeEngine.hpp */,
-			);
-			path = Native;
-			sourceTree = "<group>";
-		};
-		B3D4D49222DE380F00032061 /* CSGesture */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D49322DE380F00032061 /* VoodooI2CCSGestureEngine.hpp */,
-				B3D4D49422DE380F00032061 /* AverageClasses.h */,
-				B3D4D49522DE380F00032061 /* VoodooCSGestureHIDWrapper.cpp */,
-				B3D4D49622DE380F00032061 /* VoodooCSGestureHIDWrapper.h */,
-				B3D4D49722DE380F00032061 /* VoodooCSGestureHIPointingWrapper.cpp */,
-				B3D4D49822DE380F00032061 /* csgesturescroll.cpp */,
-				B3D4D49922DE380F00032061 /* VoodooCSGestureHIPointingWrapper.hpp */,
-				B3D4D49A22DE380F00032061 /* VoodooI2CCSGestureEngine.cpp */,
-				B3D4D49B22DE380F00032061 /* csgesturescroll.h */,
-				B3D4D49C22DE380F00032061 /* csgesture-softc.h */,
-			);
-			path = CSGesture;
-			sourceTree = "<group>";
-		};
-		B3D4D4A222DE380F00032061 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D4A322DE380F00032061 /* IOKit */,
-				B3D4D4AB22DE380F00032061 /* libkern */,
-			);
-			name = Headers;
-			path = Dependencies/VoodooI2C/Dependencies/Headers;
-			sourceTree = "<group>";
-		};
-		B3D4D4A322DE380F00032061 /* IOKit */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D4A422DE380F00032061 /* hid */,
-			);
-			path = IOKit;
-			sourceTree = "<group>";
-		};
-		B3D4D4A422DE380F00032061 /* hid */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D4A522DE380F00032061 /* IOHIDPrivateKeys.h */,
-				B3D4D4A622DE380F00032061 /* AppleHIDUsageTables.h */,
-				B3D4D4A722DE380F00032061 /* IOHIDEventService.h */,
-				B3D4D4A822DE380F00032061 /* IOHIDEvent.h */,
-				B3D4D4A922DE380F00032061 /* IOHIDProperties.h */,
-				B3D4D4AA22DE380F00032061 /* IOHIDEventTypes.h */,
-			);
-			path = hid;
-			sourceTree = "<group>";
-		};
-		B3D4D4AB22DE380F00032061 /* libkern */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D4AC22DE380F00032061 /* libkern */,
-			);
-			path = libkern;
-			sourceTree = "<group>";
-		};
-		B3D4D4AC22DE380F00032061 /* libkern */ = {
-			isa = PBXGroup;
-			children = (
-				B3D4D4AD22DE380F00032061 /* OSBase.h */,
-			);
-			path = libkern;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,7 +139,7 @@
 		B3953FF022D8DBC100473323 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "leo-labs";
 				TargetAttributes = {
 					B3953FF822D8DBC100473323 = {
@@ -275,6 +153,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = B3953FEF22D8DBC100473323;
 			productRefGroup = B3953FFA22D8DBC100473323 /* Products */;
@@ -338,6 +217,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -364,7 +244,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -398,6 +281,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -418,7 +302,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				KERNEL_EXTENSION_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				KERNEL_FRAMEWORK_HEADERS = "$(PROJECT_DIR)/MacKernelSDK/Headers";
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/MacKernelSDK/Library/x86_64";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -428,6 +315,10 @@
 		B395400422D8DBC100473323 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ANALYZER_DEADCODE_DEADSTORES = NO;
+				CLANG_ANALYZER_DIVIDE_BY_ZERO = NO;
+				CLANG_ANALYZER_NULL_DEREFERENCE = NO;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
@@ -440,6 +331,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "de.leo-labs.VoodooSMBus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -447,6 +339,7 @@
 		B395400522D8DBC100473323 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1.0.0d1;
@@ -456,6 +349,7 @@
 				INFOPLIST_FILE = VoodooSMBus/Info.plist;
 				MODULE_NAME = "de.leo-labs.VoodooSMBus";
 				MODULE_VERSION = 1.0.0d1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "de.leo-labs.VoodooSMBus";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

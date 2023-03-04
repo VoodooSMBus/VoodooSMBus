@@ -25,6 +25,10 @@
 #include "VoodooSMBusDeviceNub.hpp"
 #include "HostNotifyMessage.h"
 
+#ifndef __ACIDANTHERA_MAC_SDK
+#error "No Acidanthera SDK"
+#endif
+
 /* Helper struct so we are able to pass more than 4 arguments to `transferGated(..)` */
 typedef struct  {
     VoodooSMBusSlaveDevice* slave_device;
