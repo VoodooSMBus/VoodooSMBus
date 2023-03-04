@@ -124,7 +124,7 @@ public:
      * @flags: I2C_CLIENT_* flags (usually zero or I2C_CLIENT_PEC)
      * @read_write: I2C_SMBUS_READ or I2C_SMBUS_WRITE
      * @command: Byte interpreted by slave, for protocols which use such bytes
-     * @ protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
+     * @protocol: SMBus protocol operation to execute, such as I2C_SMBUS_PROC_CALL
      * @data: Data to be read or written
      *
      * This executes an SMBus protocol operation, and returns a negative
